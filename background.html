@@ -1,0 +1,23 @@
+<html>
+<head>
+	<script type="text/javascript" src="chrome_ex_oauthsimple.js"></script>
+	<script type="text/javascript" src="chrome_ex_oauth.js"></script>
+	<script src="background.js"></script>
+	<script type="text/javascript">
+	var oauth = ChromeExOAuth.initBackgroundPage({
+	  'request_url': 'https://www.google.com/accounts/OAuthGetRequestToken',
+	  'authorize_url': 'https://www.google.com/accounts/OAuthAuthorizeToken',
+	  'access_url': 'https://www.google.com/accounts/OAuthGetAccessToken',
+	  'consumer_key': 'anonymous',
+	  'consumer_secret': 'anonymous',
+	  'scope': 'https://mail.google.com/',
+	  'app_name': 'My Google GMail Extension'
+	});
+	</script>
+</head>
+<body>
+	<img id="logged_in" src="gmail_logged_in.png">
+	<canvas id="canvas" width="19" height="19">
+</body>
+</html>
+
