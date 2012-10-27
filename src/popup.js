@@ -14,5 +14,5 @@ $(function(){
 	bgPage.oauth.authorize(function(token, secret) {
 		console.log("Authorize - Token:"+token+", Secret:"+secret);
 	});
-	console.log("onload");
+
 });
