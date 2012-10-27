@@ -11,7 +11,12 @@
 			</arguments>
 		</buildCommand>
 		<buildCommand>
-			<name>com.aptana.ide.core.unifiedBuilder</name>
+			<name>com.eclipsesource.jshint.ui.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
+		<buildCommand>
+			<name>org.eclipse.wst.jsdt.core.javascriptValidator</name>
 			<arguments>
 			</arguments>
 		</buildCommand>
@@ -20,9 +25,14 @@
 			<arguments>
 			</arguments>
 		</buildCommand>
+		<buildCommand>
+			<name>org.sourceforge.jsonedit.core.core.validation.builder</name>
+			<arguments>
+			</arguments>
+		</buildCommand>
 	</buildSpec>
 	<natures>
-		<nature>com.aptana.projects.webnature</nature>
 		<nature>org.eclipse.wst.jsdt.core.jsNature</nature>
+		<nature>org.sourceforge.jsonedit.core.validation.nature</nature>
 	</natures>
 </projectDescription>
