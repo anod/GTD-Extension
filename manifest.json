@@ -4,8 +4,7 @@
     "page": "views/background.html"
   },
   "browser_action": {
-    "default_icon": "graphics/gmail_not_logged_in.png",
-    "default_popup": "views/popup.html"
+    "default_icon": "graphics/icon_128.png"
   },
   "default_locale": "en",
   "description": "__MSG_gmailcheck_description__",
@@ -17,6 +16,7 @@
   "permissions": [
     "alarms",
     "tabs",
+    "notifications",
     "webNavigation",
     "*://*.google.com/",
     //OAuth
@@ -26,6 +26,9 @@
     "https://www.google.com/accounts/OAuthAuthorizeToken",
     "https://www.google.com/accounts/OAuthGetAccessToken"
    ],
+  "web_accessible_resources": [
+    "graphics/icon_128.png"
+  ],
   "version": "0.2",
   "minimum_chrome_version": "22",
   "manifest_version": 2

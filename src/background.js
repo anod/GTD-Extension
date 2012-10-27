@@ -14,4 +14,12 @@ function init() {
 	gtdController.runBackground();	
 }
 
+function refresh() {
+	if (gtdController) {
+		gtdController.runBackground();
+	}
+}
+
 document.addEventListener('DOMContentLoaded', init);
+
+chrome.browserAction.onClicked.addListener(refresh);
