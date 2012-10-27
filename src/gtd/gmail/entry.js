@@ -1,4 +1,6 @@
-gtd.Gmail.Entry = Backbone.Model.extend({
+"use strict";
+
+window.gtd.Gmail.Entry = Backbone.Model.extend({
 
 	defaults : {
 		title : "",

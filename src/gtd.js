@@ -1,1 +1,3 @@
-var gtd = {};
+"use strict";
+
+window.gtd = {};

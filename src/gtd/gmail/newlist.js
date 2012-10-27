@@ -1,6 +1,7 @@
+"use strict";
 
-gtd.Gmail.NewList = Backbone.Collection.extend({
-	model: gtd.Gmail.Entry,
+window.gtd.Gmail.NewList = Backbone.Collection.extend({
+	model: window.gtd.Gmail.Entry,
 
 	oauth: null,
 	feedUrl : 'https://mail.google.com/mail/feed/atom',

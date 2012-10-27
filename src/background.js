@@ -1,25 +1,26 @@
+"use strict";
 
-var gtdController = null;
+window.gtdController = null;
 function init() {
-	oauth.authorize(function(token, secret) {
+	window.oauth.authorize(function(token, secret) {
 		console.log("Authorize - Token:" + token + ", Secret:" + secret);
 	});
 
-	gtdController = new gtd.Controller({
-		'oauth': oauth,
-		'chrome': chrome,
-		'gmail': new gtd.Gmail.NewList([], { 'oauth': oauth })
+	window.gtdController = new window.gtd.Controller({
+		'oauth': window.oauth,
+		'chrome': window.chrome,
+		'gmail': new window.gtd.Gmail.NewList([], { 'oauth': window.oauth })
 	});
 	
-	gtdController.runBackground();	
+	window.gtdController.runBackground();	
 }
 
 function refresh() {
-	if (gtdController) {
-		gtdController.runBackground();
+	if (window.gtdController) {
+		window.gtdController.runBackground();
 	}
 }
 
 document.addEventListener('DOMContentLoaded', init);
 
-chrome.browserAction.onClicked.addListener(refresh);
+window.chrome.browserAction.onClicked.addListener(refresh);

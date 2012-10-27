@@ -1,6 +1,4 @@
-// Copyright (c) 2012 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+"use strict";
 
 var customDomainsTextbox;
 var saveButton;
@@ -11,14 +9,14 @@ function init() {
   saveButton = document.getElementById("save-button");
   cancelButton = document.getElementById("cancel-button");
 
-  customDomainsTextbox.value = localStorage.customDomain || "";
+  customDomainsTextbox.value = window.localStorage.customDomain || "";
   markClean();
 }
 
 function save() {
-  localStorage.customDomain = customDomainsTextbox.value;
+  window.localStorage.customDomain = customDomainsTextbox.value;
   markClean();
-  chrome.runtime.getBackgroundPage(function(backgroundPage) {
+  window.chrome.runtime.getBackgroundPage(function(backgroundPage) {
     backgroundPage.startRequest({
       scheduleRequest:false,
       showLoadingAnimation:true

@@ -1,2 +1,3 @@
+"use strict";
 
-gtd.Gmail = {};
+window.gtd.Gmail = {};
