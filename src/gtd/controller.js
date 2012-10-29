@@ -29,12 +29,15 @@ window.gtd.Controller = Backbone.Model.extend({
 		});
 		// Create a simple text notification:
 		var notification = window.webkitNotifications.createNotification(
-			'graphics/icon_128.png',  // icon url - can be relative
+			'../graphics/icon_128.png',  // icon url - can be relative
 			'New Emails',  // notification title
 			text // notification body text
 		);
 		
 		notification.show();
+		setTimeout(function(){
+			notification.cancel();
+		},5000);		
 		this.get('chrome').browserAction.setBadgeText({ text: collection.length + ''});
 	}
 
