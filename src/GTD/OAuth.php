@@ -1,26 +1,34 @@
 <?php
 namespace GTD;
-
-require_once 'Zend/Mail/Protocol/Imap.php';
-
+/**
+ * 
+ * @author alex
+ *
+ */
 class OAuth {
+	const GMAIL_HOST = 'imap.gmail.com';
+	const GMAIL_PORT = '993';
+	const USE_SSL = true;
 	/**
-	 * @var Zend_Mail_Protocol_Imap
+	 * @var Zend\Mail\Protocol\Imap
 	 */
 	private $imap;
 	
+	/**
+	 * 
+	 */
 	public function __construct() {
-		$this->imap = new Zend_Mail_Protocol_Imap('imap.gmail.com', '993', true);
+		$this->imap = new \Zend\Mail\Protocol\Imap();
 	}
 	
 	/**
-	 * Builds an OAuth2 authentication string for the given email address and access
-	 * token.
+	 * 
+	 * @return \GTD\OAuth
 	 */
-	private function constructAuthString($email, $accessToken) {
-		return base64_encode("user=$email\1auth=Bearer $accessToken\1\1");
+	public function connect() {
+		$this->imap->connect(self::GMAIL_HOST, self::GMAIL_PORT, self::USE_SSL);
+		return $this;		
 	}
-	
 	/**
 	 * Given an open IMAP connection, attempts to authenticate with OAuth2.
 	 *
@@ -30,16 +38,19 @@ class OAuth {
 	 *
 	 * @returns bool true on successful authentication, false otherwise.
 	 */
-	private function authenticate($imap, $email, $accessToken) {
-		$authenticateParams = array('XOAUTH2', $this->constructAuthString($email, $accessToken));
-		$imap->sendRequest('AUTHENTICATE', $authenticateParams);
+	public function authenticate($email, $accessToken) {
+		$authenticateParams = array(
+			'XOAUTH2', $this->constructAuthString($email, $accessToken)
+		);
+		$this->imap->sendRequest('AUTHENTICATE', $authenticateParams);
 		while (true) {
 			$response = "";
-			$is_plus = $imap->readLine($response, '+', true);
+			$is_plus = $this->imap->readLine($response, '+', true);
+			var_dump($response);
 			if ($is_plus) {
-				error_log("got an extra server challenge: $response");
+				error_log("got an extra server challenge: ".base64_decode($response));
 				// Send empty client response.
-				$imap->sendRequest('');
+				$this->imap->sendRequest('');
 			} else {
 				if (preg_match('/^NO /i', $response) || preg_match('/^BAD /i', $response)) {
 					error_log("got failure response: $response");
@@ -52,5 +63,14 @@ class OAuth {
 			}
 		}
 	}
+
+	/**
+	 * Builds an OAuth2 authentication string for the given email address and access
+	 * token.
+	 */
+	private function constructAuthString($email, $accessToken) {
+		return base64_encode("user=$email\1auth=Bearer $accessToken\1\1");
+	}
+
 
 }
