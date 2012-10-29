@@ -12,9 +12,10 @@ window.gtd.Controller = Backbone.Model.extend({
 		this.get('gmail').loadNewEmails();
 		this.get('gmail').on("gmail:newlist", this._notifyList, this);
 		
+		var self = this;
 		this.get('chrome').alarms.onAlarm.addListener(function(alarm) {
 			if (alarm.name == "loadNewEmails") {
-				this.get('gmail').loadNewEmails();
+				self.get('gmail').loadNewEmails();
 			}
 		});
 		
@@ -35,7 +36,7 @@ window.gtd.Controller = Backbone.Model.extend({
 		);
 		
 		notification.show();
-		setTimeout(function(){
+		window.setTimeout(function(){
 			notification.cancel();
 		},5000);		
 		this.get('chrome').browserAction.setBadgeText({ text: collection.length + ''});
