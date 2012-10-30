@@ -3,16 +3,17 @@
 window.gtdController = null;
 function init() {
 	window.oauth.authorize(function(token, secret) {
-		console.log("Authorize - Token:" + token + ", Secret:" + secret);
+		console.log("Authorize - Token:" + oogleAuth.getAccessToken());
 	});
-
+/*
 	window.gtdController = new window.gtd.Controller({
 		'oauth': window.oauth,
 		'chrome': window.chrome,
 		'gmail': new window.gtd.Gmail.NewList([], { 'oauth': window.oauth })
 	});
 	
-	window.gtdController.runBackground();	
+	window.gtdController.runBackground();
+	*/	
 }
 
 function refresh() {

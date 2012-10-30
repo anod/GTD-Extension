@@ -1,35 +1,32 @@
 {
-  "background": {
-    "persistent": false,
-    "page": "views/background.html"
-  },
-  "browser_action": {
-    "default_icon": "graphics/icon_128.png"
-  },
-  "default_locale": "en",
-  "description": "__MSG_gmailcheck_description__",
-  "icons": {
-    "128": "graphics/icon_128.png"
-  },
-  "name": "__MSG_gmailcheck_name__",
-  "options_page": "views/options.html",
-  "permissions": [
-    "alarms",
-    "tabs",
-    "notifications",
-    "webNavigation",
-    "*://*.google.com/",
-    //OAuth
-    "tabs",
-    "https://docs.google.com/feeds/*",
-    "https://www.google.com/accounts/OAuthGetRequestToken",
-    "https://www.google.com/accounts/OAuthAuthorizeToken",
-    "https://www.google.com/accounts/OAuthGetAccessToken"
-   ],
-  "web_accessible_resources": [
-    "graphics/icon_128.png"
-  ],
-  "version": "0.2",
-  "minimum_chrome_version": "22",
-  "manifest_version": 2
+	"background": {
+		"persistent": false,
+		"page": "views/background.html"
+	},
+	"browser_action": {
+		"default_icon": "graphics/icon_128.png"
+	},
+	"default_locale": "en",
+	"description": "__MSG_gmailcheck_description__",
+	"icons": {
+		"128": "graphics/icon_128.png"
+	},
+	"name": "__MSG_gmailcheck_name__",
+	"options_page": "views/options.html",
+	"permissions": [
+		"alarms",
+		"tabs",
+		"notifications",
+		"webNavigation",
+		"*://*.google.com/",
+		/** OAuth */
+		"tabs",
+		"https://accounts.google.com/o/oauth2/token"
+	],
+	"web_accessible_resources": [
+		"graphics/icon_128.png"
+	],
+	"version": "0.2",
+	"minimum_chrome_version": "22",
+	"manifest_version": 2
 }

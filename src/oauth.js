@@ -1,12 +1,7 @@
 "use strict";
 
-window.oauth = ChromeExOAuth.initBackgroundPage({
-	'request_url': 'https://www.google.com/accounts/OAuthGetRequestToken',
-	'authorize_url': 'https://www.google.com/accounts/OAuthAuthorizeToken',
-	'access_url': 'https://www.google.com/accounts/OAuthGetAccessToken',
-	'consumer_key': 'anonymous',
-	'consumer_secret': 'anonymous',
-	'scope': 'https://mail.google.com/',
-	'app_name': 'GTD GMail Extension',
-	'callback_page': '../vendors/oauth/chrome_ex_oauth.html'
+window.oauth = new OAuth2('google', {
+	client_id: '737630223567-1bijvq8p0f8pvtrvbat3bjlfp5j1d317.apps.googleusercontent.com',
+	client_secret: 'WbYH5ZokrhBYAOLfnS6Mnj8d',
+	api_scope: 'https://mail.google.com/'
 });
