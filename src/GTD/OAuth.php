@@ -6,29 +6,20 @@ namespace GTD;
  *
  */
 class OAuth {
-	const GMAIL_HOST = 'imap.gmail.com';
-	const GMAIL_PORT = '993';
-	const USE_SSL = true;
+
 	/**
-	 * @var Zend\Mail\Protocol\Imap
+	 * @var Imap
 	 */
 	private $imap;
 	
 	/**
 	 * 
+	 * @param Imap $imap
 	 */
-	public function __construct() {
-		$this->imap = new \Zend\Mail\Protocol\Imap();
+	public function __construct(Imap $imap) {
+		$this->imap = $imap;
 	}
 	
-	/**
-	 * 
-	 * @return \GTD\OAuth
-	 */
-	public function connect() {
-		$this->imap->connect(self::GMAIL_HOST, self::GMAIL_PORT, self::USE_SSL);
-		return $this;		
-	}
 	/**
 	 * Given an open IMAP connection, attempts to authenticate with OAuth2.
 	 *
@@ -42,15 +33,15 @@ class OAuth {
 		$authenticateParams = array(
 			'XOAUTH2', $this->constructAuthString($email, $accessToken)
 		);
-		$this->imap->sendRequest('AUTHENTICATE', $authenticateParams);
+		$protocol = $this->imap->getProtocol();
+		$protocol->sendRequest('AUTHENTICATE', $authenticateParams);
 		while (true) {
 			$response = "";
-			$is_plus = $this->imap->readLine($response, '+', true);
-			var_dump($response);
+			$is_plus = $protocol->readLine($response, '+', true);
 			if ($is_plus) {
 				error_log("got an extra server challenge: ".base64_decode($response));
 				// Send empty client response.
-				$this->imap->sendRequest('');
+				$protocol->sendRequest('');
 			} else {
 				if (preg_match('/^NO /i', $response) || preg_match('/^BAD /i', $response)) {
 					error_log("got failure response: $response");
