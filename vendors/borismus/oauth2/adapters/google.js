@@ -12,7 +12,7 @@ OAuth2.adapter('google', {
   },
 
   redirectURL: function(config) {
-    return 'http://localhost';
+    return 'http://www.google.com/robots.txt';
   },
 
   parseAuthorizationCode: function(url) {

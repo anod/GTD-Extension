@@ -13,20 +13,29 @@ window.gtd.Gmail.NewList = Backbone.Collection.extend({
 	},
 	
 	loadNewEmails: function() {
+		var self = this;
 		var request = {
-			'method' : 'GET',
-			'parameters' : {
-				'zx' : this.instanceId
+			type : 'GET',
+			url : this.feedUrl,
+			data : {
+				zx : this.instanceId
+			},
+			dataType : 'xml',
+			headers : {
+				'Authorization': 'OAuth ' + this.oauth.getAccessToken()
+			},
+			success : function(data, status, xhr) {
+				self.feedResponse(data,xhr);
+			},
+			error : function(xhr, errorType, error) {
+				console.log('Error load new emails: ' + errorType + ', ' + error);
 			}
 		};
-		var self = this;
-		this.oauth.sendSignedRequest(this.feedUrl, function(resp, xhr) {
-			self.feedResponse(resp,xhr);
-		}, request);
+		
+		$.ajax(request);
 	},
 	
-	feedResponse: function(resp, xhr) {
-		var xmlDoc = $.parseXML(resp);
+	feedResponse: function(xmlDoc, xhr) {
 		var $xml = $(xmlDoc);
 		var $entries = $xml.find("entry");
 		var models = [];
@@ -42,7 +51,6 @@ window.gtd.Gmail.NewList = Backbone.Collection.extend({
 		});
 		this.reset(models, {silent: true});
 		this.trigger("gmail:newlist",this);
-	}
-
+	},
 
 });

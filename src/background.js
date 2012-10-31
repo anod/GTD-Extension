@@ -2,10 +2,9 @@
 
 window.gtdController = null;
 function init() {
-	window.oauth.authorize(function(token, secret) {
-		console.log("Authorize - Token:" + oogleAuth.getAccessToken());
+	window.oauth.authorize(function() {
+		console.log("Authorize - Token:" + window.oauth.getAccessToken());
 	});
-/*
 	window.gtdController = new window.gtd.Controller({
 		'oauth': window.oauth,
 		'chrome': window.chrome,
@@ -13,7 +12,6 @@ function init() {
 	});
 	
 	window.gtdController.runBackground();
-	*/	
 }
 
 function refresh() {
