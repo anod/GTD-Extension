@@ -8,16 +8,16 @@ namespace GTD;
 class OAuth {
 
 	/**
-	 * @var Imap
+	 * @var \Zend\Mail\Protocol\Imap
 	 */
-	private $imap;
+	private $protocol;
 	
 	/**
 	 * 
-	 * @param Imap $imap
+	 * @param \Zend\Mail\Protocol\Imap $protocol
 	 */
-	public function __construct(Imap $imap) {
-		$this->imap = $imap;
+	public function __construct(\Zend\Mail\Protocol\Imap $protocol) {
+		$this->protocol = $protocol;
 	}
 	
 	/**
@@ -33,18 +33,17 @@ class OAuth {
 		$authenticateParams = array(
 			'XOAUTH2', $this->constructAuthString($email, $accessToken)
 		);
-		$protocol = $this->imap->getProtocol();
-		$protocol->sendRequest('AUTHENTICATE', $authenticateParams);
+		$this->protocol->sendRequest('AUTHENTICATE', $authenticateParams);
 		while (true) {
 			$response = "";
-			$is_plus = $protocol->readLine($response, '+', true);
+			$is_plus = $this->protocol->readLine($response, '+', true);
 			if ($is_plus) {
 				error_log("got an extra server challenge: ".base64_decode($response));
 				// Send empty client response.
 				$protocol->sendRequest('');
 			} else {
 				if (preg_match('/^NO /i', $response) || preg_match('/^BAD /i', $response)) {
-					error_log("got failure response: $response");
+					new OAuthException('Authentication failure: '.$response);
 					return false;
 				} else if (preg_match("/^OK /i", $response)) {
 					return true;
@@ -65,3 +64,5 @@ class OAuth {
 
 
 }
+
+class OAuthException extends \Exception {};
