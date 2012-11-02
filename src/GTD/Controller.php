@@ -27,8 +27,8 @@ class Controller {
 	public function run(array $request) {
 		try {
 			$reponse = $this->runUnsafe($request);
-		} catch(\Exeption $e) {
-			return $this->errorResponse($e->getMesssage());
+		} catch(\Exception $e) {
+			return $this->errorResponse($e->getMessage());
 		}
 		return $response;
 	}
