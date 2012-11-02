@@ -6,20 +6,17 @@ $imap = new \GTD\Imap($protocol);
 $oauth = new \GTD\OAuth($imap);
 
 $imap->connect();
-$result = $oauth->authenticate('alex.gavrishev@gmail.com', 'ya29.AHES6ZQqNvwtzeRrn7vUlqdTJXDin2P7qQHH-YD9rmG03VpV');
+$result = $oauth->authenticate('alex.gavrishev@gmail.com', 'ya29.AHES6ZQTShloAmWaCsXDqySmV77I3_HTIXbt27owYe2ei1Mk');
 if ($result) {
 	echo "Authorized\n";
-	$capatibility = $imap->getProtocol()->capability();
-	echo implode(" ",$capatibility),"\n";
+	$imap->getProtocol()->capability();
 	$response = $imap->sendId();
-	print_r($response);
-	
-	$response = $imap->getProtocol()->requestAndResponse('XLIST', array('""' ,  '"*"'), true);
-	print_r($response);
-	
-	$response = $imap->getProtocol()->requestAndResponse('SEARCH', array('X-GM-RAW', '"has:attachment in:unread"'));
-	var_dump($response);
-	
-	$response = $imap->getProtocol()->requestAndResponse('FETCH', array("2004:1417384860882812671" ,  "(X-GM-MSGID)"));
-	var_dump($response);
+	$result = $imap-> getProtocol()->select('INBOX');
+
+	$search_response = $imap->getProtocol()->requestAndResponse('UID SEARCH', array('X-GM-MSGID', '1417471224887292232'));
+	if ($search_response) {
+		$msg_uid = $search_response[0][1];
+		var_dump($msg_uid);
+		
+	}
 }
