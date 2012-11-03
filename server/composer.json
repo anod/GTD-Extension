@@ -1,0 +1,14 @@
+{
+    "require": {
+        "zendframework/zend-mail": "2.0.*"
+    },
+	"repositories": [
+		{
+	        "type": "composer",
+	        "url": "http://packages.zendframework.com/"
+	    }
+	],  
+	"autoload": {
+        "psr-0": {"GTD": "src/"}
+    }    
+}
