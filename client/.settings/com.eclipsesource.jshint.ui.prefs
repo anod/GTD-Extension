@@ -2,5 +2,5 @@ eclipse.preferences.version=1
 excluded=vendors//*
 globals=window\:true, $\:true, _\:true, Backbone\:true, OAuth2\:true, console\:true, document\:true, DOMParser\:true
 included=//*.js\://*.json
-options=strict\: true, globalstrict\: true
+options=strict\: true, globalstrict\: true, sub\: true
 projectSpecificOptions=true

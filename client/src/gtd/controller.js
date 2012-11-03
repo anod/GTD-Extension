@@ -2,6 +2,7 @@
 
 window.gtd.Controller = Backbone.Model.extend({
 	defaults : {
+		notification: window.notification,
 		gmail : null,
 		chrome : null,
 		oauth : null
@@ -28,17 +29,7 @@ window.gtd.Controller = Backbone.Model.extend({
 			text += entry.get('title');
 			text += "\n";
 		});
-		// Create a simple text notification:
-		var notification = window.webkitNotifications.createNotification(
-			'../graphics/icon_128.png',  // icon url - can be relative
-			'New Emails',  // notification title
-			text // notification body text
-		);
-		
-		notification.show();
-		window.setTimeout(function(){
-			notification.cancel();
-		},5000);		
+		this.get('notification').notify('New Emails', text);
 		this.get('chrome').browserAction.setBadgeText({ text: collection.length + ''});
 	}
 
