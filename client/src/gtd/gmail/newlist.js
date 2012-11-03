@@ -41,8 +41,12 @@ window.gtd.Gmail.NewList = Backbone.Collection.extend({
 		var models = [];
 		$.each($entries, function(key, value) {
 			var $entry = $(this);
+			var idArr = $entry.find("id").text().split(':');
+			//<id>tag:gmail.google.com,2004:1417537161044037294</id>
+			
 			var $author = $entry.find("author");
 			models.push({
+				id: idArr[2],
 				title:  $entry.find("title").text(),
 				summary: $entry.find("summary").text(),
 				author_name: $author.find("name").text(),

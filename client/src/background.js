@@ -6,9 +6,8 @@ function init() {
 		console.log("Authorize - Token:" + window.oauth.getAccessToken());
 	});
 	window.gtdController = new window.gtd.Controller({
-		'oauth': window.oauth,
-		'chrome': window.chrome,
-		'gmail': new window.gtd.Gmail.NewList([], { 'oauth': window.oauth })
+		'gmail': new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
+		'imap' : new window.gtd.Gmail.Imap({ 'oauth': window.oauth})
 	});
 	
 	window.gtdController.runBackground();

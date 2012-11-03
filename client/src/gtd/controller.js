@@ -4,8 +4,9 @@ window.gtd.Controller = Backbone.Model.extend({
 	defaults : {
 		notification: window.notification,
 		gmail : null,
-		chrome : null,
-		oauth : null
+		imap : null,
+		oauth: window.oauth,
+		chrome: window.chrome
 	},
 	
 	runBackground: function(oauth) {
@@ -25,9 +26,14 @@ window.gtd.Controller = Backbone.Model.extend({
 	
 	_notifyList: function(collection) {
 		var text = '';
+		var self = this;
 		collection.forEach(function(entry) {
 			text += entry.get('title');
 			text += "\n";
+			if (entry.get('title').search('GTD-Test') != -1 ||
+				entry.get('summary').search('GTD-Test') != -1) {
+				self.get('imap').applyLabel(entry.get('id'), 'GTD-Test');
+			}
 		});
 		this.get('notification').notify('New Emails', text);
 		this.get('chrome').browserAction.setBadgeText({ text: collection.length + ''});
