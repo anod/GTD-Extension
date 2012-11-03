@@ -51,6 +51,6 @@ window.gtd.Gmail.NewList = Backbone.Collection.extend({
 		});
 		this.reset(models, {silent: true});
 		this.trigger("gmail:newlist",this);
-	},
+	}
 
 });

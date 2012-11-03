@@ -21,7 +21,8 @@
 		"*://*.google.com/",
 		/** OAuth */
 		"tabs",
-		"https://accounts.google.com/o/oauth2/token"
+		"https://accounts.google.com/o/oauth2/token",
+		"http://gtd.anodsplace.info/"
 	],
 	"web_accessible_resources": [
 		"graphics/icon_128.png"
