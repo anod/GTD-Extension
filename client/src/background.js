@@ -1,21 +1,21 @@
 "use strict";
 
-window.gtdController = null;
+window.gtdApp = null;
 function init() {
 	window.oauth.authorize(function() {
 		console.log("Authorize - Token:" + window.oauth.getAccessToken());
 	});
-	window.gtdController = new window.gtd.Controller({
+	window.gtdApp = new window.gtd.Application({
 		'gmail': new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
 		'imap' : new window.gtd.Gmail.Imap({ 'oauth': window.oauth})
 	});
 	
-	window.gtdController.runBackground();
+	window.gtdApp.runBackground();
 }
 
 function refresh() {
-	if (window.gtdController) {
-		window.gtdController.runBackground();
+	if (window.gtdApp) {
+		window.gtdApp.runBackground();
 	}
 }
 

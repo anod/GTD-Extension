@@ -1,6 +1,6 @@
 "use strict";
 
-window.gtd.Controller = Backbone.Model.extend({
+window.gtd.Application = Backbone.Model.extend({
 	defaults : {
 		notification: window.notification,
 		gmail : null,

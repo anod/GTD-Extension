@@ -19,6 +19,14 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		});
 	},
 	
+	fillDetails: function(emailId) {
+		//TODO
+	},
+	
+	archive: function(emailId) {
+		//TODO
+	},
+	
 	_sendRequest: function(params, callback) {
 		var data = params || {};
 		data['email'] = 'alex.gavrishev@gmail.com';
