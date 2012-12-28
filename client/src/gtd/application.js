@@ -1,27 +1,33 @@
 "use strict";
 
 window.gtd.Application = Backbone.Model.extend({
+	PULL_TIME: 2,
+	context: null,
 	defaults : {
-		notification: window.notification,
+		context: null,
 		gmail : null,
-		imap : null,
-		oauth: window.oauth,
-		chrome: window.chrome
+		newemail: null,
+		imap : null
+	},
+
+	initialize: function(attributes) {
+		this.context = attributes.context;
 	},
 	
 	runBackground: function(oauth) {
-		this.get('chrome').browserAction.setBadgeText({ text: '...'});
+		this.context.get('chrome').browserAction.setBadgeText({ text: '...'});
 		this.get('gmail').loadNewEmails();
 		this.get('gmail').on("gmail:newlist", this._notifyList, this);
-		
+		this.get('newemail').on("analysis:apply:label", this._applyLabel, this);
+
 		var self = this;
-		this.get('chrome').alarms.onAlarm.addListener(function(alarm) {
+		this.context.get('chrome').alarms.onAlarm.addListener(function(alarm) {
 			if (alarm.name == "loadNewEmails") {
 				self.get('gmail').loadNewEmails();
 			}
 		});
 		
-		this.get('chrome').alarms.create('loadNewEmails', {periodInMinutes : 2});
+		this.context.get('chrome').alarms.create('loadNewEmails', {periodInMinutes : this.PULL_TIME});
 	},
 	
 	_notifyList: function(collection) {
@@ -30,13 +36,14 @@ window.gtd.Application = Backbone.Model.extend({
 		collection.forEach(function(entry) {
 			text += entry.get('title');
 			text += "\n";
-			if (entry.get('title').search('GTD-Test') != -1 ||
-				entry.get('summary').search('GTD-Test') != -1) {
-				self.get('imap').applyLabel(entry.get('id'), 'GTD-Test');
-			}
+			self.get('newemail').analyse(entry);
 		});
-		this.get('notification').notify('New Emails', text);
-		this.get('chrome').browserAction.setBadgeText({ text: collection.length + ''});
+		this.context.get('notification').notify('New Emails', text);
+		this.context.get('chrome').browserAction.setBadgeText({ text: collection.length + ''});
+	},
+	
+	_applyLabel: function(label, entry) {
+		this.get('imap').applyLabel(entry.get('id'), label);
 	}
 
 });
