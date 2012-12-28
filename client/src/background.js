@@ -1,53 +1,64 @@
 "use strict";
 
-window.gtdApp = null;
-function init() {
-	window.oauth.authorize(function() {
-		console.log("Authorize - Token:" + window.oauth.getAccessToken());
-	});
-	var db = initDb();
-	var settings = new window.gtd.Settings.Settings({},{ 'db': db });
-
-	var context = new window.gtd.Context({
-		'db'       : db,
-		'settings' : settings
-	});
+window.gtdBootstrap = {
+	app: null,
 	
-	window.gtdApp = new window.gtd.Application({
-		'context'  : context,
-		'gmail'    : new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
-		'imap'     : new window.gtd.Gmail.Imap({ 'oauth': window.oauth }),
-		'newemail' : new window.gthd.Analysis.NewEmail()
-	});
+	init: function() {
+		window.oauth.authorize(function() {
+			console.log("Authorize - Token:" + window.oauth.getAccessToken());
+		});
+		var db = this._initDb();
+		var settings = new window.gtd.Settings.Settings({},{ 'db': db });
 	
-	window.gtdApp.runBackground();
-}
+		var context = new window.gtd.Context({
+			'db'       : db,
+			'settings' : settings
+		});
+		
+		this.app = new window.gtd.Application({
+			'context'  : context,
+			'gmail'    : new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
+			'imap'     : new window.gtd.Gmail.Imap({ 'oauth': window.oauth }),
+			'newemail' : this._createNewEmail(context)
+		});
+		
+		this.app.runBackground();
+	},
 
-function initDb() {
-	var schema = {
-		stores : [
-			{ name: 'actions' },
-			{ name: 'settings' },
-			{ name: 'suggestions'}
-		]
-	};
-
-
-	/**
-	 * Create and initialize the database. Depending on platform, this will
-	 * create IndexedDB or WebSql or even localStorage storage mechanism.
-	 * @type {ydn.db.Storage}
-	 */
-	var db = new window.ydn.db.Storage('todos', schema, { mechanisms: ["indexeddb"] });
-	return db;
-}
-
-function refresh() {
-	if (window.gtdApp) {
-		window.gtdApp.runBackground();
+	refresh: function() {
+		if (this.app) {
+			this.app.runBackground();
+		}
+	},
+	
+	_createNewEmail: function(context) {
+		return new window.gtd.Analysis.NewEmail( { 
+			'context' : context,
+			'similarsearch' : new window.gtd.Analysis.SimilarSearch({}, { 'context': context }),
+			'termextraction': new window.gtd.Analysis.TermExtraction()
+		});
+	},
+	
+	_initDb: function() {
+		var schema = {
+			stores : [
+				{ name: 'actions' },
+				{ name: 'settings' },
+				{ name: 'suggestions'}
+			]
+		};
+	
+	
+		/**
+		 * Create and initialize the database. Depending on platform, this will
+		 * create IndexedDB or WebSql or even localStorage storage mechanism.
+		 * @type {ydn.db.Storage}
+		 */
+		var db = new window.ydn.db.Storage('todos', schema, { mechanisms: ["indexeddb"] });
+		return db;
 	}
-}
+};
 
-document.addEventListener('DOMContentLoaded', init);
-
-window.chrome.browserAction.onClicked.addListener(refresh);
+_.bindAll(window.gtdBootstrap);
+document.addEventListener('DOMContentLoaded', window.gtdBootstrap.init);
+window.chrome.browserAction.onClicked.addListener(window.gtdBootstrap.refresh);

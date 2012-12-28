@@ -6,7 +6,8 @@ window.gtd.Context = Backbone.Model.extend({
 		db: null,
 		settings: null,
 		oauth: window.oauth,
-		chrome: window.chrome
+		chrome: window.chrome,
+		notification: window.notification
 	}
 	
 });

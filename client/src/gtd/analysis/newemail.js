@@ -2,11 +2,18 @@
 
 window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	defaults : {
-		settings: null,
-		similarsearch : null
+		context: null,
+		similarsearch : null,
+		termextraction: null
 	},
 	
 	analyse: function(entry) {
+		
+		var titleTags = this.get('termextraction').extract(entry.get('title'));
+		var summaryTags = this.get('termextraction').extract(entry.get('summary'));
+		
+		console.log('gtd.Analysis.NewEmail:' + entry.get('title') + ' : ' + titleTags);
+		console.log('gtd.Analysis.NewEmail:' + entry.get('summary') + ' : ' + summaryTags);
 		
 		var similar = this.get('similarsearch').search(entry);
 		
@@ -15,7 +22,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			// TODO
 			//var suggestion = new window.gtd.Suggestion.Suggestion();
 			//suggestion.store();
-			this.trigger('analysis:suggestion:new', suggestion);
+			//this.trigger('analysis:suggestion:new', suggestion);
 			return;
 		}
 		
