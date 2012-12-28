@@ -14,7 +14,6 @@ window.gtdBootstrap = {
 			'db'       : db,
 			'settings' : settings
 		});
-		
 		this.app = new window.gtd.Application({
 			'context'  : context,
 			'gmail'    : new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
@@ -54,7 +53,7 @@ window.gtdBootstrap = {
 		 * create IndexedDB or WebSql or even localStorage storage mechanism.
 		 * @type {ydn.db.Storage}
 		 */
-		var db = new window.ydn.db.Storage('todos', schema, { mechanisms: ["indexeddb"] });
+		var db = new window.ydn.db.Storage('gtd', schema, { mechanisms: ["indexeddb"] });
 		return db;
 	}
 };

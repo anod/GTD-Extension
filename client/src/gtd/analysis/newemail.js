@@ -12,8 +12,8 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		var titleTags = this.get('termextraction').extract(entry.get('title'));
 		var summaryTags = this.get('termextraction').extract(entry.get('summary'));
 		
-		console.log('gtd.Analysis.NewEmail:' + entry.get('title') + ' : ' + titleTags);
-		console.log('gtd.Analysis.NewEmail:' + entry.get('summary') + ' : ' + summaryTags);
+		this.get('context').get('logger').info('gtd.Analysis.NewEmail:' + entry.get('title') + ' : ' + titleTags);
+		this.get('context').get('logger').info('gtd.Analysis.NewEmail:' + entry.get('summary') + ' : ' + summaryTags);
 		
 		var similar = this.get('similarsearch').search(entry);
 		
@@ -35,7 +35,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		}
 	},
 	
-	_maxSimilarity: function(simliar) {
+	_maxSimilarity: function(similar) {
 		_.each(similar, function(action) {
 			
 		});
