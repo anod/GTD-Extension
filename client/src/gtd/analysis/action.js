@@ -1,15 +1,22 @@
 "use strict";
 
 window.gtd.Analysis.Action = Backbone.Model.extend({
-	db: null,
+	UNKNOWN: 0,
+	NEXT_ACTION: 1,
+	PROJECT: 2,
+	WAITING_FOR: 3,
+	CALENDAR: 4,
 	
 	defaults: {
-		actionId: 0,
-		titleTags: [],
-		summaryTags: []
-	},
-	
-	initialize: function(options) {
-		this.db = options.db;
+		id: -1,
+		action: 0,
+		label: '',
+		deadline: -1,
+		name: '',
+		//
+		author_name: '',
+		author_email: '',
+		tags: []
 	}
+
 });

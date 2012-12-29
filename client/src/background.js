@@ -35,7 +35,8 @@ window.gtdBootstrap = {
 		
 		return new window.gtd.Analysis.NewEmail( { 
 			'context' : context,
-			'similarsearch' : new window.gtd.Analysis.SimilarSearch({}, { 'context': context }),
+			'actions' : new window.gtd.Analysis.ActionCollection({}, { 'context': context }),
+			'suggestions' : new window.gtd.Suggestion.SuggestionCollection({}, { 'context': context }),
 			'termextraction': new window.gtd.Analysis.TermExtraction(),
 			'topia' : topia
 		});
