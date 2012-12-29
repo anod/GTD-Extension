@@ -31,10 +31,13 @@ window.gtdBootstrap = {
 	},
 	
 	_createNewEmail: function(context) {
+		var topia = new window.gtd.Analysis.Topia.TermExtraction();
+		
 		return new window.gtd.Analysis.NewEmail( { 
 			'context' : context,
 			'similarsearch' : new window.gtd.Analysis.SimilarSearch({}, { 'context': context }),
-			'termextraction': new window.gtd.Analysis.TermExtraction()
+			'termextraction': new window.gtd.Analysis.TermExtraction(),
+			'topia' : topia
 		});
 	},
 	
