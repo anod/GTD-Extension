@@ -35,8 +35,8 @@ window.gtdBootstrap = {
 		
 		return new window.gtd.Analysis.NewEmail( { 
 			'context' : context,
-			'actions' : new window.gtd.Analysis.ActionCollection({}, { 'context': context }),
-			'suggestions' : new window.gtd.Suggestion.SuggestionCollection({}, { 'context': context }),
+			'actions' : new window.gtd.Analysis.ActionCollection([], { 'context': context }),
+			'suggestions' : new window.gtd.Suggestion.SuggestionCollection([], { 'context': context }),
 			'termextraction': new window.gtd.Analysis.TermExtraction(),
 			'topia' : topia
 		});
@@ -45,12 +45,11 @@ window.gtdBootstrap = {
 	_initDb: function() {
 		var schema = {
 			stores : [
-				{ name: 'actions' },
-				{ name: 'settings' },
-				{ name: 'suggestions'}
+				{ name: 'actions', keyPath: 'id'},
+				{ name: 'settings', keyPath: 'id' },
+				{ name: 'suggestions', keyPath: 'id'}
 			]
 		};
-	
 	
 		/**
 		 * Create and initialize the database. Depending on platform, this will
