@@ -3,9 +3,19 @@
 window.gtd.Suggestion.Suggestion = Backbone.Model.extend({
 	
 	defaults: {
-		id: -1,
+		id: "", //MsgId
 		emailId : 0,
-		msgId : 0,
 		action: null
+	},
+	
+	/**
+	 * @Override
+	 */
+	toJSON: function() {
+		var actionJson = this.get('action').toJSON();
+		var json = Backbone.Model.prototype.toJSON.apply(this, arguments);
+		json.action = actionJson;
+		return json;
 	}
+	
 });
