@@ -1,6 +1,8 @@
 "use strict";
 
 window.gtd.Gmail.Imap = Backbone.Model.extend({
+	ACTION_LABEL: 1,
+	
 	url : 'http://gtd.anodsplace.info/handler.php',
 	defaults : {
 		$ : window.$,

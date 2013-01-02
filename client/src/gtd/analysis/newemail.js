@@ -35,10 +35,13 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	_maxSimilarity: function(similar) {
-		_.each(similar, function(action) {
+		var similarAction = null;
+		_.find(similar, function(action) {
 			//TODO
-			return action;
+			similarAction = action;
+			return true;
 		});
+		return similarAction;
 	},
 	
 	_applyAction: function(entry, action) {
