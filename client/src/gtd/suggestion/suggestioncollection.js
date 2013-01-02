@@ -1,7 +1,7 @@
 "use strict";
 
 window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
-	STORE_SCHEMA: {name: 'suggestions', keyPath: 'id'},
+	STORE_NAME: 'suggestions',
 	model: window.gtd.Suggestion.Suggestion,
 	context: null,
 	
@@ -23,13 +23,28 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 			return; //Not supported
 		}
 		var plain = suggestion.toJSON();
-		var req = this.context.get('db').put(this.STORE_SCHEMA, plain);
+		var req = this.context.get('db').put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
 			this.trigger('change:add', suggestion );
 		}, this));
 		req.fail(_.bind(function(error) {
 			this.context.get('logger').exception(error);
 		}, this));
-	}
+	},
 
+	load: function(id, options) {
+		var self = this;
+		this.context.get('db')
+			.get(this.STORE_NAME, id)
+			.done(function(value) {
+				if (_.isObject(value)) {
+					self.trigger('load:done', value ,options);
+				}
+			})
+			.fail(_.bind(function(error) {
+				this.context.get('logger').exception(error);
+			}, this)
+		);
+	}
+	
 });

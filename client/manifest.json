@@ -32,6 +32,17 @@
 		"matches": ["http://www.google.com/robots.txt*"],
 		"js": ["vendors/borismus/oauth2/oauth2_inject.js"],
 		"run_at": "document_start"
+	},
+	{
+		"matches": ["https://mail.google.com/mail/*"],
+		"js": [
+			"vendors/jquery-1.8.2-min.js",
+			"vendors/noty/jquery.noty.js",
+			"vendors/noty/layouts/bottomCenter.js",
+			"vendors/noty/themes/default.js",
+			"src/gtd/contentscript/inbox.js"
+		],
+		"run_at": "document_start"
 	}
 	],
 	"version": "0.2",

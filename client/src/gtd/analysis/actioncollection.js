@@ -9,8 +9,9 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 	},
 	
 	search: function(entry, tags) {
-		var db = this.context.get('db');
-		//
+		//var db = this.context.get('db');
+		//http://dev.yathit.com/demo/ydn-db/nosql/query_container.js
+		//topic
 		var actions = [];
 		//TODO for testing purpose
 		if (_.contains(tags,'calendar')) {
