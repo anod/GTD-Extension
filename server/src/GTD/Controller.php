@@ -6,6 +6,7 @@ namespace GTD;
  *
  */
 class Controller {
+	const ACTION_LABEL = 1;
 	private $email;
 	private $token;
 	private $action;
@@ -42,7 +43,14 @@ class Controller {
 		$this->gmail->sendId();
 		$this->gmail->selectInbox();
 		$uid = $this->gmail->getMessageUID($this->msgid);
-		$this->gmail->applyLabel($uid, 'GTD-Test');
+		
+		if ($this->action == self::ACTION_LABEL) {
+			$label = isset($request['label']) ? trim($request['label']) : '';
+			if (empty($label)) {
+				throw new ControllerException("Request missing parameter: label");
+			}
+			$this->gmail->applyLabel($uid, $label);
+		}
 	}
 	
 	private function errorResponse($msg) {
