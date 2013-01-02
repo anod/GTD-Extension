@@ -45,7 +45,7 @@ window.gtdBootstrap = {
 	_initDb: function() {
 		var schema = {
 			stores : [
-				{ name: 'actions', keyPath: 'id'},
+				{ name: 'actions', keyPath: 'id', autoIncrement: true, indexes: [{ keyPath: 'tags', unique: false, multiEntry: true }]},
 				{ name: 'settings', keyPath: 'id' },
 				{ name: 'suggestions', keyPath: 'id'}
 			]

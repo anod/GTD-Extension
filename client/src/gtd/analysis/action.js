@@ -8,7 +8,7 @@ window.gtd.Analysis.Action = Backbone.Model.extend({
 	CALENDAR: 4,
 	
 	defaults: {
-		id: -1,
+		/* id: -1, */
 		action: 0,
 		label: '',
 		deadline: -1,

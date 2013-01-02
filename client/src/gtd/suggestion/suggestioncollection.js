@@ -9,6 +9,15 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		this.context = options.context;
 	},
 	
+	createSuggestion: function(entry, action) {
+		var suggestion = new window.gtd.Suggestion.Suggestion({
+			'id' : entry.get('msgid'),
+			'emailId' : entry.get('id'),
+			'action': action
+		});
+		return suggestion;
+	},
+	
 	add: function(suggestion) {
 		if (_.isArray(suggestion)) {
 			return; //Not supported

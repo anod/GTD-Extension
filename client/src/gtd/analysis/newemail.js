@@ -20,27 +20,17 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [CUSTO] ' + tags2);
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: -------');
 		
-		var similar = this.get('actions').search(entry,tags2);
-
-		if (similar.length === 0) {
-			var action = new window.gtd.Analysis.Action({
-				'author_email' : entry.get('author_email'),
-				'author_name' : entry.get('author_name'),
-				'tags' : tags2
-			});
-
-			// store as suggestion
-			var suggestion = new window.gtd.Suggestion.Suggestion({
-				'id' : entry.get('msgid'),
-				'emailId' : entry.get('id'),
-				'action': action
-			});
-			
+		var similarList = this.get('actions').search(entry,tags2);
+		
+		// store as suggestion
+		if (similarList.length === 0) {
+			var action = this.get('actions').createAction(entry, tags2);
+			var suggestion = this.get('suggestions').createSuggestion(entry, action);
 			this.get('suggestions').add(suggestion);
 			return;
 		}
 
-		var similarAction = this._maxSimilarity(similar);
+		var similarAction = this._maxSimilarity(similarList);
 		this._applyAction(entry, similarAction);
 	},
 	
@@ -52,7 +42,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	_applyAction: function(entry, action) {
-		this.trigger('analysis:apply:label', 'GTD-Test', entry);
+		this.trigger('analysis:apply:label', action.get('label'), entry);
 	}
 	
 });
