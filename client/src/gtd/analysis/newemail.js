@@ -31,10 +31,11 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 
 			// store as suggestion
 			var suggestion = new window.gtd.Suggestion.Suggestion({
+				'id' : entry.get('msgid'),
 				'emailId' : entry.get('id'),
-				'msgId' : entry.get('msgId'),
 				'action': action
 			});
+			
 			this.get('suggestions').add(suggestion);
 			return;
 		}
