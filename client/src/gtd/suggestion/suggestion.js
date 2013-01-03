@@ -8,6 +8,12 @@ window.gtd.Suggestion.Suggestion = Backbone.Model.extend({
 		action: null
 	},
 	
+	initialize: function(attributes, options) {
+		if (attributes.action) {
+			this.set('action', new window.gtd.Analysis.Action(attributes.action));
+		}
+	},
+	
 	/**
 	 * @Override
 	 */

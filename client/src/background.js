@@ -39,9 +39,7 @@ window.gtdBootstrap = {
 	message: function(message, sender) {
 		console.log("[Extension] Received:", message, (this.app)? true : false);
 		if (this.app) {
-			if (message.action == 'open') {
-				this.app.get('router').emailOpen(message.msgId, { tabId : sender.tab.id});
-			}
+			this.app.get('router').route(message, { tabId : sender.tab.id});
 		}
 	},
 

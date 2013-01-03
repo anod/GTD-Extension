@@ -8,7 +8,7 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 	initialize: function(attributes, options) {
 		this.context = options.context;
 	},
-	
+
 	createSuggestion: function(entry, action) {
 		var suggestion = new window.gtd.Suggestion.Suggestion({
 			'id' : entry.get('msgid'),
@@ -40,6 +40,19 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 				if (_.isObject(value)) {
 					self.trigger('load:done', value ,options);
 				}
+			})
+			.fail(_.bind(function(error) {
+				this.context.get('logger').exception(error);
+			}, this)
+		);
+	},
+	
+	remove: function(id, options) {
+		var self = this;
+		this.context.get('db')
+			.clear(this.STORE_NAME, id)
+			.done(function() {
+				self.trigger('remove:done', options);
 			})
 			.fail(_.bind(function(error) {
 				this.context.get('logger').exception(error);

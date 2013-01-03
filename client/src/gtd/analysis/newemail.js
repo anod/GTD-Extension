@@ -9,6 +9,10 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		topia: null
 	},
 	
+	initialize: function(attributes, options) {
+		this.get('context').on('suggestion:apply:label', this._applySuggestion, this);
+	},
+	
 	analyse: function(entry) {
 		
 		var text = entry.get('title') + "\n" + entry.get('summary');
@@ -31,7 +35,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		}
 
 		var similarAction = this._maxSimilarity(similarList);
-		this._applyAction(entry, similarAction);
+		this._applyAction(entry.get('id'), similarAction);
 	},
 	
 	_maxSimilarity: function(similar) {
@@ -44,8 +48,12 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		return similarAction;
 	},
 	
-	_applyAction: function(entry, action) {
-		this.trigger('analysis:apply:label', action.get('label'), entry);
+	_applyAction: function(mailId, action) {
+		this.get('context').trigger('analysis:apply:label', mailId, action.get('label'));
+	},
+		
+	_applySuggestion: function(suggestion)  {
+		//Save as action
+		this._applyAction(suggestion.get('emailId'),suggestion.get('action'));
 	}
-	
 });
