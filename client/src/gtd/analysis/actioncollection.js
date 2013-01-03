@@ -9,17 +9,22 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 	},
 	
 	search: function(entry, tags) {
-		//var db = this.context.get('db');
-		//http://dev.yathit.com/demo/ydn-db/nosql/query_container.js
+		var db = this.context.get('db');
+		var store = this.STORE_NAME;
+		db.run(function (tdb) { 
+			for(var i = 0; i< tags.length; i++) {
+				var range = window.ydn.db.KeyRange.only(tags[i]);
+				console.log(tags[i]);
+				tdb.list(store, 'tags', range).done(function(records) {
+					console.log(records);
+					//	records.map(function(x) {
+					//	console.log(x.first + ' ' + x.last + ' ' + new Date(x.born));
+					//	});
+				});
+			}
+		}, [this.STORE_NAME], "readonly");
 		//topic
 		var actions = [];
-		//TODO for testing purpose
-		if (_.contains(tags,'calendar')) {
-			var action = this.createAction(entry, tags);
-			action.set({'label': 'GTD-Calendar'});
-			actions.push(action);
-		}
-		
 		return actions;
 	},
 

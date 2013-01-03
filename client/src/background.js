@@ -17,7 +17,6 @@ window.gtdBootstrap = {
 		
 		var suggestions = new window.gtd.Suggestion.SuggestionCollection([], { 'context': context });
 		var router = new window.gtd.Suggestion.Router({ 'context': context, 'suggestions' : suggestions });
-		router.on('suggestion:show', this._onSuggestionShow);
 		
 		this.app = new window.gtd.Application({
 			'context'  : context,
@@ -34,22 +33,6 @@ window.gtdBootstrap = {
 		if (this.app) {
 			this.app.runBackground();
 		}
-	},
-	
-	message: function(message, sender) {
-		console.log("[Extension] Received:", message, (this.app)? true : false);
-		if (this.app) {
-			this.app.get('router').route(message, { tabId : sender.tab.id});
-		}
-	},
-
-	_onSuggestionShow: function(suggestion, options) {
-		var message = {
-			'action' : 'show',
-			'suggestion' : suggestion
-		};
-		console.log("[Extension] Send:", message, options);
-		window.chrome.tabs.sendMessage(options.tabId, message);
 	},
 	
 	_createNewEmail: function(context, suggestions) {
@@ -86,4 +69,3 @@ window.gtdBootstrap = {
 _.bindAll(window.gtdBootstrap);
 document.addEventListener('DOMContentLoaded', window.gtdBootstrap.init);
 window.chrome.browserAction.onClicked.addListener(window.gtdBootstrap.refresh);
-window.chrome.extension.onMessage.addListener(window.gtdBootstrap.message);

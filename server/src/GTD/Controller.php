@@ -62,7 +62,7 @@ class Controller {
 
 	private function goodResponse() {
 		return array(
-			'status' => 'ok'		
+			'status' => 'ok'
 		);
 	}
 	

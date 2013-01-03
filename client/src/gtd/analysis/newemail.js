@@ -54,6 +54,8 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		
 	_applySuggestion: function(suggestion)  {
 		//Save as action
-		this._applyAction(suggestion.get('emailId'),suggestion.get('action'));
+		var action = suggestion.get('action');
+		this.get('actions').add(action);
+		this._applyAction(suggestion.get('emailId'),action);
 	}
 });
