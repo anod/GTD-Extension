@@ -94,6 +94,7 @@ window.gtd.contentscript.GmailInbox = {
 		return '<div class="noty_message"><span class="noty_text"></span>' + 
 		'<div>' + text + '</div>' +
 		'<div>' + labelSelect + '</div>' +
+		'<div>[' + suggestion.action.tags.join(', ') + ']</div>' +
 		'<div class="noty_close"></div></div>';
 	}
 	
