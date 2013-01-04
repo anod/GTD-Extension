@@ -12,8 +12,8 @@ window.gtd.Application = Backbone.Model.extend({
 
 	initialize: function(attributes) {
 		this.context = attributes.context;
-		this.context.get('chrome').extension.onMessage.addListener(this._message);
-		this.get('router').on('suggestion:show', this._onSuggestionShow);
+		this.context.get('chrome').extension.onMessage.addListener(_.bind(this._message, this));
+		this.get('router').on('suggestion:show', this._onSuggestionShow, this);
 	},
 	
 	runBackground: function(oauth) {
@@ -23,14 +23,15 @@ window.gtd.Application = Backbone.Model.extend({
 		this.get('gmail').loadNewEmails();
 		this.context.on("analysis:apply:label", this._applyLabel, this);
 
-		
-		
-		var self = this;
-		this.context.get('chrome').alarms.onAlarm.addListener(function(alarm) {
+		this._registerPullAlarm();
+	},
+
+	_registerPullAlarm: function() {
+		this.context.get('chrome').alarms.onAlarm.addListener(_.bind(function(alarm) {
 			if (alarm.name == "loadNewEmails") {
-				self.get('gmail').loadNewEmails();
+				this.get('gmail').loadNewEmails();
 			}
-		});
+		},this));
 		
 		this.context.get('chrome').alarms.create('loadNewEmails', {periodInMinutes : this.PULL_TIME});
 	},
@@ -49,9 +50,7 @@ window.gtd.Application = Backbone.Model.extend({
 
 	_message: function(message, sender) {
 		console.log("[Extension] Received:", message, (this.app)? true : false);
-		if (this.app) {
-			this.get('router').route(message, { tabId : sender.tab.id});
-		}
+		this.get('router').route(message, { tabId : sender.tab.id});
 	},
 
 	_onSuggestionShow: function(suggestion, options) {

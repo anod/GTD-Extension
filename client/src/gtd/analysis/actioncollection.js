@@ -9,26 +9,46 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 	},
 	
 	search: function(entry, tags) {
+		tags.sort();
+		var tagsHash = _.object(tags, tags);
+
 		var db = this.context.get('db');
-		var store = this.STORE_NAME;
-		db.run(function (tdb) { 
-			for(var i = 0; i< tags.length; i++) {
-				var range = window.ydn.db.KeyRange.only(tags[i]);
-				console.log(tags[i]);
-				tdb.list(store, 'tags', range).done(function(records) {
-					console.log(records);
-					//	records.map(function(x) {
-					//	console.log(x.first + ' ' + x.last + ' ' + new Date(x.born));
-					//	});
-				});
+		var range = window.ydn.db.KeyRange.bound(tags[0], tags[tags.length-1]);
+		var iter = new window.ydn.db.KeyIterator(this.STORE_NAME, 'tags', range);
+		var keysHash = {};
+		var keys = [];
+		var i=0;
+		var req = db.open(iter, function(cursor) {
+			if (!tagsHash[cursor.indexKey()]) {
+				return tags[++i]; // jump to next index position.
 			}
-		}, [this.STORE_NAME], "readonly");
+			var key = cursor.key();
+			// we got the result
+			if (!keysHash[key]) { // remove duplicate
+				keysHash[key] = true;
+				keys.push(key);
+			}
+			return true; // continue to next cursor position
+		});
+		
+		var localTags = _.clone(tags);
+		var localEntry = entry.clone();
+		req.done(_.bind(function() {
+			if (keys.length > 0) {
+				db.list(this.STORE_NAME, keys).done(function(results) {
+					console.log(entry, tags, results);
+				});
+			} else {
+				this.trigger('search:result',[],localEntry, localTags);
+			}
+		}, this));
 		//topic
 		var actions = [];
 		return actions;
 	},
 
 	createAction: function(entry, tags) {
+		tags.sort();
 		var action = new window.gtd.Analysis.Action({
 			'author_email' : entry.get('author_email'),
 			'author_name' : entry.get('author_name'),

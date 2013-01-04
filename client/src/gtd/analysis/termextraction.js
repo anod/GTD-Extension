@@ -43,7 +43,7 @@ window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
      "somewhere", "still", "such", "system",
      "take", "ten", "than", "that", "the", "their", "them", "themselves", "then",
      "thence", "there", "thereafter", "thereby", "therefore", "therein", "thereupon",
-     "these", "they", "thickv", "thin", "third", "this", "those", "though", "three",
+     "these", "they", "thick", "thin", "third", "this", "those", "though", "three",
      "through", "throughout", "thru", "thus", "to", "together", "too", "top", "toward",
      "towards", "twelve", "twenty", "two",
      "un", "under", "until", "up", "upon", "us", 

@@ -11,6 +11,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	
 	initialize: function(attributes, options) {
 		this.get('context').on('suggestion:apply:label', this._applySuggestion, this);
+		this.get('actions').on('search:result', this._searchResult, this);
 	},
 	
 	analyse: function(entry) {
@@ -24,11 +25,14 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [CUSTO] ' + tags2);
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: -------');
 		
-		var similarList = this.get('actions').search(entry,tags2);
-		
+		this.get('actions').search(entry,tags2);
+
+	},
+	
+	_searchResult: function(similarList, entry, tags) {
 		// store as suggestion
 		if (similarList.length === 0) {
-			var action = this.get('actions').createAction(entry, tags2);
+			var action = this.get('actions').createAction(entry, tags);
 			var suggestion = this.get('suggestions').createSuggestion(entry, action);
 			this.get('suggestions').add(suggestion);
 			return;

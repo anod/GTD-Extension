@@ -17,7 +17,7 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 			return;
 		}
 		if (message.action == 'apply') {
-			var suggestion = new window.gtd.Suggestion.Suggestion(message.suggestion);
+			var suggestion = this.get('suggestions').fromJSON(message.suggestion);
 			this.get('suggestions').remove(suggestion.get('id'), options);
 			this.get('context').trigger('suggestion:apply:label', suggestion);
 			return;

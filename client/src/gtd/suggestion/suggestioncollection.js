@@ -9,6 +9,16 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		this.context = options.context;
 	},
 
+	fromJSON: function(json) {
+		var action = new window.gtd.Analysis.Action(json.action);
+		var suggestion = new window.gtd.Suggestion.Suggestion({
+			'id' : json.id,
+			'emailId' : json.emailId,
+			'action': action
+		});
+		return suggestion;
+	},
+	
 	createSuggestion: function(entry, action) {
 		var suggestion = new window.gtd.Suggestion.Suggestion({
 			'id' : entry.get('msgid'),
@@ -23,7 +33,8 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 			return; //Not supported
 		}
 		var plain = suggestion.toJSON();
-		var req = this.context.get('db').put(this.STORE_NAME, plain);
+		var db =this.context.get('db');
+		var req = db.put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
 			this.trigger('change:add', suggestion );
 		}, this));
