@@ -117,6 +117,6 @@ window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
 				return false;
 			}
 		}
-		return true;
+		return false;
 	}
 });

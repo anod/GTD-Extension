@@ -31,15 +31,13 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 			return true; // continue to next cursor position
 		});
 		
-		var localTags = _.clone(tags);
-		var localEntry = entry.clone();
 		req.done(_.bind(function() {
 			if (keys.length > 0) {
-				db.list(this.STORE_NAME, keys).done(function(results) {
-					console.log(entry, tags, results);
-				});
+				db.list(this.STORE_NAME, keys).done(_.bind(function(results) {
+					this.trigger('search:result',results,entry, tags);
+				},this));
 			} else {
-				this.trigger('search:result',[],localEntry, localTags);
+				this.trigger('search:result',[],entry, tags);
 			}
 		}, this));
 		//topic

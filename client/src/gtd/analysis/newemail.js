@@ -17,12 +17,10 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	analyse: function(entry) {
 		
 		var text = entry.get('title') + "\n" + entry.get('summary');
-		var tags1 = this.get('topia').call(text);
 		var tags2 = this.get('termextraction').extract(text);
 
-		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [TEXT ] ' + text);
-		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [TOPIA] ' + tags1);
-		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [CUSTO] ' + tags2);
+		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [TEXT] ' + text);
+		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [ TAGS] ' + tags2);
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: -------');
 		
 		if (tags2.length > 0) {
@@ -39,18 +37,21 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			return;
 		}
 
-		var similarAction = this._maxSimilarity(similarList);
+		var similarAction = this._maxSimilarity(similarList, tags);
 		this._applyAction(entry.get('id'), similarAction);
 	},
 	
-	_maxSimilarity: function(similar) {
+	_maxSimilarity: function(similar, tags) {
 		var similarAction = null;
-		_.find(similar, function(action) {
-			//TODO
-			similarAction = action;
-			return true;
+		var count = tags.length;
+		_.each(similar, function(action) {
+			var res = _.difference(action.tags, tags);
+			if (res.length < count) {
+				count = res.length;
+				similarAction = action;
+			}
 		});
-		return similarAction;
+		return new window.gtd.Analysis.Action(similarAction);
 	},
 	
 	_applyAction: function(mailId, action) {

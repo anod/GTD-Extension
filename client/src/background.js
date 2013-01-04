@@ -50,7 +50,10 @@ window.gtdBootstrap = {
 	_initDb: function() {
 		var schema = {
 			stores : [
-				{ name: 'actions', keyPath: 'id', autoIncrement: true, indexes: [{ keyPath: 'tags', unique: false, multiEntry: true }]},
+				{ name: 'actions', keyPath: 'id', autoIncrement: true, indexes: [
+					{ keyPath: 'tags', name: 'tags', unique: false, multiEntry: true },
+					{ keyPath: 'label', name: 'label', unique: false, multiEntry: false }
+				]},
 				{ name: 'settings', keyPath: 'id' },
 				{ name: 'suggestions', keyPath: 'id'}
 			]
@@ -62,6 +65,29 @@ window.gtdBootstrap = {
 		 * @type {ydn.db.Storage}
 		 */
 		var db = new window.ydn.db.Storage('gtd', schema, { mechanisms: ["indexeddb"] });
+
+		//var range = window.ydn.db.KeyRange.only("alex");
+		//var rangeTest = window.ydn.db.KeyRange.only("great");
+		//var iter = new window.ydn.db.KeyIterator('actions', 'tags', rangeTest, false);
+		//db.open(iter, function(cursor) {
+		//	console.log(cursor);
+		//	return true;
+		//});
+		
+		// Naming is a mess!
+		/*
+        var transaction = db.c.m.transaction(["actions"], "readonly");
+        var objectStore = transaction.objectStore("actions");
+        var index = objectStore.index("tags");
+        var rangeTest = IDBKeyRange.only(tag);
+        index.openCursor(rangeTest).onsuccess = function(e1) {
+        	var cursor = e1.target.result;
+        	if (cursor) {
+        		console.log(cursor);
+        		cursor.continue();
+        	}
+        };
+        */
 		return db;
 	}
 };
