@@ -40,16 +40,17 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			var suggestion = this.get('suggestions').createSuggestion(entry, action);
 			this.get('suggestions').add(suggestion);		
 		} else {
+			this.get('context').get('logger').info('gtd.Analysis.NewEmail: Found similar ['+tags.join(',')+'] to ['+similarAction.get('tags').join(',')+']' );
 			this._applyAction(entry.get('id'), similarAction);
 		}
 	},
 	
 	_maxSimilarity: function(similar, tags) {
 		var similarAction = null;
-		var count = tags.length;
+		var count = 0;tags.length;
 		_.each(similar, function(action) {
-			var res = _.difference(action.tags, tags);
-			if (res.length < count) {
+			var res = _.intersection(tags, action.tags);
+			if (res.length > count) {
 				count = res.length;
 				similarAction = action;
 			}

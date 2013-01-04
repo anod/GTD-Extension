@@ -17,7 +17,7 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 			'msgid' : emailId,
 			'label' : label
 		}, function(response) {
-			console.log(response);
+			console.log("gtd.Gmail.Imap: Label '"+label+"' applied to email #"+emailId);
 		});
 	},
 	
@@ -36,7 +36,7 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		var self = this;
 		this.get('$').post(this.url, data, function(response){
 			if (!response || response.status == 'error') {
-				self.get('notification').error(response.message);
+				console.error(response.message);
 			} else {
 				callback(response);
 			}
