@@ -29,16 +29,19 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	_searchResult: function(similarList, entry, tags) {
+		var similarAction = null;
 		// store as suggestion
-		if (similarList.length === 0) {
-			var action = this.get('actions').createAction(entry, tags);
-			var suggestion = this.get('suggestions').createSuggestion(entry, action);
-			this.get('suggestions').add(suggestion);
-			return;
+		if (similarList.length > 0) {
+			similarAction = this._maxSimilarity(similarList, tags);
 		}
 
-		var similarAction = this._maxSimilarity(similarList, tags);
-		this._applyAction(entry.get('id'), similarAction);
+		if (similarAction == null) {
+			var action = this.get('actions').createAction(entry, tags);
+			var suggestion = this.get('suggestions').createSuggestion(entry, action);
+			this.get('suggestions').add(suggestion);		
+		} else {
+			this._applyAction(entry.get('id'), similarAction);
+		}
 	},
 	
 	_maxSimilarity: function(similar, tags) {
@@ -51,6 +54,9 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 				similarAction = action;
 			}
 		});
+		if (similarAction == null) {
+			return null;
+		}
 		return new window.gtd.Analysis.Action(similarAction);
 	},
 	
