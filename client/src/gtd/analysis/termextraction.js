@@ -85,10 +85,11 @@ window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
 		// TODO check with Unit test
 		var reg = /[^\w\s']+/g;
 		var cache = {};
+		var count = {};
 		for ( var i = 0; i < words.length; i++) {
 			var w = words[i].replace(reg, "");
 
-			if (w.length > 0 && (!this._stopWords[w]) && !cache[w]) {
+			if (!cache[w] && !this._filter(w, count)) {
 				cache[w] = 1;
 				var stem = window.stemmer(w);
 				results.push(stem);
@@ -96,5 +97,26 @@ window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
 		}
 
 		return results;
+	},
+	
+	_filter: function(w, count) {
+		if (w.length === 0) {
+			return true;
+		}
+		if (this._stopWords[w]) {
+			return true;
+		}
+		if (w.length < 3) {
+			if (!count[w]) {
+				count[w] = 1;
+				return true;
+			} else if (count[w] < 3) {
+				count[w]++;
+				return true;
+			} else {
+				return false;
+			}
+		}
+		return true;
 	}
 });

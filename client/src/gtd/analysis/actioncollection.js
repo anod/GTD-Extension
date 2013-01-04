@@ -19,10 +19,10 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		var keys = [];
 		var i=0;
 		var req = db.open(iter, function(cursor) {
-			if (!tagsHash[cursor.indexKey()]) {
+			if (!tagsHash[cursor.getIndexKey()]) {
 				return tags[++i]; // jump to next index position.
 			}
-			var key = cursor.key();
+			var key = cursor.getPrimaryKey();
 			// we got the result
 			if (!keysHash[key]) { // remove duplicate
 				keysHash[key] = true;

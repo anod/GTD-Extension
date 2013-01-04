@@ -25,8 +25,9 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [CUSTO] ' + tags2);
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: -------');
 		
-		this.get('actions').search(entry,tags2);
-
+		if (tags2.length > 0) {
+			this.get('actions').search(entry,tags2);
+		}
 	},
 	
 	_searchResult: function(similarList, entry, tags) {
