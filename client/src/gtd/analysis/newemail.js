@@ -1,6 +1,7 @@
 "use strict";
 
 window.gtd.Analysis.NewEmail = Backbone.Model.extend({
+	MIN_TAGS_LENGTH: 3,
 	defaults : {
 		context: null,
 		termextraction: null,
@@ -19,11 +20,11 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		var text = entry.get('title') + "\n" + entry.get('summary');
 		var tags2 = this.get('termextraction').extract(text);
 
-		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [TEXT] ' + text);
-		this.get('context').get('logger').info('gtd.Analysis.NewEmail: [ TAGS] ' + tags2);
-		this.get('context').get('logger').info('gtd.Analysis.NewEmail: -------');
+		//this.get('context').get('logger').info('gtd.Analysis.NewEmail: [TEXT] ' + text);
+		//this.get('context').get('logger').info('gtd.Analysis.NewEmail: [ TAGS] ' + tags2);
+		//this.get('context').get('logger').info('gtd.Analysis.NewEmail: -------');
 		
-		if (tags2.length > 0) {
+		if (tags2.length > this.MIN_TAGS_LENGTH) {
 			this.get('actions').search(entry,tags2);
 		}
 	},
@@ -36,9 +37,10 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		}
 
 		if (similarAction === null) {
+			this.get('context').get('logger').info('Analysis.NewEmail: Store suggestion ['+tags.join(',')+']' );
 			var action = this.get('actions').createAction(entry, tags);
 			var suggestion = this.get('suggestions').createSuggestion(entry, action);
-			this.get('suggestions').add(suggestion);		
+			this.get('suggestions').add(suggestion);
 		} else {
 			this.get('context').get('logger').info('gtd.Analysis.NewEmail: Found similar ['+tags.join(',')+'] to ['+similarAction.get('tags').join(',')+']' );
 			this._applyAction(entry.get('id'), similarAction);

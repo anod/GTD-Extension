@@ -38,7 +38,7 @@ window.gtdBootstrap = {
 	_createNewEmail: function(context, suggestions) {
 		var topia = new window.gtd.Analysis.Topia.TermExtraction();
 		
-		return new window.gtd.Analysis.NewEmail( { 
+		return new window.gtd.Analysis.NewEmail({
 			'context' : context,
 			'actions' : new window.gtd.Analysis.ActionCollection([], { 'context': context }),
 			'suggestions' : suggestions,
@@ -66,29 +66,13 @@ window.gtdBootstrap = {
 		 */
 		var db = new window.ydn.db.Storage('gtd', schema, { mechanisms: ["indexeddb"] });
 
-		//var range = window.ydn.db.KeyRange.only("alex");
-		//var rangeTest = window.ydn.db.KeyRange.only("great");
-		//var iter = new window.ydn.db.KeyIterator('actions', 'tags', rangeTest, false);
-		//db.open(iter, function(cursor) {
-		//	console.log(cursor);
-		//	return true;
-		//});
-		
-		// Naming is a mess!
-		/*
-        var transaction = db.c.m.transaction(["actions"], "readonly");
-        var objectStore = transaction.objectStore("actions");
-        var index = objectStore.index("tags");
-        var rangeTest = IDBKeyRange.only(tag);
-        index.openCursor(rangeTest).onsuccess = function(e1) {
-        	var cursor = e1.target.result;
-        	if (cursor) {
-        		console.log(cursor);
-        		cursor.continue();
-        	}
-        };
-        */
 		return db;
+	},
+	
+	// shortcut to reset data in db: window.gtdBootstrap.resetDB();
+	resetDB: function() {
+		var db = this._initDb();
+		db.clear();
 	}
 };
 
