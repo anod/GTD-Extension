@@ -35,7 +35,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			similarAction = this._maxSimilarity(similarList, tags);
 		}
 
-		if (similarAction == null) {
+		if (similarAction === null) {
 			var action = this.get('actions').createAction(entry, tags);
 			var suggestion = this.get('suggestions').createSuggestion(entry, action);
 			this.get('suggestions').add(suggestion);		
@@ -45,17 +45,14 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		}
 	},
 	
-	_maxSimilarity: function(similar, tags) {
+	_maxSimilarity: function(similarList, tags) {
 		var similarAction = null;
-		var count = 0;tags.length;
-		_.each(similar, function(action) {
-			var res = _.intersection(tags, action.tags);
-			if (res.length > count) {
-				count = res.length;
+		_.each(similarList, function(action) {
+			if (_.isEqual(tags,action.tags)) {
 				similarAction = action;
 			}
 		});
-		if (similarAction == null) {
+		if (similarAction === null) {
 			return null;
 		}
 		return new window.gtd.Analysis.Action(similarAction);
