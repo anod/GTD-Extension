@@ -6,8 +6,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		context: null,
 		termextraction: null,
 		suggestions: null,
-		actions: null,
-		topia: null
+		actions: null
 	},
 	
 	initialize: function(attributes, options) {

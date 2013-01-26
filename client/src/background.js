@@ -35,15 +35,12 @@ window.gtdBootstrap = {
 		}
 	},
 	
-	_createNewEmail: function(context, suggestions) {
-		var topia = new window.gtd.Analysis.Topia.TermExtraction();
-		
+	_createNewEmail: function(context, suggestions) {	
 		return new window.gtd.Analysis.NewEmail({
 			'context' : context,
 			'actions' : new window.gtd.Analysis.ActionCollection([], { 'context': context }),
 			'suggestions' : suggestions,
-			'termextraction': new window.gtd.Analysis.TermExtraction(),
-			'topia' : topia
+			'termextraction': new window.gtd.Analysis.TermExtraction()
 		});
 	},
 	
