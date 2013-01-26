@@ -39,10 +39,21 @@ new TestCase("Analysis.NewEmailTest", {
 	testMaxSimilarity3: function() {
 		var list1 = [
 			{ tags: [ 'tag1', 'tag2', 'tag3' ] },
+			{ tags: [ 'tag4', 'tag5', 'tag7', 'tag9'] },
+			{ tags: [ 'tag5', 'tag6', 'tag8'] }
+		];
+		var actual3 = this.newemail._maxSimilarity(list1, [ 'tag5', 'tag6' ]);
+		var expected2 = new window.gtd.Analysis.Action({ tags:[ 'tag5', 'tag6', 'tag8'] });
+		assertEquals("Match by unique tag", expected2.toJSON(), actual3.toJSON());
+	},
+	
+	testMaxSimilarity4: function() {
+		var list1 = [
+			{ tags: [ 'tag1', 'tag2', 'tag3' ] },
 			{ tags: [ 'tag1', 'tag2', 'tag3', 'tag4'] },
 			{ tags: [ 'tag5', 'tag6'] }
 		];
-		var actual3 = this.newemail._maxSimilarity(list1, [ 'tag1' ]);
+		var actual3 = this.newemail._maxSimilarity(list1, [ 'tag7' ]);
 		assertNull("Empty list", actual3);
 	}
 	
