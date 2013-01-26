@@ -1,7 +1,7 @@
 "use strict";
 
 window.gtd.Application = Backbone.Model.extend({
-	PULL_TIME: 2,
+	PULL_TIME: 0.5,
 	context: null,
 	defaults : {
 		context: null,

@@ -55,19 +55,19 @@ window.gtd.contentscript.GmailInbox = {
 			closeWith: ['button'],
 			template: this._template(suggestion),
 			buttons: [
+			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Do it now', onClick: function(noty){ noty.close(); } },
+			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Decide Later', onClick: function(noty){ noty.close(); }},
 			{ addClass: 'btn btn-primary T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Apply', onClick: function(noty){
 				var s = noty.data;
 				var label = noty.$bar.find(".noty_gtd_label").val();
 				s.action.label = label;
 				var message = {
-					'action' : 'apply',
-					'suggestion' : s 
+						'action' : 'apply',
+						'suggestion' : s 
 				};
 				window.chrome.extension.sendMessage(message);
 				noty.close(); 
-			}},
-			/*{ text: 'Skip', onClick: function($noty){ $noty.close(); }},*/
-			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Not Now', onClick: function(noty){ noty.close(); }}
+			}}
 			]
 		});
 		n.data = suggestion;
@@ -84,8 +84,8 @@ window.gtd.contentscript.GmailInbox = {
 	
 	_template: function(suggestion) {
 		var text = 'The email will be assigned to:';
-		var labelValues = [ 'GTD-NextActions', 'GTD-Project', 'GTD-WaitingFor', 'GTD-Calendar' ];
-		var labelTitles = [ 'Next Actions', 'Project', 'Waiting for', 'Calendar' ];
+		var labelValues = [ 'GTD-NextAction', 'GTD-Project', 'GTD-WaitingFor', 'GTD-Calendar', 'GTD-Someday' ];
+		var labelTitles = [ 'Next Action', 'Project', 'Waiting for', 'Calendar', 'Someday' ];
 		var labelSelect = '<select class="noty_gtd_label T-I J-J5-Ji ar7 nf T-I-ax7 L3">';
 		for (var i=0; i<labelTitles.length; i++) {
 			labelSelect+= '<option value="'+labelValues[i]+'">' + labelTitles[i] + '</option>';

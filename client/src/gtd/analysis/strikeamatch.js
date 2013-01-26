@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Simplified version of strike a match algorithm
+ * @see http://www.catalysoft.com/articles/StrikeAMatch.html
+ */
 window.gtd.Analysis.StrikeAMatch = Backbone.Model.extend({
 	
 	compare: function(tags1, tags2) {

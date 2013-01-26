@@ -23,6 +23,12 @@ new TestCase("Analysis.StrikeAMatch", {
 	testHalf: function() {
 		var actual = this.strikeamatch.compare([ 'tag1', 'tag2', 'tag3', 'tag4'], [ 'tag2', 'tag4', 'tag7', 'tag9' ]);
 		assertEquals("Match by equals", 0.5, actual);
-	}
+	},
 	
+	testReal: function() {
+		var tags = ['alex','amazon','app','app','remov','request','thank','write'];
+		var atags = ['84156061','alex','amazon','app','app','case','contact','distribut','gavrishev','m2cmfdkpef4kqp','portal','remov','request','request_app_withdraw','thank','write']
+		var actual = this.strikeamatch.compare(tags, atags);
+		console.log(actual);
+	}
 });

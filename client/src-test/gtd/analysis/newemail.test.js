@@ -4,12 +4,18 @@ new TestCase("Analysis.NewEmailTest", {
 	context: null,
 	actions: null,
 	newemail: null,
+	strikeamatch: null,
+	
 	setUp: function() {
-		this.context = new window.gtd.Context();
+		this.context = new window.gtd.Context({
+			'logger' : console
+		});
 		this.actions = new window.gtd.Analysis.ActionCollection([], { 'context' : this.context });
+		this.strikeamatch = new window.gtd.Analysis.StrikeAMatch();
 		this.newemail = new window.gtd.Analysis.NewEmail({
 			'context' : this.context,
-			'actions' : this.actions
+			'actions' : this.actions,
+			'strikeamatch' : this.strikeamatch
 		});
 	},
 	

@@ -40,7 +40,8 @@ window.gtdBootstrap = {
 			'context' : context,
 			'actions' : new window.gtd.Analysis.ActionCollection([], { 'context': context }),
 			'suggestions' : suggestions,
-			'termextraction': new window.gtd.Analysis.TermExtraction()
+			'termextraction': new window.gtd.Analysis.TermExtraction(),
+			'strikeamatch': new window.gtd.Analysis.StrikeAMatch()
 		});
 	},
 	

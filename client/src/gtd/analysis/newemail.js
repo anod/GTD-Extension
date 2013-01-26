@@ -6,7 +6,8 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		context: null,
 		termextraction: null,
 		suggestions: null,
-		actions: null
+		actions: null,
+		strikeamatch: null
 	},
 	
 	initialize: function(attributes, options) {
@@ -48,15 +49,28 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	
 	_maxSimilarity: function(similarList, tags) {
 		var similarAction = null;
+		var similarityRank = 0;
+		
+		this.get('context').get('logger').info('gtd.Analysis.NewEmail: _maxSimilarity, tags: [' + tags.join(',') + ']');
 		_.find(similarList, function(action) {
-			if (_.isEqual(tags,action.tags)) {
+			var rank = this.get('strikeamatch').compare(tags, action.tags);
+			this.get('context').get('logger').info('gtd.Analysis.NewEmail: '
+				+ 'Similarity = ' + rank
+				+ ', action.tags: [' + action.tags.join(',') + '] '
+			);
+			if (rank == 1.0) { //Equals
 				similarAction = action;
+				similarityRank = rank;
 				return true;
-			} else if(similarAction === null && _.intersection(tags, action.tags).length === tags.length) {
+			} else if (rank >similarityRank) {
 				similarAction = action;
+				similarityRank = rank;
 			}
 			return false;
-		});
+		}, this);
+		if (similarityRank < 0.7) {
+			return null;
+		}
 		if (similarAction === null) {
 			return null;
 		}
