@@ -54,7 +54,8 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: _maxSimilarity, tags: [' + tags.join(',') + ']');
 		_.find(similarList, function(action) {
 			var rank = this.get('strikeamatch').compare(tags, action.tags);
-			this.get('context').get('logger').info('gtd.Analysis.NewEmail: '
+			this.get('context').get('logger').info(
+				'gtd.Analysis.NewEmail: '
 				+ 'Similarity = ' + rank
 				+ ', action.tags: [' + action.tags.join(',') + '] '
 			);

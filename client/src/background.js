@@ -12,20 +12,41 @@ window.gtdBootstrap = {
 	
 		var context = new window.gtd.Context({
 			'db'       : db,
-			'settings' : settings
+			'settings' : settings,
+			'gmail'    : new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
+			'imap'     : new window.gtd.Gmail.Imap({ 'oauth': window.oauth }),
+			'termextraction': new window.gtd.Analysis.TermExtraction(),
+			'strikeamatch': new window.gtd.Analysis.StrikeAMatch()
 		});
 		
 		var suggestions = new window.gtd.Suggestion.SuggestionCollection([], { 'context': context });
-		var router = new window.gtd.Suggestion.Router({ 'context': context, 'suggestions' : suggestions });
+		context.set({'suggestions' : suggestions});
+		
+		var router = new window.gtd.Suggestion.Router({
+			'context': context,
+			'suggestions': context.get('suggestions')
+		});
+		
+		context.set('actions', new window.gtd.Analysis.ActionCollection([], { 'context': context }));
+		context.set('suggestions', suggestions);
+		context.set('newemail', new window.gtd.Analysis.NewEmail({
+			'context' : context,
+			'actions' : context.get('actions'),
+			'suggestions' : context.get('suggestions'),
+			'termextraction': context.get('termextraction'),
+			'strikeamatch': context.get('strikeamatch')
+		}));
+		context.set('router', router);
+		context.set('notifier', new window.gtd.External.Notifier({ 'context' : context }));
 		
 		this.app = new window.gtd.Application({
 			'context'  : context,
-			'gmail'    : new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
-			'imap'     : new window.gtd.Gmail.Imap({ 'oauth': window.oauth }),
-			'newemail' : this._createNewEmail(context, suggestions),
-			'router'   : router
+			'gmail'    : context.get('gmail'),
+			'newemail' : context.get('newemail'),
+			'imap'     : context.get('imap'),
+			'router'   : context.get('router')
 		});
-		
+		context.set('app', this.app);
 		this.app.runBackground();
 	},
 
@@ -34,17 +55,7 @@ window.gtdBootstrap = {
 			this.app.runBackground();
 		}
 	},
-	
-	_createNewEmail: function(context, suggestions) {	
-		return new window.gtd.Analysis.NewEmail({
-			'context' : context,
-			'actions' : new window.gtd.Analysis.ActionCollection([], { 'context': context }),
-			'suggestions' : suggestions,
-			'termextraction': new window.gtd.Analysis.TermExtraction(),
-			'strikeamatch': new window.gtd.Analysis.StrikeAMatch()
-		});
-	},
-	
+
 	_initDb: function() {
 		var schema = {
 			stores : [
