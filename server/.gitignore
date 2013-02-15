@@ -4,3 +4,4 @@
 /vendor/psr
 composer.phar
 composer.lock
+extapi_log.log
