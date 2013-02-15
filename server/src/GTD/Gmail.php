@@ -111,12 +111,14 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	}
 	
 	public function getMessageUID($uid) {
-		$items = array('FLAGS', 'RFC822');
+		$items = array('FLAGS', 'RFC822.HEADER', 'RFC822.TEXT');
 		$itemList = $this->protocol->escapeList($items);
 		
-		$response = $this->protocol->requestAndResponse('UID FETCH', array($uid, $itemList));
-
-		return $response;
+		$fetch_response = $this->protocol->requestAndResponse('UID FETCH', array($uid, $itemList));
+		if (!isset($fetch_response[0][2]) || is_array($fetch_response[0][2])) {
+			throw new GmailException("Cannot retreieve message by uid. ".var_export($fetch_response, TRUE));
+		}
+		return $fetch_response;
 	}
 	
 }
