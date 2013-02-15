@@ -10,5 +10,7 @@ date_default_timezone_set('Asia/Jerusalem');
 $log = new Logger(\GTD\ExtApi::NAME);
 $log->pushHandler(new StreamHandler(__DIR__ . '/'. \GTD\ExtApi::PATH, Logger::INFO));
 
-
-$log->info("test");
+if ($_POST) {
+	$data = var_export($_POST, true);
+	$log->info($data);
+}
