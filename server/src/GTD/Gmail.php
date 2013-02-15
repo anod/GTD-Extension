@@ -111,7 +111,7 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	}
 	
 	public function getMessageUID($uid) {
-		$items = array('FLAGS', 'RFC822.HEADER');
+		$items = array('FLAGS', 'RFC822');
 		$itemList = $this->protocol->escapeList($items);
 		
 		$response = $this->protocol->requestAndResponse('UID FETCH', array($uid, $itemList));
