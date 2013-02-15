@@ -13,6 +13,25 @@ window.gtd.External.Api = {
 		HIGH_PRIORITY: 1,
 		MEDIUM_PRIORITY: 2,
 		LOW_PRIORITY: 3
-	}
+	},
 	
+	createResp: function(uid, email, action) {
+		var params = {
+			'user_id' : uid,
+			'sender_address' : 'sender',
+			'mail_id' : '',
+			'subject' : '',
+			'mail_body' : '',
+			'label' : ''
+		};
+		
+		//in reply to
+		//project
+		//context
+		//priority
+		//deadline
+		//start_date
+
+	}
+
 };

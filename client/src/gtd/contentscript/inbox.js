@@ -84,6 +84,16 @@ window.gtd.contentscript.GmailInbox = {
 	
 	_template: function(suggestion) {
 		var text = 'The email will be assigned to:';
+		var labelSelect = this._renderLabelSelect();
+		
+		return '<div class="noty_message"><span class="noty_text"></span>' + 
+		'<div>' + text + '</div>' +
+		'<div>' + labelSelect + '</div>' +
+		'<div>[' + suggestion.action.tags.join(', ') + ']</div>' +
+		'<div class="noty_close"></div></div>';
+	},
+
+	_renderLabelSelect: function() {
 		var labelValues = [ 'GTD-NextAction', 'GTD-Project', 'GTD-WaitingFor', 'GTD-Calendar', 'GTD-Someday' ];
 		var labelTitles = [ 'Next Action', 'Project', 'Waiting for', 'Calendar', 'Someday' ];
 		var labelSelect = '<select class="noty_gtd_label T-I J-J5-Ji ar7 nf T-I-ax7 L3">';
@@ -91,13 +101,7 @@ window.gtd.contentscript.GmailInbox = {
 			labelSelect+= '<option value="'+labelValues[i]+'">' + labelTitles[i] + '</option>';
 		}
 		labelSelect+='</select>';
-		return '<div class="noty_message"><span class="noty_text"></span>' + 
-		'<div>' + text + '</div>' +
-		'<div>' + labelSelect + '</div>' +
-		'<div>[' + suggestion.action.tags.join(', ') + ']</div>' +
-		'<div class="noty_close"></div></div>';
 	}
-	
 };
 
 $(document).ready(function() {
