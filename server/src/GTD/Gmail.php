@@ -114,8 +114,8 @@ class Gmail {
 		var_dump($response);
 	} 
 	
-	public function getMessage($msgid) {
-		$response = $this->protocol->requestAndResponse('FETCH', array('X-GM-MSGID', $msgid));
+	public function getMessage($uid) {
+		$response = $this->protocol->requestAndResponse('FETCH', array($uid));
 		var_dump($response);
 	}
 }

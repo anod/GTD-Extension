@@ -44,16 +44,16 @@ class Controller {
 		$this->gmail->authenticate($this->email, $this->token);
 		$this->gmail->sendId();
 		$this->gmail->selectInbox();
+		$uid = $this->gmail->getMessageUID($this->msgid);
 		
 		if ($this->action == self::ACTION_LABEL) {
-			$uid = $this->gmail->getMessageUID($this->msgid);
 			$label = isset($request['label']) ? trim($request['label']) : '';
 			if (empty($label)) {
 				throw new ControllerException("Request missing parameter: label");
 			}
 			$this->gmail->applyLabel($uid, $label);
 		} elseif ($this->action == self::ACTION_CONTENT) {
-			$this->gmail->getMessage($this->msgid);
+			$this->gmail->getMessage($uid);
 		}
 	}
 	
