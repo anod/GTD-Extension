@@ -53,7 +53,8 @@ class Controller {
 			}
 			$this->gmail->applyLabel($uid, $label);
 		} elseif ($this->action == self::ACTION_CONTENT) {
-			$this->gmail->getMessage($uid);
+			$message = $this->gmail->getMessage($uid);
+			var_dump($message);
 		}
 	}
 	

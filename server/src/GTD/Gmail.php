@@ -5,7 +5,7 @@ namespace GTD;
  * @author alex
  *
  */
-class Gmail {
+class Gmail extends \Zend\Mail\Storage\Imap {
 	const GMAIL_HOST = 'imap.gmail.com';
 	const GMAIL_PORT = '993';
 	const USE_SSL = true;
@@ -16,10 +16,6 @@ class Gmail {
 		"vendor" , "Alex Gavrishev",
 		"contact" , "alex.gavrishev@gmail.com"
 	);
-	/**
-	 * @var Zend\Mail\Protocol\Imap
-	 */
-	private $protocol;
 	/**
 	 * @var OAuth
 	 */
@@ -114,10 +110,6 @@ class Gmail {
 		var_dump($response);
 	} 
 	
-	public function getMessage($uid) {
-		$response = $this->protocol->requestAndResponse('FETCH', array($uid));
-		var_dump($response);
-	}
 }
 
 class GmailException extends \Exception {};
