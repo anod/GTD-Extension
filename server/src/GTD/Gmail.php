@@ -113,6 +113,11 @@ class Gmail {
 		$response = $this->protocol->requestAndResponse('UID STORE', array($uid, '+X-GM-LABELS', '('.$label.')'));
 		var_dump($response);
 	} 
+	
+	public function getMessage($msgid) {
+		$response = $this->protocol->requestAndResponse('FETCH', array('X-GM-MSGID', $msgid));
+		var_dump($response);
+	}
 }
 
 class GmailException extends \Exception {};
