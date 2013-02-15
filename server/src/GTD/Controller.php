@@ -44,7 +44,7 @@ class Controller {
 		$this->gmail->authenticate($this->email, $this->token);
 		$this->gmail->sendId();
 		$this->gmail->selectInbox();
-		$uid = $this->gmail->getMessageUID($this->msgid);
+		$uid = $this->gmail->getUID($this->msgid);
 		
 		if ($this->action == self::ACTION_LABEL) {
 			$label = isset($request['label']) ? trim($request['label']) : '';
@@ -53,7 +53,7 @@ class Controller {
 			}
 			$this->gmail->applyLabel($uid, $label);
 		} elseif ($this->action == self::ACTION_CONTENT) {
-			$message = $this->gmail->getMessage($uid);
+			$message = $this->gmail->getMessageUID($uid);
 			var_dump($message);
 		}
 	}

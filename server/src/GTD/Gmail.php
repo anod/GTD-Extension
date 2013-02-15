@@ -93,7 +93,7 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	/**
 	 * @return int
 	 */
-	public function getMessageUID($msgid) {
+	public function getUID($msgid) {
 		$search_response = $this->protocol->requestAndResponse('UID SEARCH', array('X-GM-MSGID', $msgid));
 		if (isset($search_response[0][1])) {
 			return (int)$search_response[0][1];
@@ -108,7 +108,18 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	public function applyLabel($uid, $label) {
 		$response = $this->protocol->requestAndResponse('UID STORE', array($uid, '+X-GM-LABELS', '('.$label.')'));
 		var_dump($response);
-	} 
+	}
+	
+	public function getMessageUID($uid) {
+		$data = $this->protocol->fetch(array('FLAGS', 'RFC822.HEADER'), $uid);
+		$header = $data['RFC822.HEADER'];
+		
+		$flags = array();
+		foreach ($data['FLAGS'] as $flag) {
+			$flags[] = isset(static::$knownFlags[$flag]) ? static::$knownFlags[$flag] : $flag;
+		}
+		return $data;
+	}
 	
 }
 
