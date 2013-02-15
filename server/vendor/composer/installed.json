@@ -1,12 +1,12 @@
 [
     {
         "name": "zendframework/zend-stdlib",
-        "version": "2.0.3",
-        "version_normalized": "2.0.3.0",
+        "version": "2.0.7",
+        "version_normalized": "2.0.7.0",
         "target-dir": "Zend/Stdlib",
         "dist": {
             "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Stdlib-2.0.3.zip",
+            "url": "http://packages.zendframework.com/composer/Zend_Stdlib-2.0.7.zip",
             "reference": null,
             "shasum": null
         },
@@ -29,8 +29,8 @@
         "description": " ",
         "homepage": "http://packages.zendframework.com/",
         "keywords": [
-            "zf2",
-            "stdlib"
+            "stdlib",
+            "zf2"
         ],
         "support": {
             "email": "fw-general-subscribe@lists.zend.com",
@@ -41,12 +41,12 @@
     },
     {
         "name": "zendframework/zend-mime",
-        "version": "2.0.3",
-        "version_normalized": "2.0.3.0",
+        "version": "2.0.7",
+        "version_normalized": "2.0.7.0",
         "target-dir": "Zend/Mime",
         "dist": {
             "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Mime-2.0.3.zip",
+            "url": "http://packages.zendframework.com/composer/Zend_Mime-2.0.7.zip",
             "reference": null,
             "shasum": null
         },
@@ -67,8 +67,8 @@
         "description": " ",
         "homepage": "http://packages.zendframework.com/",
         "keywords": [
-            "zf2",
-            "mime"
+            "mime",
+            "zf2"
         ],
         "support": {
             "email": "fw-general-subscribe@lists.zend.com",
@@ -79,12 +79,12 @@
     },
     {
         "name": "zendframework/zend-loader",
-        "version": "2.0.3",
-        "version_normalized": "2.0.3.0",
+        "version": "2.0.7",
+        "version_normalized": "2.0.7.0",
         "target-dir": "Zend/Loader",
         "dist": {
             "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Loader-2.0.3.zip",
+            "url": "http://packages.zendframework.com/composer/Zend_Loader-2.0.7.zip",
             "reference": null,
             "shasum": null
         },
@@ -107,8 +107,8 @@
         "description": " ",
         "homepage": "http://packages.zendframework.com/",
         "keywords": [
-            "zf2",
-            "loader"
+            "loader",
+            "zf2"
         ],
         "support": {
             "email": "fw-general-subscribe@lists.zend.com",
@@ -119,12 +119,12 @@
     },
     {
         "name": "zendframework/zend-mail",
-        "version": "2.0.3",
-        "version_normalized": "2.0.3.0",
+        "version": "2.0.7",
+        "version_normalized": "2.0.7.0",
         "target-dir": "Zend/Mail",
         "dist": {
             "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Mail-2.0.3.zip",
+            "url": "http://packages.zendframework.com/composer/Zend_Mail-2.0.7.zip",
             "reference": null,
             "shasum": null
         },
@@ -135,8 +135,8 @@
             "zendframework/zend-stdlib": "self.version"
         },
         "suggest": {
-            "zendframework/zend-validator": "Zend\\Validator component",
-            "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
+            "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
+            "zendframework/zend-validator": "Zend\\Validator component"
         },
         "type": "library",
         "installation-source": "dist",
@@ -151,8 +151,8 @@
         "description": "provides generalized functionality to compose and send both text and MIME-compliant multipart e-mail messages",
         "homepage": "http://packages.zendframework.com/",
         "keywords": [
-            "zf2",
-            "mail"
+            "mail",
+            "zf2"
         ],
         "support": {
             "email": "fw-general-subscribe@lists.zend.com",
@@ -160,5 +160,126 @@
             "issues": "https://github.com/zendframework/zf2/issues",
             "source": "https://github.com/zendframework/zf2"
         }
+    },
+    {
+        "name": "php-tail/php-tail",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "svn",
+            "url": "http://php-tail.googlecode.com/svn/",
+            "reference": "trunk/"
+        },
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "classmap": [
+                "PHPTail.php"
+            ]
+        }
+    },
+    {
+        "name": "psr/log",
+        "version": "1.0.0",
+        "version_normalized": "1.0.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/php-fig/log",
+            "reference": "1.0.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://github.com/php-fig/log/archive/1.0.0.zip",
+            "reference": "1.0.0",
+            "shasum": ""
+        },
+        "time": "2012-12-21 11:40:51",
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Psr\\Log\\": ""
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "PHP-FIG",
+                "homepage": "http://www.php-fig.org/"
+            }
+        ],
+        "description": "Common interface for logging libraries",
+        "keywords": [
+            "log",
+            "psr",
+            "psr-3"
+        ]
+    },
+    {
+        "name": "monolog/monolog",
+        "version": "1.4.0",
+        "version_normalized": "1.4.0.0",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/Seldaek/monolog",
+            "reference": "1.4.0"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/Seldaek/monolog/zipball/1.4.0",
+            "reference": "1.4.0",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.0",
+            "psr/log": ">=1.0,<2.0"
+        },
+        "require-dev": {
+            "doctrine/couchdb": "dev-master",
+            "mlehner/gelf-php": "1.0.*",
+            "raven/raven": "0.3.*"
+        },
+        "suggest": {
+            "doctrine/couchdb": "Allow sending log messages to a CouchDB server",
+            "ext-amqp": "Allow sending log messages to an AMQP server (1.0+ required)",
+            "ext-mongo": "Allow sending log messages to a MongoDB server",
+            "mlehner/gelf-php": "Allow sending log messages to a GrayLog2 server",
+            "raven/raven": "Allow sending log messages to a Sentry server"
+        },
+        "time": "2013-02-13 18:06:51",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.4.x-dev"
+            }
+        },
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Monolog": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Jordi Boggiano",
+                "email": "j.boggiano@seld.be",
+                "homepage": "http://seld.be",
+                "role": "Developer"
+            }
+        ],
+        "description": "Sends your logs to files, sockets, inboxes, databases and various web services",
+        "homepage": "http://github.com/Seldaek/monolog",
+        "keywords": [
+            "log",
+            "logging",
+            "psr-3"
+        ]
     }
 ]

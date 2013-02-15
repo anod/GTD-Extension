@@ -1,3 +1,6 @@
 /vendor/zendframework
+/vendor/php-tail
+/vendor/monolog
+/vendor/psr
 composer.phar
 composer.lock
