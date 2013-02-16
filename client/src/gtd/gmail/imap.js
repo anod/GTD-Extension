@@ -2,12 +2,12 @@
 
 window.gtd.Gmail.Imap = Backbone.Model.extend({
 	ACTION_LABEL: 1,
+	ACTION_CONTENT: 2,
 	
 	url : 'http://gtd.anodsplace.info/handler.php',
 	defaults : {
 		$ : window.$,
-		notification: window.notification,
-		errorHandler : window.errorHandler,
+		context: null,
 		oauth : null
 	},
 	
@@ -21,8 +21,14 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		});
 	},
 	
-	fillDetails: function(emailId) {
-		//TODO
+	getContent: function(emailId, callback) {
+		this._sendRequest({ 
+			'action': this.ACTION_CONTENT,
+			'msgid' : emailId
+		}, function(response) {
+			console.log("gtd.Gmail.Imap: getContent finished for email #"+emailId);
+			callback(response);
+		});
 	},
 	
 	archive: function(emailId) {
@@ -31,7 +37,7 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 	
 	_sendRequest: function(params, callback) {
 		var data = params || {};
-		data['email'] = 'alex.gavrishev@gmail.com';
+		data['email'] = this.get('oauth').get('clientId');
 		data['token'] = this.get('oauth').getAccessToken();
 		var self = this;
 		this.get('$').post(this.url, data, function(response){

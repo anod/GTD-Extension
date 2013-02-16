@@ -21,7 +21,7 @@ window.gtd.Application = Backbone.Model.extend({
 		
 		this.get('gmail').on("gmail:newlist", this._notifyList, this);
 		this.get('gmail').loadNewEmails();
-		this.context.on("analysis:apply:label", this._applyLabel, this);
+		this.context.on("analysis:apply:action", this._applyLabel, this);
 
 		this._registerPullAlarm();
 	},
@@ -36,8 +36,8 @@ window.gtd.Application = Backbone.Model.extend({
 		this.context.get('chrome').alarms.create('loadNewEmails', {periodInMinutes : this.PULL_TIME});
 	},
 	
-	_applyLabel: function(emailId, label) {
-		this.get('imap').applyLabel(emailId, label);
+	_applyLabel: function(emailId, action) {
+		this.get('imap').applyLabel(emailId, action.get('label'));
 	},
 	
 	_notifyList: function(collection) {

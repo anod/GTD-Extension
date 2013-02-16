@@ -11,7 +11,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	initialize: function(attributes, options) {
-		this.get('context').on('suggestion:apply:label', this._applySuggestion, this);
+		this.get('context').on('suggestion:apply', this._applySuggestion, this);
 		this.get('actions').on('search:result', this._searchResult, this);
 	},
 	
@@ -79,7 +79,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	_applyAction: function(mailId, action) {
-		this.get('context').trigger('analysis:apply:label', mailId, action.get('label'));
+		this.get('context').trigger('analysis:apply:action', mailId, action);
 	},
 		
 	_applySuggestion: function(suggestion)  {

@@ -7,17 +7,20 @@ window.gtdBootstrap = {
 		window.oauth.authorize(function() {
 			console.log("Authorize - Token:" + window.oauth.getAccessToken());
 		});
+		
 		var db = this._initDb();
 		var settings = new window.gtd.Settings.Settings({},{ 'db': db });
 	
 		var context = new window.gtd.Context({
+			'oauth'    : window.oauth,
 			'db'       : db,
 			'settings' : settings,
 			'gmail'    : new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
-			'imap'     : new window.gtd.Gmail.Imap({ 'oauth': window.oauth }),
 			'termextraction': new window.gtd.Analysis.TermExtraction(),
 			'strikeamatch': new window.gtd.Analysis.StrikeAMatch()
 		});
+		var imap = new window.gtd.Gmail.Imap({ 'context': context, 'oauth': window.oauth });
+		context.set('imap', imap);
 		
 		var suggestions = new window.gtd.Suggestion.SuggestionCollection([], { 'context': context });
 		context.set({'suggestions' : suggestions});
@@ -37,7 +40,7 @@ window.gtdBootstrap = {
 			'strikeamatch': context.get('strikeamatch')
 		}));
 		context.set('router', router);
-		context.set('notifier', new window.gtd.External.Notifier({ 'context' : context }));
+		context.set('notifier', new window.gtd.External.Notifier({ 'context' : context, 'imap' : imap  }));
 		
 		this.app = new window.gtd.Application({
 			'context'  : context,
