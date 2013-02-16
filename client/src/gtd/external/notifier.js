@@ -3,6 +3,7 @@
 window.gtd.External.Notifier = Backbone.Model.extend({
 	defaults : {
 		'$' : window.$,
+		'oauth' : window.oauth,
 		'context' : null,
 		'imap' : null
 	},

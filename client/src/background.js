@@ -12,6 +12,8 @@ window.gtdBootstrap = {
 		var settings = new window.gtd.Settings.Settings({},{ 'db': db });
 	
 		var context = new window.gtd.Context({
+			'$' : window.$,
+			'localStorage' : window.localStorage,
 			'oauth'    : window.oauth,
 			'db'       : db,
 			'settings' : settings,
@@ -19,6 +21,10 @@ window.gtdBootstrap = {
 			'termextraction': new window.gtd.Analysis.TermExtraction(),
 			'strikeamatch': new window.gtd.Analysis.StrikeAMatch()
 		});
+		
+		var userinfo = new window.gtd.Gmail.UserInfo({}, { 'context' : context });
+		context.set('userinfo', context);
+		
 		var imap = new window.gtd.Gmail.Imap({ 'context': context, 'oauth': window.oauth });
 		context.set('imap', imap);
 		

@@ -22,6 +22,7 @@
 		/** OAuth */
 		"tabs",
 		"https://accounts.google.com/o/oauth2/token",
+		"https://www.googleapis.com/auth/userinfo.profile",
 		"http://gtd.anodsplace.info/"
 	],
 	"web_accessible_resources": [
