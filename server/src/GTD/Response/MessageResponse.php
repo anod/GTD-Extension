@@ -32,7 +32,9 @@ class MessageResponse extends AbstractResponse{
 		
 		return array(
 			'subject' => $this->message->getHeader('subject', 'string'),
-			'body' => $body
+			'body' => $body,
+			'from' => $this->message->getHeader('from', 'string'),
+			'to' => $this->message->getHeader('to', 'string'),
 		);
 	}
 	

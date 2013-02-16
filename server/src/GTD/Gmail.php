@@ -140,6 +140,11 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 		return $data;
 	}
 	
+	public function getThreadId($uid) {
+		$fetch_response = $this->protocol->requestAndResponse('UID FETCH', array($uid, 'X-GM-THRID'));
+		var_dump($fetch_response);
+	}
+	
 	/**
 	 * 
 	 * @param string $uid
@@ -147,6 +152,8 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	 */
 	public function getMessageUID($uid) {
 		$data = $this->getRawMessageUID($uid);
+		$threadId = $this->getThreadId($uid);
+		
 		$header = $data['RFC822.HEADER'];
 		$content = $data['RFC822.TEXT'];
 		$flags = array();
