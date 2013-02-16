@@ -24,7 +24,7 @@ class MessageResponse extends AbstractResponse{
 		$body = '';
 		if ($this->message->isMultipart()) {
 			if ($this->message->countParts() > 0) {
-				$body = $this->message->getPart(1);
+				$body = $this->message->getPart(1)->getContent();
 			}
 		} else {
 			$body = $this->message->getContent();
