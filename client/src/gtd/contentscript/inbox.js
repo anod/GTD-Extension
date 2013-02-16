@@ -86,9 +86,26 @@ window.gtd.contentscript.GmailInbox = {
 		var text = 'The email will be assigned to:';
 		var labelSelect = this._renderLabelSelect();
 		
-		return '<div class="noty_message"><span class="noty_text"></span>' + 
-		'<div>' + text + '</div>' +
-		'<div>' + labelSelect + '</div>' +
+		return '<div class="noty_message">' + 
+		'<span class="noty_text"></span>' +
+		'<div class="container">' +
+			'<div class="span3">' +
+			'<div class="row"> ' +
+				'<div class="span3">' + text + '</div>' +
+			'</div>' + 
+			'<div class="row"> ' +
+				labelSelect + 
+			'</div>' +
+			'<div class="row"> ' +
+				'<div class="span1">Deadline:</div>' +
+				'<div class="span2">Context:</div>' +
+			'</div>' +
+			'<div class="row"> ' +
+				'<input class="span1" name="deadline" value="5 Jan" />' +
+				'<input class="span2" name="context" value="Study" />' +
+			'</div>' +
+			'</div>' +
+		'</div>' +
 		'<div>[' + suggestion.action.tags.join(', ') + ']</div>' +
 		'<div class="noty_close"></div></div>';
 	},
@@ -96,11 +113,12 @@ window.gtd.contentscript.GmailInbox = {
 	_renderLabelSelect: function() {
 		var labelValues = [ 'GTD-NextAction', 'GTD-Project', 'GTD-WaitingFor', 'GTD-Calendar', 'GTD-Someday' ];
 		var labelTitles = [ 'Next Action', 'Project', 'Waiting for', 'Calendar', 'Someday' ];
-		var labelSelect = '<select class="noty_gtd_label T-I J-J5-Ji ar7 nf T-I-ax7 L3">';
+		var labelSelect = '<select class="noty_gtd_label span3">';
 		for (var i=0; i<labelTitles.length; i++) {
 			labelSelect+= '<option value="'+labelValues[i]+'">' + labelTitles[i] + '</option>';
 		}
 		labelSelect+='</select>';
+		return labelSelect;
 	}
 };
 

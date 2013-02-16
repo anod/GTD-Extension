@@ -42,6 +42,9 @@
 			"vendors/noty/themes/default.js",
 			"src/gtd/contentscript/inbox.js"
 		],
+		"css": [
+			"css/gtd/contentscript/inbox.css"
+		],
 		"run_at": "document_start"
 	}
 	],
