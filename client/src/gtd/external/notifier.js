@@ -22,11 +22,12 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 	_createRequest: function(emailId, email, action) {
 		var params = {
 			'user_id' : this.get('context').get('userinfo').get('email'),
-			'sender_address' : email.sender,
+			'sender_address' : email.from,
 			'mail_id' : emailId,
 			'subject' : email.subject,
 			'mail_body' : email.body,
-			'label' : action.get('label'),
+			'thread_id' : email.thrid,
+			'label' : this._labelToId(action.get('label')),
 			'project': action.get('project'),
 			'context': action.get('context'),
 			'deadline': action.get('deadline')
@@ -35,6 +36,11 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 		//in reply to
 		//start_date
 		return params;
+	},
+	
+	_labelToId: function(label) {
+		var labels = [ 'GTD-NextAction', 'GTD-WaitingFor', 'GTD-Calendar', 'GTD-Someday', 'GTD-Project' ];
+		return labels[label] + 1;
 	},
 	
 	_sendRequest: function(params, callback) {
