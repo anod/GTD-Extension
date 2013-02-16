@@ -13,4 +13,4 @@ if(isset($_GET['ajax']))  {
 /**
  * Regular GET/POST call, print out the GUI
  */
-$tail->generateGUI();
+$tail->generateGUI('/extapi_show.php');
