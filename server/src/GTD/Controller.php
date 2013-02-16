@@ -69,6 +69,7 @@ class Controller {
 			$message = $this->gmail->getMessageUID($uid);
 			return new MessageResponse($message);
 		}
+		throw new ControllerException("Unknown action: '".$this->action."'");
 	}
 	
 	private function initLibraries() {
