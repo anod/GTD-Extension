@@ -4,9 +4,9 @@ namespace GTD;
 class GmailTest extends \PHPUnit_Framework_TestCase {
 	
 	/**
-	 * @dataProvider providerGetMessageUID
+	 * @dataProvider providerGetRawMessageUID
 	 */
-	public function testGetMessageUID($response, $expected) {
+	public function testGetRawMessageUID($response, $expected) {
 		$protocol = $this->getMock('\Zend\Mail\Protocol\Imap', array('requestAndResponse'));
 		
 		$protocol
@@ -16,13 +16,13 @@ class GmailTest extends \PHPUnit_Framework_TestCase {
 		;
 		
 		$gmail = new Gmail($protocol);
-		$actual = $gmail->getMessageUID("53559");
+		$actual = $gmail->getRawMessageUID("53559");
 		
 		$this->assertEquals($expected, $actual);
 		
 	}
 	
-	public function providerGetMessageUID() {
+	public function providerGetRawMessageUID() {
 		
 		$body = "--BODY--";
 		$header = "--HEADER--";

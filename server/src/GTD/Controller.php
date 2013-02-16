@@ -1,5 +1,10 @@
 <?php
 namespace GTD;
+use GTD\Response\MessageResponse;
+use GTD\Response\OkResponse;
+use GTD\Response\AbstractResponse;
+use GTD\Response\ErrorResponse;
+
 /**
  * 
  * @author alex
@@ -18,24 +23,31 @@ class Controller {
 	 * @var \GTD\Gmail
 	 */
 	private $gmail;
-	private $debug;
-	/**
-	 * 
-	 * @param bool $debug
-	 */
-	public function __construct($debug = false) {
-		$this->debug = true;
+	private $debug = false;
+	
+	public function __construct() {
 	}
 	
+	/**
+	 * 
+	 * @param array $request
+	 * @return \GTD\Response\AbstractResponse
+	 */
 	public function run(array $request) {
 		try {
 			$reponse = $this->runUnsafe($request);
 		} catch(\Exception $e) {
-			return $this->errorResponse($e->getMessage());
+			return new ErrorResponse($e->getMessage());
 		}
 		return $response;
 	}
 	
+	/**
+	 * 
+	 * @param array $request
+	 * @throws ControllerException
+	 * @return \GTD\Response\AbstractResponse
+	 */
 	public function runUnsafe(array $request) {
 		$this->initRequest($request);
 		$this->initLibraries();
@@ -52,23 +64,11 @@ class Controller {
 				throw new ControllerException("Request missing parameter: label");
 			}
 			$this->gmail->applyLabel($uid, $label);
+			return new OkResponse();
 		} elseif ($this->action == self::ACTION_CONTENT) {
 			$message = $this->gmail->getMessageUID($uid);
-			var_dump($message);
+			return new MessageResponse($message);
 		}
-	}
-	
-	private function errorResponse($msg) {
-		return array(
-			'status' => 'error',
-			'message' => $msg	
-		);
-	}
-
-	private function goodResponse() {
-		return array(
-			'status' => 'ok'
-		);
 	}
 	
 	private function initLibraries() {
@@ -93,6 +93,7 @@ class Controller {
 		$this->token = $request['token'];
 		$this->action = $request['action'];
 		$this->msgid = $request['msgid'];
+		$this->debug = isset($request['debug']) ? (bool)$request['debug'] : false;
 	}
 }
 

@@ -110,7 +110,13 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 		var_dump($response);
 	}
 	
-	public function getMessageUID($uid) {
+	/**
+	 * 
+	 * @param string $uid
+	 * @throws GmailException
+	 * @return array
+	 */
+	public function getRawMessageUID($uid) {
 		$items = array('FLAGS', 'RFC822.HEADER', 'RFC822.TEXT');
 		$itemList = $this->protocol->escapeList($items);
 		
@@ -131,8 +137,30 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 				$data[current($tokens[2])] = next($tokens[2]);
 				next($tokens[2]);
 			}
-		}	
+		}
 		return $data;
+	}
+	
+	/**
+	 * 
+	 * @param string $uid
+	 * @return \Zend\Mail\Storage\Message
+	 */
+	public function getMessageUID($uid) {
+		$data = $this->getRawMessageUID($uid);
+		$header = $data['RFC822.HEADER'];
+		$content = $data['RFC822.TEXT'];
+		$flags = array();
+		foreach ($data['FLAGS'] as $flag) {
+			$flags[] = isset(static::$knownFlags[$flag]) ? static::$knownFlags[$flag] : $flag;
+		}
+		return new \Zend\Mail\Storage\Message(array(
+			'handler' => $this,
+			'id' => $uid,
+			'headers' => $header,
+			'content' => $content,
+			'flags' => $flags
+		));
 	}
 	
 }
