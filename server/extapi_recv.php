@@ -13,4 +13,5 @@ $log->pushHandler(new StreamHandler(__DIR__ . '/'. \GTD\ExtApi::PATH, Logger::IN
 if ($_POST) {
 	$data = var_export($_POST, true);
 	$log->info($data);
+	echo json_encode(array('status' => 'ok'));
 }
