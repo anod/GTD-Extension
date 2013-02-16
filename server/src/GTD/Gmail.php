@@ -107,7 +107,6 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	 */	
 	public function applyLabel($uid, $label) {
 		$response = $this->protocol->requestAndResponse('UID STORE', array($uid, '+X-GM-LABELS', '('.$label.')'));
-		var_dump($response);
 	}
 	
 	/**
