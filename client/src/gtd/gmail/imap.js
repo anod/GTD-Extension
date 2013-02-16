@@ -41,10 +41,11 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		data['token'] = this.get('oauth').getAccessToken();
 		var self = this;
 		this.get('$').post(this.url, data, function(response){
-			if (!response || response.status == 'error') {
-				console.error(response.message);
+			var obj = (response) ? JSON.parse(response) : null;
+			if (!obj || obj.status == 'error') {
+				console.error(response);
 			} else {
-				callback(response);
+				callback(obj);
 			}
 		});
 	}
