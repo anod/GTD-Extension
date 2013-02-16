@@ -1,3 +1,6 @@
+/vendor/symfony
+/vendor/phpunit
+/vendor/bin/phpunit
 /vendor/zendframework
 /vendor/php-tail
 /vendor/monolog

@@ -4,6 +4,9 @@
         "php-tail/php-tail": "1.0.0",
         "monolog/monolog": "1.4.0"
     },
+	"require-dev": {
+        "phpunit/phpunit": "3.7.*"
+    },
     "repositories": [
         {
             "type": "composer",

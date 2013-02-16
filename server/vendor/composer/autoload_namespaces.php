@@ -10,6 +10,7 @@ return array(
     'Zend\\Mime\\' => $vendorDir . '/zendframework/zend-mime/',
     'Zend\\Mail\\' => $vendorDir . '/zendframework/zend-mail/',
     'Zend\\Loader\\' => $vendorDir . '/zendframework/zend-loader/',
+    'Symfony\\Component\\Yaml' => $vendorDir . '/symfony/yaml/',
     'Psr\\Log\\' => $vendorDir . '/psr/log/',
     'Monolog' => $vendorDir . '/monolog/monolog/src/',
     'GTD' => $baseDir . '/src/',

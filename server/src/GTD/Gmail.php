@@ -115,10 +115,24 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 		$itemList = $this->protocol->escapeList($items);
 		
 		$fetch_response = $this->protocol->requestAndResponse('UID FETCH', array($uid, $itemList));
-		if (!isset($fetch_response[0][2]) || is_array($fetch_response[0][2])) {
+		if (!isset($fetch_response[0][2]) || !is_array($fetch_response[0][2])) {
 			throw new GmailException("Cannot retreieve message by uid. ".var_export($fetch_response, TRUE));
 		}
-		return $fetch_response;
+		$response_count = count($fetch_response);
+		$data = array();
+		for($i = 0; $i < $response_count; $i++) {
+			$tokens = $fetch_response[$i];
+			// ignore other responses
+			if ($tokens[1] != 'FETCH') {
+				continue;
+			}
+			
+			while (key($tokens[2]) !== null) {
+				$data[current($tokens[2])] = next($tokens[2]);
+				next($tokens[2]);
+			}
+		}	
+		return $data;
 	}
 	
 }
