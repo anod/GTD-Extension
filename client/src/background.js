@@ -23,7 +23,7 @@ window.gtdBootstrap = {
 		});
 		
 		var userinfo = new window.gtd.Gmail.UserInfo({}, { 'context' : context });
-		context.set('userinfo', context);
+		context.set('userinfo', userinfo);
 		
 		var imap = new window.gtd.Gmail.Imap({ 'context': context, 'oauth': window.oauth });
 		context.set('imap', imap);

@@ -23,6 +23,7 @@ window.gtd.Gmail.UserInfo = Backbone.Model.extend({
 		}
 		var obj = JSON.parse(localStorage['gtd_user']);
 		this.set(obj, { silent: true });
+		return true;
 	},
 	
 	_initRemote: function() {
