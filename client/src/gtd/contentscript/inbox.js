@@ -59,11 +59,13 @@ window.gtd.contentscript.GmailInbox = {
 			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Decide Later', onClick: function(noty){ noty.close(); }},
 			{ addClass: 'btn btn-primary T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Apply', onClick: function(noty){
 				var s = noty.data;
-				var label = noty.$bar.find(".noty_gtd_label").val();
-				s.action.label = label;
+				s.action.label    = noty.$bar.find("select.noty_gtd_label").val();
+				s.action.deadline = noty.$bar.find("input[name=deadline]").val();
+				s.action.context  = noty.$bar.find("input[name=context]").val();
+				s.action.project  = noty.$bar.find("input[name=project]").val();
 				var message = {
-						'action' : 'apply',
-						'suggestion' : s 
+					'action' : 'apply',
+					'suggestion' : s 
 				};
 				window.chrome.extension.sendMessage(message);
 				noty.close(); 
@@ -108,7 +110,7 @@ window.gtd.contentscript.GmailInbox = {
 				'<div class="span3">Project name:</div>' +
 			'</div>' +
 			'<div class="row"> ' +
-				'<input class="span3" name="project name" value="GTD" />' +
+				'<input class="span3" name="project" value="GTD" />' +
 			'</div>' +
 			'</div>' +
 		'</div>' +

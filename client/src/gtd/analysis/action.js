@@ -6,12 +6,15 @@ window.gtd.Analysis.Action = Backbone.Model.extend({
 	PROJECT: 2,
 	WAITING_FOR: 3,
 	CALENDAR: 4,
+	SOMEDAY: 5,
 	
 	defaults: {
 		/* id: -1, */
 		action: 0,
 		label: '',
+		project: '',
 		deadline: -1,
+		context: '',
 		name: '',
 		//
 		author_name: '',
