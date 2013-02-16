@@ -21,7 +21,7 @@ class MessageResponse extends AbstractResponse{
 	 */
 	protected function jsonSerializeImpl() {
 		return array(
-			'subject' => $this->message->getHeader('Subject'),
+			'subject' => $this->message->getHeader('subject', 'string'),
 			'body' => $this->message->getContent()
 		);
 	}
