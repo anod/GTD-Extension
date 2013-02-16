@@ -104,6 +104,12 @@ window.gtd.contentscript.GmailInbox = {
 				'<input class="span1" name="deadline" value="5 Jan" />' +
 				'<input class="span2" name="context" value="Study" />' +
 			'</div>' +
+			'<div class="row"> ' +
+				'<div class="span3">Project name:</div>' +
+			'</div>' +
+			'<div class="row"> ' +
+				'<input class="span3" name="project name" value="GTD" />' +
+			'</div>' +
 			'</div>' +
 		'</div>' +
 		'<div>[' + suggestion.action.tags.join(', ') + ']</div>' +
