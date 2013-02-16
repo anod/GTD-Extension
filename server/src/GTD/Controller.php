@@ -35,7 +35,7 @@ class Controller {
 	 */
 	public function run(array $request) {
 		try {
-			$reponse = $this->runUnsafe($request);
+			$response = $this->runUnsafe($request);
 		} catch(\Exception $e) {
 			return new ErrorResponse($e->getMessage());
 		}
