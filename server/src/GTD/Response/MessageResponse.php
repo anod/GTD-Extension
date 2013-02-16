@@ -20,9 +20,19 @@ class MessageResponse extends AbstractResponse{
 	 * @see \GTD\Response\AbstractResponse::jsonSerializeImpl()
 	 */
 	protected function jsonSerializeImpl() {
+		
+		$body = '';
+		if ($this->message->isMultipart()) {
+			if ($this->message->countParts() > 0) {
+				$body = $this->message->getPart(1);
+			}
+		} else {
+			$body = $this->message->getContent();
+		}
+		
 		return array(
 			'subject' => $this->message->getHeader('subject', 'string'),
-			'body' => $this->message->getContent()
+			'body' => $body
 		);
 	}
 	
