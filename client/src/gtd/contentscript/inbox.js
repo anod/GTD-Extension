@@ -55,8 +55,6 @@ window.gtd.contentscript.GmailInbox = {
 			closeWith: ['button'],
 			template: this._template(suggestion),
 			buttons: [
-			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Do it now', onClick: function(noty){ noty.close(); } },
-			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Decide Later', onClick: function(noty){ noty.close(); }},
 			{ addClass: 'btn btn-primary T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Apply', onClick: function(noty){
 				var s = noty.data;
 				s.action.label    = noty.$bar.find("select.noty_gtd_label").val();
@@ -69,14 +67,17 @@ window.gtd.contentscript.GmailInbox = {
 				};
 				window.chrome.extension.sendMessage(message);
 				noty.close(); 
-			}}
+			}},
+			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Do it now', onClick: function(noty){ noty.close(); } },
+			{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Later', onClick: function(noty){ noty.close(); }}
 			]
 		});
 		n.data = suggestion;
 		n.$bar.css({ background: '#E7E7E7' });
 		n.$buttons.css({ 
 			borderTop: '1px solid #ccc',
-			backgroundColor: '#E7E7E7' 
+			backgroundColor: '#E7E7E7',
+			textAlign: 'center'
 		});
 	},
 	
