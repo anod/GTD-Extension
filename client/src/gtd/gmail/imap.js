@@ -37,7 +37,7 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 	
 	_sendRequest: function(params, callback) {
 		var data = params || {};
-		data['email'] = this.get('oauth').get('clientId');
+		data['email'] = this.get('context').get('userinfo').get('email');
 		data['token'] = this.get('oauth').getAccessToken();
 		var self = this;
 		this.get('$').post(this.url, data, function(response){

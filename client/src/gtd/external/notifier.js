@@ -21,7 +21,7 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 	
 	_createRequest: function(emailId, email, action) {
 		var params = {
-			'user_id' : this.get('context').get('imap').get('clientId'),
+			'user_id' : this.get('context').get('userinfo').get('email'),
 			'sender_address' : email.sender,
 			'mail_id' : emailId,
 			'subject' : email.subject,
@@ -39,16 +39,10 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 	
 	_sendRequest: function(params, callback) {
 		var data = params || {};
-		data['email'] = this.get('oauth').get('clientId');
-		data['token'] = this.get('oauth').getAccessToken();
 		var self = this;
 		var url = window.gtd.External.Api.URL;
 		this.get('$').post(url, data, function(response){
-			if (!response || response.status == 'error') {
-				console.error(response.message);
-			} else {
-				console.log(response);
-			}
+			console.log(response);
 		});
 	}
 
