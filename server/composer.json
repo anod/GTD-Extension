@@ -1,7 +1,6 @@
 {
     "require": {
         "zendframework/zend-mail": "2.0.*",
-        "php-tail/php-tail": "1.0.0",
         "monolog/monolog": "1.4.0"
     },
 	"require-dev": {
@@ -11,21 +10,6 @@
         {
             "type": "composer",
             "url": "http://packages.zendframework.com/"
-        },
-        {
-            "type": "package",
-            "package": {
-                "name": "php-tail/php-tail",
-                "version": "1.0.0",
-                "source": {
-        	        "url" : "http://php-tail.googlecode.com/svn/",
-                    "type": "svn",
-                    "reference": "trunk/"
-                },
-                "autoload": {
-                    "classmap": ["PHPTail.php"]
-                }
-            }
         }
 	],  
 	"autoload": {
