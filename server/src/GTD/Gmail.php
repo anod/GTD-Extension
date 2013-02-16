@@ -140,9 +140,18 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 		return $data;
 	}
 	
+	/**
+	 * 
+	 * @param string $uid
+	 * @throws GmailException
+	 * @return string
+	 */
 	public function getThreadId($uid) {
 		$fetch_response = $this->protocol->requestAndResponse('UID FETCH', array($uid, 'X-GM-THRID'));
-		var_dump($fetch_response);
+		if (!isset($fetch_response[0][2]) || !is_array($fetch_response[0][2]) || !isset($fetch_response[0][2][1])) {
+			throw new GmailException("Cannot retreieve thread id by uid. ".var_export($fetch_response, TRUE));
+		}
+		return $fetch_response[0][2][1];
 	}
 	
 	/**
@@ -154,19 +163,21 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 		$data = $this->getRawMessageUID($uid);
 		$threadId = $this->getThreadId($uid);
 		
-		$header = $data['RFC822.HEADER'];
+		$header = $data['RFC822.HEADER'];		
 		$content = $data['RFC822.TEXT'];
 		$flags = array();
 		foreach ($data['FLAGS'] as $flag) {
 			$flags[] = isset(static::$knownFlags[$flag]) ? static::$knownFlags[$flag] : $flag;
 		}
-		return new \Zend\Mail\Storage\Message(array(
+		$msg = new \Zend\Mail\Storage\Message(array(
 			'handler' => $this,
 			'id' => $uid,
 			'headers' => $header,
 			'content' => $content,
 			'flags' => $flags
 		));
+		$msg->getHeaders()->addHeaderLine('x-gm-thrid', $threadId);
+		return $msg;
 	}
 	
 }

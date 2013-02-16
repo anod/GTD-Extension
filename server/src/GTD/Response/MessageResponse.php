@@ -35,6 +35,7 @@ class MessageResponse extends AbstractResponse{
 			'body' => $body,
 			'from' => $this->message->getHeader('from', 'string'),
 			'to' => $this->message->getHeader('to', 'string'),
+			'thrid' => $this->message->getHeader('x-gm-thrid', 'string')
 		);
 	}
 	
