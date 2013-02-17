@@ -47,7 +47,8 @@ window.gtdBootstrap = {
 		}));
 		context.set('router', router);
 		context.set('notifier', new window.gtd.External.Notifier({ 'context' : context, 'imap' : imap  }));
-		
+		context.set('extparser', new window.gtd.External.Parser({ 'context' : context }));
+
 		this.app = new window.gtd.Application({
 			'context'  : context,
 			'gmail'    : context.get('gmail'),

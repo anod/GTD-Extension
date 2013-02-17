@@ -17,6 +17,11 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	
 	analyse: function(entry) {
 		
+		var extparser = this.get('context').get('extparser');
+		if (extparser.test(entry.get('title'))) {
+			extparser.parse(entry);
+			return;
+		}
 		var text = entry.get('title') + "\n" + entry.get('summary');
 		var tags2 = this.get('termextraction').extract(text);
 
