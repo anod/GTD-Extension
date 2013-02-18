@@ -40,11 +40,11 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 	
 	_labelToId: function(label) {
 		var labels = {
-			'GTD-NextAction': window.gtd.External.Api.NEXT_ACTION_LABEL_ID,
-			'GTD-WaitingFor': window.gtd.External.Api.WATING_ON_LABEL_ID,
-			'GTD-Calendar': window.gtd.External.Api.DELAYED_LABEL_ID,
-			'GTD-Someday': window.gtd.External.Api.SOMEDAY_LABEL_ID,
-			'GTD-Project': window.gtd.External.Api.PROJECT_LABEL_ID
+			'GTD-NextAction': window.gtd.External.Api.Consts.NEXT_ACTION_LABEL_ID,
+			'GTD-WaitingFor': window.gtd.External.Api.Consts.WATING_ON_LABEL_ID,
+			'GTD-Calendar': window.gtd.External.Api.Consts.DELAYED_LABEL_ID,
+			'GTD-Someday': window.gtd.External.Api.Consts.SOMEDAY_LABEL_ID,
+			'GTD-Project': window.gtd.External.Api.Consts.PROJECT_LABEL_ID
 		};
 		return labels[label];
 	},
