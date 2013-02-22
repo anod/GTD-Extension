@@ -93,3 +93,7 @@ textarea.span1 {
   padding: 1px 6px;
   font-size: 14px;
 }
+
+.datepicker {
+	z-index: 10000001
+}

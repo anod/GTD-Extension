@@ -37,13 +37,18 @@
 	{
 		"matches": ["https://mail.google.com/mail/*"],
 		"js": [
-			"vendors/jquery-1.8.2-min.js",
+			"vendors/jquery-1.9.1.js",
+			"vendors/jquery-ui-1.10.1.custom.js",
 			"vendors/noty/jquery.noty.js",
 			"vendors/noty/layouts/bottomCenter.js",
 			"vendors/noty/themes/default.js",
+			"vendors/underscore-1.4.2-min.js",
+			"vendors/backbone-0.9.2-min.js",
+			"src/gtd/contentscript/dialog.js",
 			"src/gtd/contentscript/inbox.js"
 		],
 		"css": [
+			"css/jquery-ui-1.10.1.custom.css",
 			"css/gtd/contentscript/inbox.css"
 		],
 		"run_at": "document_start"

@@ -1,0 +1,40 @@
+<html>
+<head>
+	<script type="text/javascript" src="../vendors/jquery-1.9.1.js"></script>
+	<script type="text/javascript" src="../vendors/jquery-ui-1.10.1.custom.js"></script>
+	<script type="text/javascript" src="../vendors/noty/jquery.noty.js"></script>
+	<script type="text/javascript" src="../vendors/noty/layouts/bottomCenter.js"></script>
+	<script type="text/javascript" src="../vendors/noty/themes/default.js"></script>
+	<script type="text/javascript" src="../vendors/underscore-1.4.2-min.js"></script>
+	<script type="text/javascript" src="../vendors/backbone-0.9.2-min.js"></script>
+	<script type="text/javascript" src="../src/gtd/contentscript/dialog.js"></script>
+	<script type="text/javascript" src="../src/gtd/contentscript/inbox.js"></script>
+	<link href="../css/jquery-ui-1.10.1.custom.css" rel="stylesheet" type="text/css" />
+	<link href="../css/gtd/contentscript/inbox.css" rel="stylesheet" type="text/css" />
+</head>
+<body>
+ <div id="model">
+ </div>
+ <script type="text/javascript">
+	var model = new Backbone.Model({
+		'visible' : false,
+		'suggestion' : null,
+		'label' : 'GTD-WaitingFor',
+		'deadline' : '2013-05-01 18:20',
+		'context' : 'Study',
+		'project' : 'GTD',
+		'priority' : ''
+	});
+	var dialog = new window.gtd.Contentscript.Dialog({
+		model: model
+	});
+	
+	model.on("change", function() {
+		$('#model').html(JSON.stringify(model.toJSON()));
+	});
+	$('#model').html(JSON.stringify(model.toJSON()));
+	
+	dialog.render();
+ </script>
+</body>
+</html>
