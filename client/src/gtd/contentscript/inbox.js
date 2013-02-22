@@ -104,7 +104,7 @@ window.gtd.contentscript.GmailInbox = {
 				'<div class="span2">Context:</div>' +
 			'</div>' +
 			'<div class="row"> ' +
-				'<input class="span1" name="deadline" value="5 Jan" />' +
+				'<input class="span1" name="deadline" value="2013-03-05 18:00" />' +
 				'<input class="span2" name="context" value="Study" />' +
 			'</div>' +
 			'<div class="row"> ' +

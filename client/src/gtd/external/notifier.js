@@ -25,7 +25,7 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 			'sender_address' : email.from,
 			'mail_id' : emailId,
 			'subject' : email.subject,
-			'mail_body' : email.body,
+			'content' : email.body,
 			'thread_id' : email.thrid,
 			'label' : this._labelToId(action.get('label')),
 			'project': action.get('project'),
@@ -33,9 +33,13 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 			'deadline': action.get('deadline')
 		};
 		
-		//in reply to
+		var data = {
+			'jsonMsg' : JSON.stringify(params)
+		};
+		
+		//priority
 		//start_date
-		return params;
+		return data;
 	},
 	
 	_labelToId: function(label) {
