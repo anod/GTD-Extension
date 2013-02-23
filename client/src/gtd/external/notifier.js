@@ -30,15 +30,15 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 			'label' : this._labelToId(action.get('label')),
 			'project': action.get('project'),
 			'context': action.get('context'),
-			'deadline': action.get('deadline')
+			'deadline': action.get('deadline'),
+			'start_date': action.get('start_date'),
+			'priority' : window.gtd.External.Api.Consts.NO_PRIORITY
 		};
 		
 		var data = {
 			'jsonMsg' : JSON.stringify(params)
 		};
-		
-		//priority
-		//start_date
+
 		return data;
 	},
 	
