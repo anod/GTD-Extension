@@ -11,7 +11,7 @@ window.gtd.Contentscript.GmailInbox = {
 			'visible' : false,
 			'suggestion' : null,
 			'label' : 'GTD-NextAction',
-			'deadline' : '2013-05-01',
+			'date' : '2013-05-01',
 			'context' : 'Study',
 			'project' : 'GTD',
 			'priority' : ''

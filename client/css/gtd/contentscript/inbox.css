@@ -51,34 +51,35 @@
 }
   
 .span4 {
-  width: 300px;
+  width: 240px;
 }
 
 .span3 {
-  width: 220px;
+  width: 135px;
 }
 
 .span2 {
-  width: 140px;
+  width: 96px;
 }
 
 .span1 {
-  width: 60px;
+  width: 40px;
 }
  
 input.span4,
+select.span4,
 textarea.span4 {
-  width: 286px;
+  width: 200px;
 }
 
 input.span3,
 textarea.span3 {
-  width: 206px;
+  width: 135px;
 }
 
 input.span2,
 textarea.span2 {
-  width: 126px;
+  width: 80px;
 }
 
 input.span1,
@@ -96,4 +97,31 @@ textarea.span1 {
 
 .datepicker {
 	z-index: 10000001
+}
+
+.input-append  {
+	display: inline-block;
+	font-size: 0;
+	white-space: nowrap;
+	vertical-align: middle;
+}
+
+.input-append input {
+  position: relative;
+  margin-bottom: 0;
+  *margin-left: 0;
+  vertical-align: top;
+}
+
+.input-append .clear{
+    width: 16px;
+    height: 16px;
+    display: inline-block;
+    background-repeat: no-repeat;
+    position: relative;
+    left: -15px;
+    top: 3px;
+    color: #B0B0B0;
+    cursor: pointer;
+    font:15px Helvetica, Arial, Sans-Serif;
 }

@@ -48,7 +48,7 @@
 			"src/gtd/contentscript/inbox.js"
 		],
 		"css": [
-			"css/jquery-ui-1.10.1.custom.css",
+			"css/datepicker.css",
 			"css/gtd/contentscript/inbox.css"
 		],
 		"run_at": "document_start"

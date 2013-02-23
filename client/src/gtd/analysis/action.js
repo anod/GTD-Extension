@@ -13,7 +13,8 @@ window.gtd.Analysis.Action = Backbone.Model.extend({
 		action: 0,
 		label: '',
 		project: '',
-		deadline: -1,
+		deadline: '',
+		start_date: '',
 		context: '',
 		name: '',
 		//

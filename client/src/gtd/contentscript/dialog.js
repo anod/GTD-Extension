@@ -11,13 +11,14 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		closeWith: ['button']
 	},
 	$label: null,
-	$deadline: null,
+	$date: null,
+	$dateLabel: null,
 	$project: null,
 	$context: null,
 	
 	events: {
 		"change .noty_gtd_label": "_labelChange",
-		"change input[name=deadline]": "_deadlineChange",
+		"change input[name=date]": "_dateChange",
 		"change input[name=context]": "_contextChange",
 		"change input[name=project]": "_projectChange"
 	},
@@ -25,10 +26,22 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	initialize: function() {
 		this.$el.append(this._template());
 		this.$label = this.$el.find("select.noty_gtd_label");
-		this.$deadline = this.$el.find("input[name=deadline]");
+		this.$date = this.$el.find("input[name=date]");
+		this.$dateLabel = this.$el.find('#dateLabel');
 		this.$context = this.$el.find("input[name=context]");
+		this.$el.find('span#context-clear').click(_.bind(function() {
+			this.$context.val('');
+		},this));
 		this.$project = this.$el.find("input[name=project]");
-		this.$deadline.datepicker({dateFormat: "yy-mm-dd"});
+		this.$el.find('span#project-clear').click(_.bind(function() {
+			this.$project.val('');
+		},this));
+		this.$date.datepicker({
+			dateFormat: "yy-mm-dd",
+            inline: true,  
+            showOtherMonths: true
+		});
+		_.bindAll(this, '_onApplyClick', '_onDoItNowClick', '_onLaterClick');
 	},
 	
 	closeAll: function() {
@@ -37,10 +50,10 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	
 	render: function() {
 		this.$label.val(this.model.get('label'));
-		this.$deadline.val(this.model.get('deadline'));
+		this.$date.val(this.model.get('date'));
 		this.$context.val(this.model.get('context'));
 		this.$project.val(this.model.get('project'));
-		
+		this._setDateLabel();
 		var noty = this.notyPlugin(_.extend(this.notyOptions,{
 			template: this.$el,
 			buttons: [
@@ -68,9 +81,15 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	_onApplyClick: function(noty) {
 		var s = this.model.get('suggestion');
 		s.action.label    = this.model.get('label');
-		s.action.deadline = this.model.get('deadline');
+		if (this._isCalendarSelected()) {
+			s.action.deadline = null;
+			s.action.start_date = this.model.get('date');
+		} else {
+			s.action.deadline = this.model.get('date');
+			s.action.start_date = null;
+		}
 		s.action.context  = this.model.get('context');
-		s.action.project  =this.model.get('project');
+		s.action.project  = this.model.get('project');
 		var message = {
 			'action' : 'apply',
 			'suggestion' : s 
@@ -81,10 +100,11 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	
 	_labelChange: function(e) {
 		this.model.set('label', this.$label.val());
+		this._setDateLabel();
 	},
 	
-	_deadlineChange: function(e) {
-		this.model.set('deadline', this.$deadline.val());
+	_dateChange: function(e) {
+		this.model.set('date', this.$date.val());
 	},
 	
 	_contextChange: function(e) {
@@ -95,41 +115,59 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		this.model.set('project', this.$project.val());
 	},
 	
+	_isCalendarSelected: function() {
+		return this.model.get('label') == 'GTD-Calendar';
+	},
+	
+	_setDateLabel: function() {
+		if (this._isCalendarSelected()) {
+			this.$dateLabel.html('Date:');
+		} else {
+			this.$dateLabel.html('Deadline:');
+		}
+	},
+	
 	_template: function(suggestion) {
 		var text = 'The email will be assigned to:';
 		
 		return '<div class="noty_message">' + 
 		'<span class="noty_text"></span>' +
 		'<div class="container">' +
-			'<div class="span3">' +
+			'<div class="span4">' +
 			'<div class="row"> ' +
-				'<div class="span3">' + text + '</div>' +
+				'<div class="span4">' + text + '</div>' +
 			'</div>' + 
 			'<div class="row">'+ this._renderLabelSelect() + '</div>' +
 			'<div class="row"> ' +
-				'<div class="span1">Deadline:</div>' +
+				'<div class="span2" id="dateLabel">Deadline:</div>' +
 				'<div class="span2">Context:</div>' +
 			'</div>' +
 			'<div class="row"> ' +
-				'<div class="span1"><input name="deadline" /></div>' +
-				'<div class="span2"><input name="context" /></div>' +
+				'<input class="span2" name="date" />' +
+				'<div class="input-append">' + 
+					'<input class="span2" name="context" placeholder="Context"/>' +
+					'<span id="context-clear" class="clear">x</span>' +
+				'</div>' +
 			'</div>' +
 			'<div class="row"> ' +
-				'<div class="span3">Project name:</div>' +
+				'<div class="span4">Project name:</div>' +
 			'</div>' +
 			'<div class="row"> ' +
-				'<div class="span3"><input name="project" /></div>' +
+				'<div class="input-append">' + 
+					'<input class="span4" name="project" placeholder="Project Name"/>' +
+					'<span id="project-clear" class="clear">x</span>' +
+				'</div>' +
 			'</div>' +
 			'</div>' +
 		'</div>' +
 		'<div class="noty_close"></div></div>';
 	},
-
+	
 
 	_renderLabelSelect: function() {
 		var labelValues = [ 'GTD-NextAction', 'GTD-Project', 'GTD-WaitingFor', 'GTD-Calendar', 'GTD-Someday' ];
 		var labelTitles = [ 'Next Action', 'Project', 'Waiting for', 'Calendar', 'Someday' ];
-		var labelSelect = '<select class="noty_gtd_label span3">';
+		var labelSelect = '<select class="noty_gtd_label span4">';
 		for (var i=0; i<labelTitles.length; i++) {
 			labelSelect+= '<option value="'+labelValues[i]+'">' + labelTitles[i] + '</option>';
 		}
