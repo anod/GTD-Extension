@@ -54,7 +54,9 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		this.$context.val(this.model.get('context'));
 		this.$project.val(this.model.get('project'));
 		this._setDateLabel();
-		var noty = this.notyPlugin(_.extend(this.notyOptions,{
+		//Noty deletes properties
+		var defaultOptions = _.clone(this.notyOptions);
+		var noty = this.notyPlugin(_.extend(defaultOptions,{
 			template: this.$el,
 			buttons: [
 				{ addClass: 'btn btn-primary T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Apply', onClick: this._onApplyClick },
