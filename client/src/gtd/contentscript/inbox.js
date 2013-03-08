@@ -1,14 +1,14 @@
 "use strict";
 
-window.gtd = (window.gtd) ? window.gtd : {};
-window.gtd.Contentscript = (window.gtd.Contentscript) ? window.gtd.Contentscript : {};
 window.gtd.Contentscript.GmailInbox = {
 	model: null,
 	dialog: null,
+	shortcut: null,
 	
 	run: function() {
 		this.model = new Backbone.Model({
-			'visible' : false,
+			'showDialog' : false,
+			'showSuggestion' : false,
 			'suggestion' : null,
 			'label' : 'GTD-NextAction',
 			'date' : '2013-05-01',
@@ -19,26 +19,41 @@ window.gtd.Contentscript.GmailInbox = {
 		this.dialog = new window.gtd.Contentscript.Dialog({
 			model: this.model
 		});
-		window.chrome.extension.onMessage.addListener(this._message);
-		$(window).on('hashchange', this._checkUrl);
+		this.shortcut = new window.gtd.Contentscript.Shortcut({
+			model: this.model
+		});
+		this.model.on('change:showDialog', function() {
+			console.log(arguments);
+			//		this.dialog.closeAll();
+
+		}, this);
+		this.model.on('change:showSuggestion', function(model, value) {
+			if (value) {
+				this.shortcut.show();
+			} else {
+				this.shortcut.hide();
+			}
+		}, this);
+		
+		window.chrome.extension.onMessage.addListener(_.bind(this._message, this));
+		$(window).on('hashchange', _.bind(this._checkUrl, this));
 		this._checkUrl();
 	},
 
 	_checkUrl: function() {
-		var self = window.gtd.Contentscript.GmailInbox;
 		var hash = document.location.hash;
 		if (!hash) {
-			self._closeAll();
+			this._closeAll();
 			return false;
 		}
 		if (hash.length < 2) {
-			self._closeAll();
+			this._closeAll();
 			return false;
 		}
 		// Detects #inbox/13bc733d5810f7ee in hash and extracts message id
 		var match = hash.match(/\/([0-9a-f]+)$/);
 		if (!match || match.length < 2) {
-			self._closeAll();
+			this._closeAll();
 			return false;
 		}
 		var msgId = match[1];
@@ -46,6 +61,7 @@ window.gtd.Contentscript.GmailInbox = {
 			'action' : 'open',
 			'msgId' : msgId 
 		};
+		this.model.set('showSuggestion',true);
 		window.chrome.extension.sendMessage(message);
 		return true;
 	},
@@ -55,9 +71,8 @@ window.gtd.Contentscript.GmailInbox = {
 	},
 	
 	_message: function(message, sender) {
-		var self = window.gtd.Contentscript.GmailInbox;
 		if (message && message.action == 'show') {
-			self._showDialog(message.suggestion);
+			this.model.set({ 'suggestion' : message.suggestion });
 		}
 	},
 	
@@ -69,7 +84,8 @@ window.gtd.Contentscript.GmailInbox = {
 	},
 	
 	_closeAll: function() {
-		this.dialog.closeAll();
+		this.model.set('showDialog', false);
+		this.model.set('showSuggestion', false);
 	}
 	
 

@@ -1,7 +1,5 @@
 "use strict";
 
-window.gtd = (window.gtd) ? window.gtd : {};
-window.gtd.Contentscript = (window.gtd.Contentscript) ? window.gtd.Contentscript : {};
 window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	notyPlugin: window.noty,
 	notyOptions: {
