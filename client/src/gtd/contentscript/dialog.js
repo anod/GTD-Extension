@@ -15,40 +15,46 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	$dateLabel: null,
 	$project: null,
 	$context: null,
-	
-	events: {
-		"change .noty_gtd_label": "_labelChange",
-		"change input[name=date]": "_dateChange",
-		"change input[name=context]": "_contextChange",
-		"change input[name=project]": "_projectChange"
-	},
-	
+		
 	initialize: function() {
-		this.$el.append(this._template());
-		this.$label = this.$el.find("select.noty_gtd_label");
-		this.$date = this.$el.find("input[name=date]");
-		this.$dateLabel = this.$el.find('#dateLabel');
-		this.$context = this.$el.find("input[name=context]");
-		this.$el.find('span#context-clear').click(_.bind(function() {
-			this.$context.val('');
-		},this));
-		this.$project = this.$el.find("input[name=project]");
-		this.$el.find('span#project-clear').click(_.bind(function() {
-			this.$project.val('');
-		},this));
-		this.$date.datepicker({
-			dateFormat: "yy-mm-dd",
-            inline: true,  
-            showOtherMonths: true
-		});
-		_.bindAll(this, '_onApplyClick', '_onDoItNowClick', '_onLaterClick');
+		_.bindAll(this, '_onApplyClick', '_onDoItNowClick', '_onLaterClick' , '_labelChange', '_projectChange', '_contextChange', '_dateChange');
 	},
 	
 	closeAll: function() {
 		$.noty.closeAll();
 	},
 	
+	_init: function() {
+		this.$el.html(this._template());
+		this.$label = this.$el.find("select.noty_gtd_label");
+		this.$date = this.$el.find("input[name=date]");
+		this.$dateLabel = this.$el.find('#dateLabel');
+		this.$context = this.$el.find("input[name=context]");
+		this.$project = this.$el.find("input[name=project]");
+		this.$date = this.$el.find("input[name=date]");
+
+		this.$el.find('span#context-clear').click(_.bind(function() {
+			this.$context.val('');
+		},this));
+
+		this.$el.find('span#project-clear').click(_.bind(function() {
+			this.$project.val('');
+		},this));
+		
+		this.$el.find('.noty_gtd_label').change(this._labelChange);
+		this.$el.find('input[name=date]').change(this._dateChange);
+		this.$el.find('input[name=context]').change(this._contextChange);
+		this.$el.find('input[name=project]').change(this._projectChange);
+		
+		this.$date.datepicker({
+			dateFormat: "yy-mm-dd",
+            inline: true,  
+            showOtherMonths: true
+		});
+	},
+	
 	render: function() {
+		this._init();
 		this.$label.val(this.model.get('label'));
 		this.$date.val(this.model.get('date'));
 		this.$context.val(this.model.get('context'));
