@@ -23,7 +23,9 @@
 		"tabs",
 		"https://accounts.google.com/o/oauth2/token",
 		"https://www.googleapis.com/auth/userinfo.profile",
-		"http://gtd.anodsplace.info/"
+		"http://gtd.anodsplace.info/",
+		"http://gtdProject.example.com/",
+		"http://gtdProject.example.com:8082/"
 	],
 	"web_accessible_resources": [
 		"graphics/icon_128.png"

@@ -1,7 +1,7 @@
 "use strict";
 
 window.gtd.Analysis.NewEmail = Backbone.Model.extend({
-	MIN_TAGS_LENGTH: 3,
+	MIN_TAGS_LENGTH: 2,
 	defaults : {
 		context: null,
 		termextraction: null,
@@ -24,10 +24,6 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		}
 		var text = entry.get('title') + "\n" + entry.get('summary');
 		var tags2 = this.get('termextraction').extract(text);
-
-		//this.get('context').get('logger').info('gtd.Analysis.NewEmail: [TEXT] ' + text);
-		//this.get('context').get('logger').info('gtd.Analysis.NewEmail: [ TAGS] ' + tags2);
-		//this.get('context').get('logger').info('gtd.Analysis.NewEmail: -------');
 		
 		if (tags2.length > this.MIN_TAGS_LENGTH) {
 			this.get('actions').search(entry,tags2);
