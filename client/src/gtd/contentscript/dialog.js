@@ -22,6 +22,7 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		$.noty.closeAll();
 	},
 	
+	
 	_init: function() {
 		this.$el.html(this._template());
 		this.$label = this.$el.find("select.noty_gtd_label");

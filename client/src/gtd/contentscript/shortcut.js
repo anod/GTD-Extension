@@ -42,7 +42,7 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		var html = '<div id="gtd-shortcut">' +
 			'<div>' +
 			'<div class="gtd-section gtd-icon" title="GTD Action" role="button" tabindex="0"><span class="Tq">&nbsp;</span></div>' +
-			'<div class="gtd-section gtd-info" title="Press shortcut to show action dialog">Press <span class="gtd-key">Shift+E</span> for action</div>' +
+			'<div class="gtd-section gtd-info" title="Press shortcut to show action dialog">Press <span class="gtd-key">Shift+A</span> for action</div>' +
 			'</div>' +
 		'</div>'
 		;

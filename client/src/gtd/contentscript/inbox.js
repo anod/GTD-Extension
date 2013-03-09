@@ -26,10 +26,12 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		this.shortcut = new window.gtd.Contentscript.Shortcut({
 			model: this.model
 		});
-		this.model.on('change:showDialog', function() {
-			console.log(arguments);
-			//		this.dialog.closeAll();
-
+		this.model.on('change:showDialog', function(model, value) {
+			if (value) {
+				this.dialog.render();
+			} else {
+				this.dialog.closeAll();
+			}
 		}, this);
 		this.model.on('change:showSuggestion', function(model, value) {
 			if (value) {
@@ -44,6 +46,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	run: function() {	
 		this.get('extension').onMessage.addListener(_.bind(this._message, this));
 		$(window).on('hashchange', _.bind(this._checkUrl, this));
+		$(document).bind('keydown', 'shift+a', _.bind(this._shortcutPress, this));
 		this._checkUrl();
 	},
 
@@ -83,13 +86,11 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		}
 	},
 	
-	_showDialog: function(suggestion) {
-		this.model.set({
-			'suggestion' : suggestion
-		});
-		this.dialog.render();
+	_shortcutPress: function() {
+		this.model.set('showDialog', true);
+		this.model.set('showSuggestion', false);
 	},
-	
+		
 	_closeAll: function() {
 		this.model.set('showDialog', false);
 		this.model.set('showSuggestion', false);
