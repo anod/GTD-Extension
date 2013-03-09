@@ -50,7 +50,8 @@
 			"src/gtd/contentscript/ns.js",
 			"src/gtd/contentscript/shortcut.js",
 			"src/gtd/contentscript/dialog.js",
-			"src/gtd/contentscript/inbox.js"
+			"src/gtd/contentscript/inbox.js",
+			"src/gtd/contentscript/main.js"
 		],
 		"css": [
 			"css/datepicker.css",

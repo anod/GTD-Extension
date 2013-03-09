@@ -1,11 +1,15 @@
 "use strict";
 
-window.gtd.Contentscript.GmailInbox = {
+window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	model: null,
 	dialog: null,
 	shortcut: null,
 	
-	run: function() {
+	defaults: {
+		extension: null
+	},
+	
+	initialize: function() {
 		this.model = new Backbone.Model({
 			'showDialog' : false,
 			'showSuggestion' : false,
@@ -34,8 +38,11 @@ window.gtd.Contentscript.GmailInbox = {
 				this.shortcut.hide();
 			}
 		}, this);
-		
-		window.chrome.extension.onMessage.addListener(_.bind(this._message, this));
+
+	},
+	
+	run: function() {	
+		this.get('extension').onMessage.addListener(_.bind(this._message, this));
 		$(window).on('hashchange', _.bind(this._checkUrl, this));
 		this._checkUrl();
 	},
@@ -62,7 +69,7 @@ window.gtd.Contentscript.GmailInbox = {
 			'msgId' : msgId 
 		};
 		this.model.set('showSuggestion',true);
-		window.chrome.extension.sendMessage(message);
+		this.get('extension').sendMessage(message);
 		return true;
 	},
 	
@@ -89,9 +96,4 @@ window.gtd.Contentscript.GmailInbox = {
 	}
 	
 
-};
-
-$(document).ready(function() {
-	window.gtd.Contentscript.GmailInbox.run();
 });
-

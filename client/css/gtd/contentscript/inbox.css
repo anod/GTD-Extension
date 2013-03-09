@@ -132,7 +132,7 @@ textarea.span1 {
 	margin-bottom:0;
 	bottom: 0;
 	display:none;
-	left: 50%;
+	left: 45%;
 	height: 32px;
 	box-shadow: none;
 	background-color: #DCDCDC;
@@ -140,33 +140,38 @@ textarea.span1 {
 	border: 1px solid rgba(0,0,0,0.1);
 	z-index: auto;
 	padding: 0;
+	border-radius:2px;
+	padding: 0px 3px 0px 3px;
+	z-index: 10000;
 }
 
-#gtd-shortcut .gtd-info {
+
+#gtd-shortcut .gtd-section {
+	height: 32px;
+	display: inline-block;
+	line-height: 32px;
+	white-space: nowrap;
+}
+#gtd-shortcut .gtd-section.gtd-info {
 	color: #919191;
 	font-family: arial,sans-serif;
 	font-size: 80%;
-	display: inline-block;
-	height: 32px;
 	/*width: 148px;*/
 	width: 0px;
-	padding-left: 3px;
-	padding-right: 3px;
 	opacity: 0;
 }
 
-#gtd-shortcut .gtd-info .gtd-key {
+#gtd-shortcut .gtd-section.gtd-info .gtd-key {
 	color: #6E6E6E;
 	font-weight: bold;
 }
 
-#gtd-shortcut .gtd-icon {
+#gtd-shortcut .gtd-section.gtd-icon {
 	width: 32px;
-	height: 32px;
 	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAAYCAMAAADXqc3KAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAADlQTFRF////AID/AKqqAJnMAKrVAJXKAJvIAJnMAJjOAJrLAJjMAJnNAJnMAJnNAJnMAJnMAJnMAJnMAJnMzzBpKQAAABJ0Uk5TAAIDBQYYHDI+YpWipbHb7vL+zfmWtAAAAElJREFUKM9jYBhkgJ2HBbs4vxAXDnE+NqqLM3JgF2fiFuTEag4zrxBEBsN8FogMFnvBMljdA5IRwOpOoAx29wNlsIsDZVjpH40AhuwELZe5GlsAAAAASUVORK5CYII=);
 	background-repeat: no-repeat;
 	background-position:center; 
-	display: inline-block;
+	cursor: pointer;
 }
 
 
