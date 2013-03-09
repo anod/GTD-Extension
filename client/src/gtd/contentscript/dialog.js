@@ -78,11 +78,11 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	},
 	
 	_onLaterClick: function(noty) {
-		noty.close();
+		this.model.set('showDialog', false);
 	},
 	
 	_onDoItNowClick: function(noty) {
-		noty.close();
+		this.model.set('showDialog', false);
 	},
 	
 	_onApplyClick: function(noty) {
@@ -102,7 +102,7 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 			'suggestion' : s 
 		};
 		window.chrome.extension.sendMessage(message);
-		noty.close(); 
+		this.model.set('showDialog', false);
 	},
 	
 	_labelChange: function(e) {

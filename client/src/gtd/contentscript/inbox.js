@@ -31,6 +31,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 				this.dialog.render();
 			} else {
 				this.dialog.closeAll();
+				this._checkUrl();
 			}
 		}, this);
 		this.model.on('change:showSuggestion', function(model, value) {
