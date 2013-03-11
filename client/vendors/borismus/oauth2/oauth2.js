@@ -98,7 +98,7 @@ OAuth2.prototype.openAuthorizationCodePopup = function(callback) {
   window['oauth-callback'] = callback;
 
   // Create a new tab with the OAuth 2.0 prompt
-  chrome.tabs.create({url: this.adapter.authorizationCodeURL(this.getConfig())},
+  chrome.tabs.create({url: this.adapter.authorizationCodeURL(this.getConfig()), active: false},
   function(tab) {
     // 1. user grants permission for the application to access the OAuth 2.0
     // endpoint
@@ -163,7 +163,7 @@ OAuth2.prototype.getAccessAndRefreshTokens = function(authorizationCode, callbac
  * endpoints don't implement refresh tokens.
  *
  * @param {String} refreshToken A valid refresh token
- * @param {Function} callback On success, called with access token and expiry time
+ * @param {Function} callback On success, called with access token and expiry time and refresh token
  */
 OAuth2.prototype.refreshAccessToken = function(refreshToken, callback) {
   var xhr = new XMLHttpRequest();
@@ -174,7 +174,7 @@ OAuth2.prototype.refreshAccessToken = function(refreshToken, callback) {
         // Parse response with JSON
         var obj = JSON.parse(xhr.responseText);
         // Callback with the tokens
-        callback(obj.access_token, obj.expires_in);
+        callback(obj.access_token, obj.expires_in, obj.refresh_token);
       }
     }
   };
@@ -418,11 +418,12 @@ OAuth2.prototype.authorize = function(callback) {
     } else if (that.isAccessTokenExpired()) {
       // There's an existing access token but it's expired
       if (data.refreshToken) {
-        that.refreshAccessToken(data.refreshToken, function(at, exp) {
+        that.refreshAccessToken(data.refreshToken, function(at, exp, re) {
           var newData = that.get();
           newData.accessTokenDate = new Date().valueOf();
           newData.accessToken = at;
           newData.expiresIn = exp;
+          newData.refreshToken = re;
           that.setSource(newData);
           // Callback when we finish refreshing
           if (callback) {
