@@ -12,7 +12,9 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	initialize: function() {
 		this.model = new Backbone.Model({
 			'showDialog' : false,
-			'showSuggestion' : false,
+			'insideEmail' : false,
+			'openMsgId' : 0,
+			'iconClicked' : false,
 			'suggestion' : null,
 			'label' : 'GTD-NextAction',
 			'date' : '2013-05-01',
@@ -34,13 +36,15 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 				this._checkUrl();
 			}
 		}, this);
-		this.model.on('change:showSuggestion', function(model, value) {
+		
+		this.model.on('change:iconClicked',  function(model, value) {
 			if (value) {
-				this.shortcut.show();
-			} else {
-				this.shortcut.hide();
+				this._sendTabOpen();
+				this.model.set('iconClicked', false, {silent: true});
 			}
 		}, this);
+		
+		this.shortcut.show();
 
 	},
 	
@@ -54,16 +58,19 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	_checkUrl: function() {
 		var hash = document.location.hash;
 		if (!hash) {
+			this.model.set('insideEmail', false);
 			this._closeAll();
 			return false;
 		}
 		if (hash.length < 2) {
+			this.model.set('insideEmail', false);
 			this._closeAll();
 			return false;
 		}
 		// Detects #inbox/13bc733d5810f7ee in hash and extracts message id
 		var match = hash.match(/\/([0-9a-f]+)$/);
 		if (!match || match.length < 2) {
+			this.model.set('insideEmail', false);
 			this._closeAll();
 			return false;
 		}
@@ -72,9 +79,20 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			'action' : 'open',
 			'msgId' : msgId 
 		};
-		this.model.set('showSuggestion',true);
+		this.model.set('openMsgId', msgId);
+		this.model.set('insideEmail', true);
 		this.get('extension').sendMessage(message);
 		return true;
+	},
+	
+	_sendTabOpen: function() {
+		var msgId = (this.model.get('insideEmail')) ? this.model.get('openMsgId') : 0;
+		var message = {
+			'action' : 'openTab',
+			'msgId' : msgId 
+		};
+		console.log(message);
+		this.get('extension').sendMessage(message);
 	},
 	
 	_response: function(resp) {
@@ -89,12 +107,10 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	
 	_shortcutPress: function() {
 		this.model.set('showDialog', true);
-		this.model.set('showSuggestion', false);
 	},
 		
 	_closeAll: function() {
 		this.model.set('showDialog', false);
-		this.model.set('showSuggestion', false);
 	}
 	
 

@@ -22,6 +22,9 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 			this.get('context').trigger('suggestion:apply', suggestion);
 			return;
 		}
+		if (message.action == 'openTab') {
+			this._openTab(message.msgId);
+		}
 	},
 
 	_emailOpen: function(msgId, options) {
@@ -30,5 +33,13 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 	
 	_emailLoaded: function(suggestion, options) {
 		this.trigger('suggestion:show', suggestion, options);
+	},
+	
+	_openTab: function(msgId) {
+		var url = window.gtd.External.Api.ACTION_LINK + msgId;
+		this.get('context').get('chrome').tabs.create({
+			'url' : url,
+			'active' : true
+		});
 	}
 });

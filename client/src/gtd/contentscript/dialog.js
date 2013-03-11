@@ -47,8 +47,8 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		
 		this.$date.datepicker({
 			dateFormat: "yy-mm-dd",
-            inline: true,  
-            showOtherMonths: true
+			inline: true,  
+			showOtherMonths: true
 		});
 	},
 	

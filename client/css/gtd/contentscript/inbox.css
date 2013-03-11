@@ -131,8 +131,7 @@ textarea.span1 {
 	position: absolute;
 	margin-bottom:0;
 	bottom: 0;
-	display:none;
-	left: 45%;
+	left: 10px;
 	height: 32px;
 	box-shadow: none;
 	background-color: #DCDCDC;

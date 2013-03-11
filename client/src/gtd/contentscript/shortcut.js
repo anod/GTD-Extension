@@ -1,9 +1,16 @@
 "use strict";
 
 window.gtd.Contentscript.Shortcut = Backbone.View.extend({
-	$shortcut: null,
+	$icon: null,
 	initialize: function() {
 		_.bindAll(this, 'show', 'hide');
+		this.model.on('change:insideEmail', function(model, value) {
+			if (value) {
+		//		this._onEmailOpen();
+			} else {
+			//	this._onEmailClose();
+			}
+		}, this);
 	},
 	
 	show: function() {
@@ -17,7 +24,18 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 	
 	render: function() {
 		this.$el.html(this._template());
+		this.$icon = this.$el.find('.gtd-info');
+
+		$(document).on('click', this.$icon, _.bind(function() {
+			this.model.set('iconClicked', true);
+		},this));
+
 		
+		$('body').append(this.$el);
+		this.$el.find('#gtd-shortcut').show();
+	},
+	
+	_onEmailOpen: function() {
 		this.$el.hover(_.bind(function() {
 			this.$el.find('.gtd-info')
 				.delay(200)
@@ -33,16 +51,17 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 					width: '0px'
 				}, 500);
 		}, this));
-		
-		$('body').append(this.$el);
-		this.$el.find('#gtd-shortcut').show();
+	},
+	
+	_onEmailClose: function() {
+		this.$el.unbind('mouseenter mouseleave');
 	},
 	
 	_template: function() {
 		var html = '<div id="gtd-shortcut">' +
 			'<div>' +
-			'<div class="gtd-section gtd-icon" title="GTD Action" role="button" tabindex="0"><span class="Tq">&nbsp;</span></div>' +
-			'<div class="gtd-section gtd-info" title="Press shortcut to show action dialog">Press <span class="gtd-key">Shift+A</span> for action</div>' +
+			'<div class="gtd-section gtd-icon" title="Go to GTD site" role="button" tabindex="0"><span class="Tq">&nbsp;</span></div>' +
+			'<div class="gtd-section gtd-info" title="Press Shift+A to show action dialog">Press <span class="gtd-key">Shift+A</span> for action</div>' +
 			'</div>' +
 		'</div>'
 		;
