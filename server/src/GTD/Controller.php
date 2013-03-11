@@ -93,7 +93,7 @@ class Controller {
 		$this->email = $request['email'];
 		$this->token = $request['token'];
 		$this->action = $request['action'];
-		$this->msgid = hexdec($request['msgid']);
+		$this->msgid = \GTD\Math::bchexdec($request['msgid']);
 		$this->debug = isset($request['debug']) ? (bool)$request['debug'] : false;
 	}
 }
