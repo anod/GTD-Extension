@@ -44,7 +44,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			this.get('suggestions').add(suggestion);
 		} else {
 			this.get('context').get('logger').info('gtd.Analysis.NewEmail: Found similar ['+tags.join(',')+'] to ['+similarAction.get('tags').join(',')+']' );
-			this._applyAction(entry.get('id'), similarAction);
+			this._applyAction(entry.get('msgid'), similarAction);
 		}
 	},
 	
@@ -87,6 +87,6 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		//Save as action
 		var action = suggestion.get('action');
 		this.get('actions').add(action);
-		this._applyAction(suggestion.get('emailId'),action);
+		this._applyAction(suggestion.get('id'),action);
 	}
 });

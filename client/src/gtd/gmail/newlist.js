@@ -41,14 +41,12 @@ window.gtd.Gmail.NewList = Backbone.Collection.extend({
 		var models = [];
 		$.each($entries, function(key, value) {
 			var $entry = $(this);
-			var idArr = $entry.find("id").text().split(':');
 			var msgIdArr = $entry.find("link").attr("href").match(/message_id=([^&]+)/);
 			//<id>tag:gmail.google.com,2004:1417537161044037294</id>
 			//<link rel="alternate" href="http://mail.google.com/mail?account_id=alex.gavrishev@gmail.com&message_id=13bf68b802f7fce0&view=conv&extsrc=atom" type="text/html"/>
 
 			var $author = $entry.find("author");
 			models.push({
-				id: idArr[2],
 				msgid: msgIdArr[1],
 				title:  $entry.find("title").text(),
 				summary: $entry.find("summary").text(),

@@ -13,7 +13,6 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		var action = new window.gtd.Analysis.Action(json.action);
 		var suggestion = new window.gtd.Suggestion.Suggestion({
 			'id' : json.id,
-			'emailId' : json.emailId,
 			'action': action
 		});
 		return suggestion;
@@ -22,7 +21,6 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 	createSuggestion: function(entry, action) {
 		var suggestion = new window.gtd.Suggestion.Suggestion({
 			'id' : entry.get('msgid'),
-			'emailId' : entry.get('id'),
 			'action': action
 		});
 		return suggestion;

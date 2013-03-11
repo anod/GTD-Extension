@@ -1,7 +1,7 @@
 "use strict";
 
 window.gtd.Contentscript.Shortcut = Backbone.View.extend({
-	$icon: null,
+
 	initialize: function() {
 		_.bindAll(this, 'show', 'hide');
 		this.model.on('change:insideEmail', function(model, value) {
@@ -24,14 +24,13 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 	
 	render: function() {
 		this.$el.html(this._template());
-		this.$icon = this.$el.find('.gtd-info');
 
-		$(document).on('click', this.$icon, _.bind(function() {
+		$('body').append(this.$el);
+
+		$(document).on('click', 'div.gtd-info', _.bind(function() {
 			this.model.set('iconClicked', true);
 		},this));
-
 		
-		$('body').append(this.$el);
 		this.$el.find('#gtd-shortcut').show();
 	},
 	

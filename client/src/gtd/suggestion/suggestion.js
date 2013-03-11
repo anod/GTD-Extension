@@ -4,7 +4,6 @@ window.gtd.Suggestion.Suggestion = Backbone.Model.extend({
 	
 	defaults: {
 		id: "", //MsgId
-		emailId : 0,
 		action: null
 	},
 	
