@@ -6,9 +6,9 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		_.bindAll(this, 'show', 'hide');
 		this.model.on('change:insideEmail', function(model, value) {
 			if (value) {
-		//		this._onEmailOpen();
+				this._onEmailOpen();
 			} else {
-			//	this._onEmailClose();
+				this._onEmailClose();
 			}
 		}, this);
 	},
@@ -24,10 +24,11 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 	
 	render: function() {
 		this.$el.html(this._template());
-
+		
 		$('body').append(this.$el);
-
-		$(document).on('click', 'div.gtd-info', _.bind(function() {
+		
+		this.$el.on('click', 'div.gtd-icon', _.bind(function() {
+			console.log('icon clicked');
 			this.model.set('iconClicked', true);
 		},this));
 		
