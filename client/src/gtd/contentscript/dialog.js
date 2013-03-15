@@ -15,7 +15,7 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	$context: null,
 		
 	initialize: function() {
-		_.bindAll(this, '_onApplyClick', '_onDoItNowClick', '_onLaterClick' , '_labelChange', '_projectChange', '_contextChange', '_dateChange');
+		_.bindAll(this, '_onApplyClick', '_onDoItNowClick', '_onLaterClick' , '_labelChange', '_projectChange', '_contextChange', '_dateChange', '_onApplyArchiveClick');
 	},
 	
 	closeAll: function() {
@@ -52,6 +52,10 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		});
 	},
 	
+	highlight: function() {
+		this.$el.effect("highlight", { color: '#fff' });
+	},
+	
 	render: function() {
 		this._init();
 		this.$label.val(this.model.get('label'));
@@ -64,16 +68,19 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		var noty = this.notyPlugin(_.extend(defaultOptions,{
 			template: this.$el,
 			buttons: [
-				{ addClass: 'btn btn-primary T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Apply', onClick: this._onApplyClick },
-				{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Do it now', onClick: this._onDoItNowClick },
-				{ addClass: 'btn btn-information T-I J-J5-Ji Bq nS T-I-ax7 L3', text: 'Later', onClick: this._onLaterClick }
+				{ addClass: 'btn btn-primary', text: 'Do it now', onClick: this._onDoItNowClick },
+				{ addClass: 'btn btn-primary', text: 'Apply & Leave', onClick: this._onApplyClick },
+				{ addClass: 'btn btn-primary', text: 'Apply & Archive', onClick: this._onApplyArchiveClick }
 			]
 		}));
-		noty.$bar.css({ background: '#E7E7E7' });
+		noty.$bar.css({ 
+			'backgroundColor': '#DCDCDC',
+			'backgroundImage': '-webkit-linear-gradient(top,#DCDCDC,#f1f1f1)'
+		});
 		noty.$buttons.css({ 
 			borderTop: '1px solid #ccc',
-			backgroundColor: '#E7E7E7',
-			textAlign: 'center'
+			textAlign: 'center',
+			marginRight: '0'
 		});
 	},
 	
@@ -86,7 +93,22 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	},
 	
 	_onApplyClick: function(noty) {
-		var s = this.model.get('suggestion');
+		this._applyAction(false);
+	},
+	
+	_onApplyArchiveClick: function(noty) {
+		this._applyAction(true);
+	},
+	
+	_applyAction: function(archive) {
+		if (!this.model.get('insideEmail')) {
+			return;
+		}
+		var msgId = this.model.get('openMsgId');
+		var s = {
+			id: msgId,
+			action: {}
+		};
 		s.action.label    = this.model.get('label');
 		if (this._isCalendarSelected()) {
 			s.action.deadline = null;
@@ -99,7 +121,8 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		s.action.project  = this.model.get('project');
 		var message = {
 			'action' : 'apply',
-			'suggestion' : s 
+			'suggestion' : s ,
+			'archive' : archive
 		};
 		window.chrome.extension.sendMessage(message);
 		this.model.set('showDialog', false);

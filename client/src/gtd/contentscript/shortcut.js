@@ -28,8 +28,15 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		$('body').append(this.$el);
 		
 		this.$el.on('click', 'div.gtd-icon', _.bind(function() {
-			console.log('icon clicked');
 			this.model.set('iconClicked', true);
+		},this));
+		
+		this.$el.on('click', 'div.gtd-info', _.bind(function() {
+			if (this.model.get('showDialog')) {
+				this.model.set('highlightDialog', true);
+				return;
+			}
+			this.model.set('showDialog', true);
 		},this));
 		
 		this.$el.find('#gtd-shortcut').show();

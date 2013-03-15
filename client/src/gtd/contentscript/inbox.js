@@ -10,7 +10,9 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 	
 	initialize: function() {
+		_.bindAll(this,'_closeDialog', '_shortcutPress', '_message', '_closeAll');
 		this.model = new Backbone.Model({
+			'highlightDialog' : false,
 			'showDialog' : false,
 			'insideEmail' : false,
 			'openMsgId' : 0,
@@ -28,12 +30,18 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		this.shortcut = new window.gtd.Contentscript.Shortcut({
 			model: this.model
 		});
+		this.model.on('change:highlightDialog', function(model, value) {
+			if (value) {
+				this.dialog.highlight();
+				model.set('highlightDialog', false, {silent: true});
+				return;
+			}
+		}, this);
 		this.model.on('change:showDialog', function(model, value) {
 			if (value) {
 				this.dialog.render();
 			} else {
-				this.dialog.closeAll();
-				this._checkUrl();
+				this._closeDialog();
 			}
 		}, this);
 		
@@ -49,9 +57,15 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 	
 	run: function() {	
-		this.get('extension').onMessage.addListener(_.bind(this._message, this));
+		this.get('extension').onMessage.addListener(this._message);
 		$(window).on('hashchange', _.bind(this._checkUrl, this));
-		$(document).bind('keydown', 'shift+a', _.bind(this._shortcutPress, this));
+		$(document).bind('keydown', 'shift+a', this._shortcutPress);
+		$(document).bind('keydown', 'esc', this._closeAll);
+		this._checkUrl();
+	},
+	
+	_closeDialog: function() {
+		this.dialog.closeAll();
 		this._checkUrl();
 	},
 
@@ -106,6 +120,10 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 	
 	_shortcutPress: function() {
+		if (this.model.get('showDialog')) {
+			this.model.set('highlightDialog', true);
+			return;
+		}
 		this.model.set('showDialog', true);
 	},
 		
