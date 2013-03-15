@@ -1,7 +1,8 @@
 {
     "require": {
         "zendframework/zend-mail": "2.0.*",
-        "monolog/monolog": "1.4.0"
+        "monolog/monolog": "1.4.0",
+        "anod/gmail-imap" : "dev-master"
     },
 	"require-dev": {
         "phpunit/phpunit": "3.7.*"

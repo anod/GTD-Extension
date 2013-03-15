@@ -9,7 +9,6 @@ return array(
     'File_Iterator' => $baseDir . '/vendor/phpunit/php-file-iterator/File/Iterator.php',
     'File_Iterator_Facade' => $baseDir . '/vendor/phpunit/php-file-iterator/File/Iterator/Facade.php',
     'File_Iterator_Factory' => $baseDir . '/vendor/phpunit/php-file-iterator/File/Iterator/Factory.php',
-    'PHPTail' => $baseDir . '/vendor/php-tail/php-tail/PHPTail.php',
     'PHPUnit_Extensions_GroupTestSuite' => $baseDir . '/vendor/phpunit/phpunit/PHPUnit/Extensions/GroupTestSuite.php',
     'PHPUnit_Extensions_PhptTestCase' => $baseDir . '/vendor/phpunit/phpunit/PHPUnit/Extensions/PhptTestCase.php',
     'PHPUnit_Extensions_PhptTestCase_Logger' => $baseDir . '/vendor/phpunit/phpunit/PHPUnit/Extensions/PhptTestCase/Logger.php',

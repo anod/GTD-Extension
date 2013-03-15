@@ -20,7 +20,7 @@ class Controller {
 	private $msgid;
 	/**
 	 * 
-	 * @var \GTD\Gmail
+	 * @var \Anod\Gmail\Gmail
 	 */
 	private $gmail;
 	private $debug = false;
@@ -70,15 +70,15 @@ class Controller {
 			
 			return new OkResponse();
 		} elseif ($this->action == self::ACTION_CONTENT) {
-			$message = $this->gmail->getMessageUID($uid);
+			$message = $this->gmail->getMessageData($uid);
 			return new MessageResponse($message);
 		}
 		throw new ControllerException("Unknown action: '".$this->action."'");
 	}
 	
 	private function initLibraries() {
-		$protocol = new Imap($this->debug);
-		$this->gmail = new \GTD\Gmail($protocol);
+		$protocol = new \Anod\Gmail\Imap($this->debug);
+		$this->gmail = new \Anod\Gmail\Gmail($protocol);
 	}
 	
 	private function initRequest(array $request) {
@@ -98,7 +98,7 @@ class Controller {
 		$this->token = $request['token'];
 		$this->action = $request['action'];
 		$this->archive = isset($request['archive']) ? $request['archive'] : false;
-		$this->msgid = \GTD\Math::bchexdec($request['msgid']);
+		$this->msgid = \Anod\Math::bchexdec($request['msgid']);
 		$this->debug = isset($request['debug']) ? (bool)$request['debug'] : false;
 	}
 }

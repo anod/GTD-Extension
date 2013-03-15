@@ -14,4 +14,5 @@ return array(
     'Psr\\Log\\' => $vendorDir . '/psr/log/',
     'Monolog' => $vendorDir . '/monolog/monolog/src/',
     'GTD' => $baseDir . '/src/',
+    'Anod' => $vendorDir . '/anod/gmail-imap/src/',
 );

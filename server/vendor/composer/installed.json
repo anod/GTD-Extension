@@ -1,184 +1,5 @@
 [
     {
-        "name": "zendframework/zend-stdlib",
-        "version": "2.0.7",
-        "version_normalized": "2.0.7.0",
-        "target-dir": "Zend/Stdlib",
-        "dist": {
-            "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Stdlib-2.0.7.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "suggest": {
-            "pecl-weakref": "Implementation of weak references for Stdlib\\CallbackHandler"
-        },
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Zend\\Stdlib\\": ""
-            }
-        },
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": " ",
-        "homepage": "http://packages.zendframework.com/",
-        "keywords": [
-            "stdlib",
-            "zf2"
-        ],
-        "support": {
-            "email": "fw-general-subscribe@lists.zend.com",
-            "irc": "irc://irc.freenode.net/zftalk",
-            "issues": "https://github.com/zendframework/zf2/issues",
-            "source": "https://github.com/zendframework/zf2"
-        }
-    },
-    {
-        "name": "zendframework/zend-mime",
-        "version": "2.0.7",
-        "version_normalized": "2.0.7.0",
-        "target-dir": "Zend/Mime",
-        "dist": {
-            "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Mime-2.0.7.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "zendframework/zend-stdlib": "self.version"
-        },
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Zend\\Mime\\": ""
-            }
-        },
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": " ",
-        "homepage": "http://packages.zendframework.com/",
-        "keywords": [
-            "mime",
-            "zf2"
-        ],
-        "support": {
-            "email": "fw-general-subscribe@lists.zend.com",
-            "irc": "irc://irc.freenode.net/zftalk",
-            "issues": "https://github.com/zendframework/zf2/issues",
-            "source": "https://github.com/zendframework/zf2"
-        }
-    },
-    {
-        "name": "zendframework/zend-loader",
-        "version": "2.0.7",
-        "version_normalized": "2.0.7.0",
-        "target-dir": "Zend/Loader",
-        "dist": {
-            "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Loader-2.0.7.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "php": ">=5.3.3"
-        },
-        "suggest": {
-            "zendframework/zend-stdlib": "Zend\\Stdlib component"
-        },
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Zend\\Loader\\": ""
-            }
-        },
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": " ",
-        "homepage": "http://packages.zendframework.com/",
-        "keywords": [
-            "loader",
-            "zf2"
-        ],
-        "support": {
-            "email": "fw-general-subscribe@lists.zend.com",
-            "irc": "irc://irc.freenode.net/zftalk",
-            "issues": "https://github.com/zendframework/zf2/issues",
-            "source": "https://github.com/zendframework/zf2"
-        }
-    },
-    {
-        "name": "zendframework/zend-mail",
-        "version": "2.0.7",
-        "version_normalized": "2.0.7.0",
-        "target-dir": "Zend/Mail",
-        "dist": {
-            "type": "zip",
-            "url": "http://packages.zendframework.com/composer/Zend_Mail-2.0.7.zip",
-            "reference": null,
-            "shasum": null
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "zendframework/zend-loader": "self.version",
-            "zendframework/zend-mime": "self.version",
-            "zendframework/zend-stdlib": "self.version"
-        },
-        "suggest": {
-            "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
-            "zendframework/zend-validator": "Zend\\Validator component"
-        },
-        "type": "library",
-        "installation-source": "dist",
-        "autoload": {
-            "psr-0": {
-                "Zend\\Mail\\": ""
-            }
-        },
-        "license": [
-            "BSD-3-Clause"
-        ],
-        "description": "provides generalized functionality to compose and send both text and MIME-compliant multipart e-mail messages",
-        "homepage": "http://packages.zendframework.com/",
-        "keywords": [
-            "mail",
-            "zf2"
-        ],
-        "support": {
-            "email": "fw-general-subscribe@lists.zend.com",
-            "irc": "irc://irc.freenode.net/zftalk",
-            "issues": "https://github.com/zendframework/zf2/issues",
-            "source": "https://github.com/zendframework/zf2"
-        }
-    },
-    {
-        "name": "php-tail/php-tail",
-        "version": "1.0.0",
-        "version_normalized": "1.0.0.0",
-        "source": {
-            "type": "svn",
-            "url": "http://php-tail.googlecode.com/svn/",
-            "reference": "trunk/"
-        },
-        "type": "library",
-        "installation-source": "source",
-        "autoload": {
-            "classmap": [
-                "PHPTail.php"
-            ]
-        }
-    },
-    {
         "name": "psr/log",
         "version": "1.0.0",
         "version_normalized": "1.0.0.0",
@@ -280,6 +101,235 @@
             "log",
             "logging",
             "psr-3"
+        ]
+    },
+    {
+        "name": "zendframework/zend-loader",
+        "version": "2.0.8",
+        "version_normalized": "2.0.8.0",
+        "target-dir": "Zend/Loader",
+        "source": {
+            "type": "git",
+            "url": "git://github.com/zendframework/Component_ZendLoader.git",
+            "reference": "release-2.0.8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://packages.zendframework.com/composer/Zend_Loader-2.0.8.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "zendframework/zend-stdlib": "Zend\\Stdlib component"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Zend\\Loader\\": ""
+            }
+        },
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "description": " ",
+        "homepage": "http://packages.zendframework.com/",
+        "keywords": [
+            "loader",
+            "zf2"
+        ],
+        "support": {
+            "email": "fw-general-subscribe@lists.zend.com",
+            "irc": "irc://irc.freenode.net/zftalk",
+            "issues": "https://github.com/zendframework/zf2/issues",
+            "source": "https://github.com/zendframework/zf2"
+        }
+    },
+    {
+        "name": "zendframework/zend-stdlib",
+        "version": "2.0.8",
+        "version_normalized": "2.0.8.0",
+        "target-dir": "Zend/Stdlib",
+        "source": {
+            "type": "git",
+            "url": "git://github.com/zendframework/Component_ZendStdlib.git",
+            "reference": "release-2.0.8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://packages.zendframework.com/composer/Zend_Stdlib-2.0.8.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "php": ">=5.3.3"
+        },
+        "suggest": {
+            "pecl-weakref": "Implementation of weak references for Stdlib\\CallbackHandler"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Zend\\Stdlib\\": ""
+            }
+        },
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "description": " ",
+        "homepage": "http://packages.zendframework.com/",
+        "keywords": [
+            "stdlib",
+            "zf2"
+        ],
+        "support": {
+            "email": "fw-general-subscribe@lists.zend.com",
+            "irc": "irc://irc.freenode.net/zftalk",
+            "issues": "https://github.com/zendframework/zf2/issues",
+            "source": "https://github.com/zendframework/zf2"
+        }
+    },
+    {
+        "name": "zendframework/zend-mime",
+        "version": "2.0.8",
+        "version_normalized": "2.0.8.0",
+        "target-dir": "Zend/Mime",
+        "source": {
+            "type": "git",
+            "url": "git://github.com/zendframework/Component_ZendMime.git",
+            "reference": "release-2.0.8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://packages.zendframework.com/composer/Zend_Mime-2.0.8.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "zendframework/zend-stdlib": "self.version"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Zend\\Mime\\": ""
+            }
+        },
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "description": " ",
+        "homepage": "http://packages.zendframework.com/",
+        "keywords": [
+            "mime",
+            "zf2"
+        ],
+        "support": {
+            "email": "fw-general-subscribe@lists.zend.com",
+            "irc": "irc://irc.freenode.net/zftalk",
+            "issues": "https://github.com/zendframework/zf2/issues",
+            "source": "https://github.com/zendframework/zf2"
+        }
+    },
+    {
+        "name": "zendframework/zend-mail",
+        "version": "2.0.8",
+        "version_normalized": "2.0.8.0",
+        "target-dir": "Zend/Mail",
+        "source": {
+            "type": "git",
+            "url": "git://github.com/zendframework/Component_ZendMail.git",
+            "reference": "release-2.0.8"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://packages.zendframework.com/composer/Zend_Mail-2.0.8.zip",
+            "reference": null,
+            "shasum": null
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "zendframework/zend-loader": "self.version",
+            "zendframework/zend-mime": "self.version",
+            "zendframework/zend-stdlib": "self.version"
+        },
+        "suggest": {
+            "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
+            "zendframework/zend-validator": "Zend\\Validator component"
+        },
+        "type": "library",
+        "installation-source": "dist",
+        "autoload": {
+            "psr-0": {
+                "Zend\\Mail\\": ""
+            }
+        },
+        "license": [
+            "BSD-3-Clause"
+        ],
+        "description": "provides generalized functionality to compose and send both text and MIME-compliant multipart e-mail messages",
+        "homepage": "http://packages.zendframework.com/",
+        "keywords": [
+            "mail",
+            "zf2"
+        ],
+        "support": {
+            "email": "fw-general-subscribe@lists.zend.com",
+            "irc": "irc://irc.freenode.net/zftalk",
+            "issues": "https://github.com/zendframework/zf2/issues",
+            "source": "https://github.com/zendframework/zf2"
+        }
+    },
+    {
+        "name": "anod/gmail-imap",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/anod/gmail-imap-php.git",
+            "reference": "7f381c4a6f33f0b1a0adc3ae3a80534a36665617"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/7f381c4a6f33f0b1a0adc3ae3a80534a36665617",
+            "reference": "7f381c4a6f33f0b1a0adc3ae3a80534a36665617",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "zendframework/zend-mail": "2.0.*"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2013-03-15 22:05:49",
+        "type": "library",
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Anod": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alex Gavrishev",
+                "email": "alex.gavrishev@gmail.com"
+            }
+        ],
+        "description": "API to work with Gmail from IMAP built on top of Zend Imap Library",
+        "homepage": "http://github.com/anod/gmail-imap-php",
+        "keywords": [
+            "gmail",
+            "imap"
         ]
     }
 ]
