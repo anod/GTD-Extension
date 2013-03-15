@@ -79,6 +79,7 @@ class Controller {
 	private function initLibraries() {
 		$protocol = new \Anod\Gmail\Imap($this->debug);
 		$this->gmail = new \Anod\Gmail\Gmail($protocol);
+		$this->gmail->setId("GTD Gmail Extension","0.1","Alex Gavrishev","alex.gavrishev@gmail.com");
 	}
 	
 	private function initRequest(array $request) {
