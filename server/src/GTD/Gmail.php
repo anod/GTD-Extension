@@ -102,6 +102,16 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	}
 
 	/**
+	 * 
+	 * @param string $uid
+	 */
+	public function archive($uid) {
+		$folder = "[Gmail]/All Mail";
+		$repsonse = $this->protocol->requestAndResponse('UID COPY', array($uid, $this->protocol->escapeString($folder)), true);
+		var_dump($response);
+	}
+	
+	/**
 	 * @param string $uid
 	 * @param string $label
 	 */	

@@ -64,6 +64,10 @@ class Controller {
 				throw new ControllerException("Request missing parameter: label");
 			}
 			$this->gmail->applyLabel($uid, $label);
+			if ($this->archive) {
+				$this->gmail->archive($uid);
+			}
+			
 			return new OkResponse();
 		} elseif ($this->action == self::ACTION_CONTENT) {
 			$message = $this->gmail->getMessageUID($uid);
@@ -93,6 +97,7 @@ class Controller {
 		$this->email = $request['email'];
 		$this->token = $request['token'];
 		$this->action = $request['action'];
+		$this->archive = isset($request['archive']) ? $request['archive'] : false;
 		$this->msgid = \GTD\Math::bchexdec($request['msgid']);
 		$this->debug = isset($request['debug']) ? (bool)$request['debug'] : false;
 	}
