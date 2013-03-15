@@ -35,7 +35,7 @@ class MessageResponse extends AbstractResponse{
 			'body' => $body,
 			'from' => $this->message->getHeader('from', 'string'),
 			'to' => $this->message->getHeader('to', 'string'),
-			'thrid' => \GTD\Math::bcdechex($this->message->getHeader('x-gm-thrid', 'string'))
+			'thrid' => \Anod\Gmail\Math::bcdechex($this->message->getHeader('x-gm-thrid', 'string'))
 		);
 	}
 	

@@ -98,7 +98,7 @@ class Controller {
 		$this->token = $request['token'];
 		$this->action = $request['action'];
 		$this->archive = isset($request['archive']) ? $request['archive'] : false;
-		$this->msgid = \Anod\Math::bchexdec($request['msgid']);
+		$this->msgid = \Anod\Gmail\Math::bchexdec($request['msgid']);
 		$this->debug = isset($request['debug']) ? (bool)$request['debug'] : false;
 	}
 }
