@@ -106,10 +106,17 @@ class Gmail extends \Zend\Mail\Storage\Imap {
 	 * @param string $uid
 	 */
 	public function archive($uid) {
-		$items = array('-FLAGS', '(\Inbox)');
-		$itemList = $this->protocol->escapeList($items);
-		$repsonse = $this->protocol->requestAndResponse('UID STORE', array($uid, $this->protocol->escapeString($folder)), true);
-		var_dump($response);
+		//1st veryfi that email in all mail folder
+		$folder = $this->protocol->escapeString("[Gmail]/All Mail");
+		$copy_response = $this->protocol->requestAndResponse('UID COPY', array($uid, $folder), true);
+		if ($copy_response) {
+			//Flag as deleted in inbox
+			$items = array('\Deleted');
+			$itemList = $this->protocol->escapeList($items);
+			$response = $this->protocol->requestAndResponse('UID STORE', array($uid, '+FLAGS', $itemList), true);
+			return $response;
+		}
+		return null;
 	}
 	
 	/**
