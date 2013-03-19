@@ -37,7 +37,7 @@ window.gtd.Application = Backbone.Model.extend({
 	},
 	
 	_applyLabel: function(emailId, action) {
-		this.get('imap').applyLabel(emailId, action.get('label'));
+		this.get('imap').applyLabel(emailId, action.get('label'), action.get('archive'));
 	},
 	
 	_notifyList: function(collection) {

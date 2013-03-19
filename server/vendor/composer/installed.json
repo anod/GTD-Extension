@@ -292,12 +292,12 @@
         "source": {
             "type": "git",
             "url": "https://github.com/anod/gmail-imap-php.git",
-            "reference": "8e60f79f5251420945c93a95de867aeb77449cfa"
+            "reference": "cec40901ebd6541d3552d9d74fd89cb4712658c2"
         },
         "dist": {
             "type": "zip",
-            "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/8e60f79f5251420945c93a95de867aeb77449cfa",
-            "reference": "8e60f79f5251420945c93a95de867aeb77449cfa",
+            "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/cec40901ebd6541d3552d9d74fd89cb4712658c2",
+            "reference": "cec40901ebd6541d3552d9d74fd89cb4712658c2",
             "shasum": ""
         },
         "require": {
@@ -307,7 +307,7 @@
         "require-dev": {
             "phpunit/phpunit": "3.7.*"
         },
-        "time": "2013-03-15 22:08:33",
+        "time": "2013-03-15 22:26:03",
         "type": "library",
         "installation-source": "source",
         "autoload": {

@@ -119,10 +119,10 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		}
 		s.action.context  = this.model.get('context');
 		s.action.project  = this.model.get('project');
+		s.action.archive = archive;
 		var message = {
 			'action' : 'apply',
-			'suggestion' : s ,
-			'archive' : archive
+			'suggestion' : s
 		};
 		window.chrome.extension.sendMessage(message);
 		this.model.set('showDialog', false);

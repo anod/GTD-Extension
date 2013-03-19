@@ -17,6 +17,7 @@ window.gtd.Analysis.Action = Backbone.Model.extend({
 		start_date: '',
 		context: '',
 		name: '',
+		archive: false,
 		//
 		author_name: '',
 		author_email: '',
