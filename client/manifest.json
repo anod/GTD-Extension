@@ -4,7 +4,9 @@
 		"page": "views/background.html"
 	},
 	"browser_action": {
-		"default_icon": "graphics/icon_128.png"
+		"default_icon": "graphics/icon_128.png",
+		"default_title": "__MSG_gmailcheck_name__",
+		"default_popup": "views/settings.html"
 	},
 	"default_locale": "en",
 	"description": "__MSG_gmailcheck_description__",
@@ -12,7 +14,7 @@
 		"128": "graphics/icon_128.png"
 	},
 	"name": "__MSG_gmailcheck_name__",
-	"options_page": "views/options.html",
+	"options_page": "views/settings.html",
 	"permissions": [
 		"alarms",
 		"tabs",
