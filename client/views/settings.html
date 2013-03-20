@@ -1,68 +1,50 @@
 <html>
 <head>
 <title>GTD GMail Extension Settings</title>
-<style>
-body {
-  font-family:helvetica, arial, sans-serif;
-  font-size:80%;
-  margin:10px;
-}
-
-#header {
-  padding-bottom:1.5em;
-  padding-top:1.5em;
-}
-
-#header h1 {
-  font-size: 156%;
-  display:inline;
-  padding-bottom:43px;
-  padding-left:75px;
-  padding-top:40px;
-  background:url(../graphics/icon_128.png) no-repeat;
-  background-size:67px;
-  background-position:1px 18px;
-}
-
-.section-header {
-  background:#ebeff9;
-  border-top:1px solid #b5c7de;
-  font-size:99%;
-  padding:3px 0 2px 5px;
-  font-weight:bold;
-  margin-bottom:1em;
-  margin-top:4em;
-}
-
-.section-header.first {
-  margin-top:1em;
-}
-
-#custom-domain {
-  width:300px;
-  margin-left:2px;
-}
-
-#footer {
-  margin-top:4em;
-}
-</style>
-<script src="../src/options.js"></script>
+<link href="../css/holo.css" rel="stylesheet" type="text/css"/>
+<link href="../css/gtd/settings.css" rel="stylesheet" type="text/css"/>
 </head>
-<body>
+<body class="holo holo-light">
+<div id="accent" class="holo-accent-blue">
 
-<div id="header"><h1>GTD GMail Extension Options</h1></div>
+<div class="holo-action-bar">
+	<h1>GTD Extension Settings</h1>
+		<div class="holo-switch gtd-mode">
+			<input type="checkbox" checked id="dark"/><label class="holo-label" for="dark"></label>
+		</div>
 
-<div class="section-header first">Custom Domain</div>
-<p>To use Google Mail checker with Google Apps for Your Domain, enter the domain here.
-<p>
-  https://mail.google.com/<input type="text" id="custom-domain">
-    <em>(eg a/mydomain.com)</em>
-
-<div id="footer">
-  <button id="save-button" style="font-weight:bold">Save</button>
-  <button id="cancel-button">Cancel</button>
 </div>
 
+<ul class="holo-list">
+	<li>
+		<div class="holo-switch">
+			<input type="checkbox" checked id="enabled"/>
+			<label class="holo-label" for="enabled">Enabled</label>
+		</div>
+		<div class="holo-switch">
+			<input type="checkbox" checked id="auto-actions"/>
+			<label class="holo-label" for="auto-actions">Auto actions</label>
+		</div>
+	</li>
+</ul>
+<h2 class="holo-divider">Previous decisions</h2>
+<ul class="holo-list gtd-box">
+	<li>Item 1</li>
+	<li>Item 2</li>
+	<li><a href="#">Link to nowhere</a></li>
+	<li>Item 3</li>
+	<li>Item 4</li>
+</ul>
+<h2 class="holo-divider">Patterns</h2>
+<ul class="holo-list gtd-box">
+	<li>Item 1</li>
+	<li>Item 2</li>
+	<li><a href="#">Link to nowhere</a></li>
+	<li>Item 3</li>
+	<li>Item 4</li>
+</ul>
+<div class="holo-buttons gtd-close">
+	<button class="holo-button">Close</button>
+</div>
 </body>
 </html>

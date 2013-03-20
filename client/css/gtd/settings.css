@@ -1,0 +1,70 @@
+
+body {
+	min-width: 600px;
+}
+
+.holo-action-bar h1 {
+	padding: 0 16px;
+}
+
+.holo-switch {
+	height: 42px;
+	 
+}
+
+.holo-switch.gtd-mode label:before,
+.holo-switch.gtd-mode label:after {
+	width: 80px;
+	padding: 0;
+	position: absolute;
+	top: 0;
+}
+.holo-switch.gtd-mode label:before {
+	right: 20px;
+}
+.holo-switch.gtd-mode label:after {
+	right: 100px;
+}
+
+.holo-switch.gtd-mode label:after { 
+	content:"BASIC";
+	color: white;
+}
+.holo-switch.gtd-mode label:before { 
+	content:"ADVANCED";
+	color: #848484; 
+	font-size: 10px;
+}
+
+.holo-switch.gtd-mode :checked + label:after { 
+	content:"BASIC";
+	color: #848484;
+}
+.holo-switch.gtd-mode :checked + label:before { 
+	content:"ADVANCED"; 
+	background:#DF7782;
+	color: white;
+	font-size: 10px;
+}
+
+.holo-switch.gtd-mode .holo-label {
+	display: inline-block;
+	height: 0;
+	margin: 0;
+	padding: 0;
+}
+
+.holo-list.gtd-box {
+	border: 1px solid #BBB;
+	margin: 10px 20px;
+	height:150px;
+	overflow: auto;
+}
+.holo-buttons.gtd-close {
+	display:block;
+}
+
+.holo-buttons.gtd-close button {
+	float:right;
+}
+
