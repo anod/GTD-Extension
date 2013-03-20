@@ -74,6 +74,7 @@ window.gtdBootstrap = {
 					{ keyPath: 'label', name: 'label', unique: false, multiEntry: false }
 				]},
 				{ name: 'settings', keyPath: 'id' },
+				{ name: 'patterns', keyPath: 'id' },
 				{ name: 'suggestions', keyPath: 'id'}
 			]
 		};
