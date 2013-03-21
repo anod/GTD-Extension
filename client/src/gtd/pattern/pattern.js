@@ -9,9 +9,12 @@ window.gtd.Pattern.Pattern = Backbone.Model.extend({
 	
 	defaults : {
 		/* id: -1, */
-		'match' : null,
+		'from' : null,
+		'subject' : null,
+		'summary' : null,
+		'content' : null,
 		'type' : null,
-		'attribute': null
+		'action': null
 	}
 	
 });
