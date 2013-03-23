@@ -16,7 +16,6 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.PROJECT_NAME, 'type' : 1, 'insensitive' : true },
 		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.ACTION, 'type' : 2, 'insensitive' : true },
 		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.CONTEXT, 'type' : 4, 'insensitive' : true }
-		
 	],
 	
 	initialize: function(model, options) {
@@ -91,11 +90,10 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		if (!dateStr) {
 			return null;
 		}
+		var date = null;
 		dateStr = dateStr.toLowerCase().replace(' ','');
 		if  (dateStr == "weekend" || dateStr == "thisweekend") {
-			var curr = new Date(); // get current date
-			var weekendStart = curr.getDate() - curr.getDay() + 5; // First day is the day of the month - the day of the week
-			var firstday = new Date(curr.setDate(first));
+			date = this.context.get('dateutils').getThisWeekend();
 		}
 	},
 	

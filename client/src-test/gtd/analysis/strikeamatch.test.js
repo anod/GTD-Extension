@@ -27,7 +27,7 @@ new TestCase("Analysis.StrikeAMatch", {
 	
 	testReal: function() {
 		var tags = ['alex','amazon','app','app','remov','request','thank','write'];
-		var atags = ['84156061','alex','amazon','app','app','case','contact','distribut','gavrishev','m2cmfdkpef4kqp','portal','remov','request','request_app_withdraw','thank','write']
+		var atags = ['84156061','alex','amazon','app','app','case','contact','distribut','gavrishev','m2cmfdkpef4kqp','portal','remov','request','request_app_withdraw','thank','write'];
 		var actual = this.strikeamatch.compare(tags, atags);
 		console.log(actual);
 	}
