@@ -120,6 +120,9 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 	
 	_shortcutPress: function() {
+		if (!this.model.get('insideEmail')) {
+			return;
+		}
 		if (this.model.get('showDialog')) {
 			this.model.set('highlightDialog', true);
 			return;

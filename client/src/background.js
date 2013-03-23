@@ -3,13 +3,17 @@
 window.gtdBootstrap = {
 	app: null,
 	
-	init: function() {
-		window.oauth.authorize(function() {
+	authorize: function() {
+		window.oauth.authorize(_.bind(function() {
 			console.log("Authorize - Token:" + window.oauth.getAccessToken());
-		});
-		
+			this.init();
+		}, this));
+	},
+	
+	init: function() {
+
 		var db = this._initDb();
-		var settings = new window.gtd.Settings.Settings({},{ 'db': db });
+		var settings = new window.gtd.Settings.Settings({},{ 'db': db, 'localStorage' : window.localStorage });
 	
 		var context = new window.gtd.Context({
 			'$' : window.$,
@@ -24,13 +28,19 @@ window.gtdBootstrap = {
 		
 		var userinfo = new window.gtd.Gmail.UserInfo({}, { 'context' : context });
 		context.set('userinfo', userinfo);
+
+		var tagfilter = new window.gtd.Analysis.TagFilter({ 'context': context, 'userinfo' : userinfo });
+		context.set('tagfilter', tagfilter);
 		
 		var imap = new window.gtd.Gmail.Imap({ 'context': context, 'oauth': window.oauth });
 		context.set('imap', imap);
 		
 		var suggestions = new window.gtd.Suggestion.SuggestionCollection([], { 'context': context });
 		context.set({'suggestions' : suggestions});
-		
+
+		var patterns = new window.gtd.Pattern.PatternCollection([], { 'context': context });
+		context.set({'patterns' : patterns});
+
 		var router = new window.gtd.Suggestion.Router({
 			'context': context,
 			'suggestions': context.get('suggestions')
@@ -43,7 +53,9 @@ window.gtdBootstrap = {
 			'actions' : context.get('actions'),
 			'suggestions' : context.get('suggestions'),
 			'termextraction': context.get('termextraction'),
-			'strikeamatch': context.get('strikeamatch')
+			'strikeamatch': context.get('strikeamatch'),
+			'tagfilter' : context.get('tagfilter'),
+			'patterns' : context.get('patterns')
 		}));
 		context.set('router', router);
 		context.set('notifier', new window.gtd.External.Notifier({ 'context' : context, 'imap' : imap  }));
@@ -57,6 +69,9 @@ window.gtdBootstrap = {
 			'router'   : context.get('router')
 		});
 		context.set('app', this.app);
+		
+		settings.set('firstTime' , false);
+		
 		this.app.runBackground();
 	},
 
@@ -66,6 +81,11 @@ window.gtdBootstrap = {
 		}
 	},
 
+	/**
+	 * Create and initialize the database. Depending on platform, this will
+	 * create IndexedDB or WebSql or even localStorage storage mechanism.
+	 * @return {ydn.db.Storage} 
+	 */
 	_initDb: function() {
 		var schema = {
 			stores : [
@@ -74,18 +94,13 @@ window.gtdBootstrap = {
 					{ keyPath: 'label', name: 'label', unique: false, multiEntry: false }
 				]},
 				{ name: 'settings', keyPath: 'id' },
-				{ name: 'patterns', keyPath: 'id' },
-				{ name: 'suggestions', keyPath: 'id'}
+				{ name: 'patterns', keyPath: 'id', autoIncrement: true },
+				{ name: 'suggestions', keyPath: 'id' },
+				{ name: 'tested', keyPath: 'id'}
 			]
 		};
 	
-		/**
-		 * Create and initialize the database. Depending on platform, this will
-		 * create IndexedDB or WebSql or even localStorage storage mechanism.
-		 * @type {ydn.db.Storage}
-		 */
 		var db = new window.ydn.db.Storage('gtd', schema, { mechanisms: ["indexeddb"] });
-
 		return db;
 	},
 	
@@ -97,5 +112,5 @@ window.gtdBootstrap = {
 };
 
 _.bindAll(window.gtdBootstrap);
-document.addEventListener('DOMContentLoaded', window.gtdBootstrap.init);
+document.addEventListener('DOMContentLoaded', window.gtdBootstrap.authorize);
 window.chrome.browserAction.onClicked.addListener(window.gtdBootstrap.refresh);

@@ -14,7 +14,7 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 
 		var db = this.context.get('db');
 		var range = window.ydn.db.KeyRange.bound(tags[0], tags[tags.length-1]);
-		var iter = new window.ydn.db.KeyIterator(this.STORE_NAME, 'tags', range);
+		var iter = new window.ydn.db.Iterator(this.STORE_NAME, 'tags', range);
 		var keysHash = {};
 		var keys = [];
 		var i=0;
@@ -33,7 +33,7 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		
 		req.done(_.bind(function() {
 			if (keys.length > 0) {
-				db.list(this.STORE_NAME, keys).done(_.bind(function(results) {
+				db.values(this.STORE_NAME, keys).done(_.bind(function(results) {
 					this.trigger('search:result',results,entry, tags);
 				},this));
 			} else {

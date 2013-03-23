@@ -5,7 +5,10 @@ window.gtd.Gmail.UserInfo = Backbone.Model.extend({
 	defaults: {
 		"id": null,
 		"email": null,
-		"verified_email": false
+		"verified_email": false,
+		"name": null,
+		"given_name" : null,
+		"family_name" : null
 	},
 	context: null,
 

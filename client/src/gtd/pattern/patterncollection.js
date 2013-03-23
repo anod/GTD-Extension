@@ -2,21 +2,51 @@
 
 window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	STORE_NAME: 'patterns',
+	
+	TYPE_DATE: 0,
+	TYPE_PROJECT_NAME: 1,
+	TYPE_ACTION: 2,
+	TYPE_SKIP_ACTION: 3,
+	TYPE_CONTEXT: 4,
+	
 	context: null,
+	
+	_initPatterns: [
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.DATE, 'type' : 0 , 'insensitive': true},
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.PROJECT_NAME, 'type' : 1, 'insensitive' : true },
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.ACTION, 'type' : 2, 'insensitive' : true },
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.CONTEXT, 'type' : 4, 'insensitive' : true }
+		
+	],
 	
 	initialize: function(model, options) {
 		this.context = options.context;
+		if (this.context.get('settings').get('firstTime')) {
+			this._initializeDb();
+		}
 	},
 	
-	match: function(entry) {
+	_initializeDb: function() {
+		var db = this.context.get('db');
+		_.each(this._initPatterns, function(plain) {
+			db
+			.add(this.STORE_NAME, plain)
+			.fail(_.bind(function(error) {
+				this.context.get('logger').exception(error);
+			}, this));
+		}, this);
+
+	},
+	
+	fillAction: function(entry, action) {
 		var db = this.context.get('db');
 		db.values(this.STORE_NAME).done(_.bind(function(records) {
 			_.each(records, function(json) {
 				var pattern = new window.gtd.Pattern.Pattern(json);
 				if (this._testPattern(pattern, entry)) {
-					this._applyPattern(pattern, entry);
+					this._applyPattern(pattern, entry, action);
 				}
-			});
+			}, this);
 		}, this));
 		
 	},
@@ -47,7 +77,7 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}, this));
 	},
 	
-	_applyPattern: function(pattern, entry) {
+	_applyPattern: function(pattern, entry, action) {
 		
 	},
 	

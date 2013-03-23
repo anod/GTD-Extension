@@ -1,13 +1,16 @@
 "use strict";
 
 window.gtd.Analysis.NewEmail = Backbone.Model.extend({
-	MIN_TAGS_LENGTH: 2,
+	MIN_TAGS_LENGTH: 1,
+	RANK_EQUALS: 1.0,
+	RANK_MATCHED: 0.7,
 	defaults : {
 		context: null,
 		termextraction: null,
 		suggestions: null,
 		actions: null,
-		strikeamatch: null
+		strikeamatch: null,
+		tagfilter: null
 	},
 	
 	initialize: function(attributes, options) {
@@ -23,10 +26,11 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			return;
 		}
 		var text = entry.get('title') + "\n" + entry.get('summary');
-		var tags2 = this.get('termextraction').extract(text);
+		var tags = this.get('termextraction').extract(text);
+		tags = this.get('tagfilter').filter(tags);
 		
-		if (tags2.length > this.MIN_TAGS_LENGTH) {
-			this.get('actions').search(entry,tags2);
+		if (tags.length > this.MIN_TAGS_LENGTH) {
+			this.get('actions').search(entry,tags);
 		}
 	},
 	
@@ -38,12 +42,18 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		}
 
 		if (similarAction === null) {
-			this.get('context').get('logger').info('Analysis.NewEmail: Store suggestion ['+tags.join(',')+']' );
+			this.get('context').get('logger').info(
+				'Analysis.NewEmail: Store suggestion ['+tags.join(',')+']'
+			);
 			var action = this.get('actions').createAction(entry, tags);
 			var suggestion = this.get('suggestions').createSuggestion(entry, action);
+			this.get('patterns').fillAction(entry, action);
 			this.get('suggestions').add(suggestion);
 		} else {
-			this.get('context').get('logger').info('gtd.Analysis.NewEmail: Found similar ['+tags.join(',')+'] to ['+similarAction.get('tags').join(',')+']' );
+			this.get('context').get('logger').info(
+				'gtd.Analysis.NewEmail: Found similar ['+tags.join(',')+'] to ['+similarAction.get('tags').join(',')+']'
+			);
+//			this.get('patterns').fillAction(entry, similarAction);
 			this._applyAction(entry.get('msgid'), similarAction);
 		}
 	},
@@ -60,7 +70,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 				'Similarity = ' + rank +
 				', action.tags: [' + action.tags.join(',') + '] '
 			);
-			if (rank == 1.0) { //Equals
+			if (rank == this.RANK_EUQALS) { //Equals
 				similarAction = action;
 				similarityRank = rank;
 				return true;
@@ -70,7 +80,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			}
 			return false;
 		}, this);
-		if (similarityRank < 0.7) {
+		if (similarityRank < this.RANK_MATCHED) {
 			return null;
 		}
 		if (similarAction === null) {
