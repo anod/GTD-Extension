@@ -109,14 +109,8 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 			id: msgId,
 			action: {}
 		};
-		s.action.label    = this.model.get('label');
-		if (this._isCalendarSelected()) {
-			s.action.deadline = null;
-			s.action.start_date = this.model.get('date');
-		} else {
-			s.action.deadline = this.model.get('date');
-			s.action.start_date = null;
-		}
+		s.action.label = this.model.get('label');
+		s.action.date = this.model.get('date');
 		s.action.context  = this.model.get('context');
 		s.action.project  = this.model.get('project');
 		s.action.archive = archive;

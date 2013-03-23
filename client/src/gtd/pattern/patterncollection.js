@@ -78,17 +78,43 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	},
 	
 	_applyPattern: function(pattern, entry, action) {
-		
+		var type = pattern.get('type');
+		if (type == this.TYPE_DATE) {
+			var match = pattern.get('data');
+			var date = this._matchToDate(match);
+			console.log(pattern.get('data'));
+		}
+	},
+	
+	_matchToDate: function(match) {
+		var dateStr = match[0];
+		if (!dateStr) {
+			return null;
+		}
+		dateStr = dateStr.toLowerCase().replace(' ','');
+		if  (dateStr == "weekend" || dateStr == "thisweekend") {
+			var curr = new Date(); // get current date
+			var weekendStart = curr.getDate() - curr.getDay() + 5; // First day is the day of the month - the day of the week
+			var firstday = new Date(curr.setDate(first));
+		}
+	},
+	
+	_getModifiers: function(pattern) {
+		if (pattern.get('insensitive')) {
+			return 'i';
+		}
+		return '';
 	},
 	
 	_testPattern: function(pattern, entry) {
 		var patt = null;
 		var result = null;
 		var data = [];
+		var modifiers = this._getModifiers(pattern);
 		if (pattern.get('from')) {
 			var fromName = entry.get('author_name');
 			var fromEmail = entry.get('author_email');
-			patt = new RegExp(pattern.get('from'));
+			patt = new RegExp(pattern.get('from'), modifiers);
 			var res1 = patt.exec(fromName);
 			var res2 = patt.exec(fromEmail);
 			if (!res1 && !res2) {
@@ -103,7 +129,7 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}
 		if (pattern.get('content')) {
 			var content = entry.get('title') + " " + entry.get('summary');
-			patt = new RegExp(pattern.get('content'),'g');
+			patt = new RegExp(pattern.get('content'),modifiers+'g');
 			result = patt.exec(content);
 			if (!result) {
 				return false;
@@ -115,7 +141,7 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		} else {
 			if (pattern.get('subject')) {
 				var subject = entry.get('title');
-				patt = new RegExp(pattern.get('subject'),'g');
+				patt = new RegExp(pattern.get('subject'),modifiers+'g');
 				result = patt.exec(subject);
 				if (!result) {
 					return false;
@@ -126,7 +152,7 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 			}
 			if (pattern.get('summary')) {
 				var summary = entry.get('summary');
-				patt = new RegExp(pattern.get('summary'),'g');
+				patt = new RegExp(pattern.get('summary'),modifiers+'g');
 				result = patt.exec(summary);
 				if (!result) {
 					return false;

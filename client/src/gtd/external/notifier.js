@@ -20,6 +20,16 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 	},
 	
 	_createRequest: function(emailId, email, action) {
+		
+		var labelId = this._labelToId(action.get('label'));
+		var start_date = '';
+		var deadline = '';
+		if (labelId == window.gtd.External.Api.Consts.DELAYED_LABEL_ID) {
+			start_date = action.get('date');
+		} else {
+			deadline = action.get('date');		
+		}
+		
 		var params = {
 			'user_id' : this.get('context').get('userinfo').get('email'),
 			'sender_address' : email.from,
@@ -27,11 +37,11 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 			'subject' : email.subject,
 			'content' : email.body,
 			'thread_id' : email.thrid,
-			'label' : this._labelToId(action.get('label')),
+			'label' : labelId,
 			'project': action.get('project'),
 			'context': action.get('context'),
-			'deadline': action.get('deadline'),
-			'start_date': action.get('start_date'),
+			'deadline': deadline,
+			'start_date': start_date,
 			'priority' : window.gtd.External.Api.Consts.NO_PRIORITY
 		};
 		
