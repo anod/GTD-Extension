@@ -24,7 +24,7 @@ window.gtdBootstrap = {
 			'gmail'    : new window.gtd.Gmail.NewList([], { 'oauth': window.oauth }),
 			'termextraction': new window.gtd.Analysis.TermExtraction(),
 			'strikeamatch': new window.gtd.Analysis.StrikeAMatch(),
-			'dateutils' : new window.gtd.Utils.Date()
+			'dateutils' : new window.gtd.Utils.DateUtils()
 		});
 		
 		var userinfo = new window.gtd.Gmail.UserInfo({}, { 'context' : context });
