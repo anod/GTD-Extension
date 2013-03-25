@@ -46,6 +46,7 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 					this._applyPattern(pattern, entry, action);
 				}
 			}, this);
+			this.context.trigger('patterns:fill', entry, action);
 		}, this));
 		
 	},
@@ -78,11 +79,63 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	
 	_applyPattern: function(pattern, entry, action) {
 		var type = pattern.get('type');
+		var matches = pattern.get('data');
+		var match = matches[0];
+		console.log("Matched", type, match);
 		if (type == this.TYPE_DATE) {
-			var match = pattern.get('data');
 			var date = this._matchToDate(match);
-			console.log(pattern.get('data'));
+			if (date !== null) {
+				action.set('date', date);
+			}
+		} else if (type == this.TYPE_PROJECT_NAME) {
+			action.set('project', this._matchToProject(match));
+		} else if (type == this.TYPE_ACTION) {
+			action.set('label', this._matchToAction(match));
+		} else if (type == this.TYPE_CONTEXT) {
+			action.set('context', this._matchToContext(match));
 		}
+	},
+
+	_matchToProject: function(match) {
+		var prjStr = match[0];
+		if (!prjStr) {
+			return "";
+		}
+		
+		return prjStr.replace(/\bproject\s+/i,'');
+		
+	},
+	
+	_matchToContext: function(match) {
+		var ctxStr = match[0];
+		if (!ctxStr) {
+			return "";
+		}
+		if (ctxStr.indexOf('context ') === 0) {
+			return ctxStr.replace(/\bcontext\s+/i,'');
+		}
+		//youtube.com
+		return 'Video';
+	},
+	
+	_matchToAction: function(match) {
+		var actStr = match[0];
+		if (!actStr) {
+			return "";
+		}
+		actStr = actStr.toLowerCase().replace(' ','');
+		if  (actStr == "nextaction") {
+			return window.gtd.Label.NEXT_ACTION;
+		} else if (actStr == "project") {
+			return window.gtd.Label.PROJECT;
+		} else if (actStr == "waitingfor") {
+			return window.gtd.Label.WAITINGFOR;
+		} else if (actStr == "calendar") {
+			return window.gtd.Label.CALENDAR;
+		} else if (actStr == "someday") {
+			return window.gtd.Label.SOMEDAY;
+		}
+		return "";
 	},
 	
 	_matchToDate: function(match) {

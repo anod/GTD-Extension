@@ -16,6 +16,8 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	initialize: function(attributes, options) {
 		this.get('context').on('suggestion:apply', this._applySuggestion, this);
 		this.get('actions').on('search:result', this._searchResult, this);
+		this.get('context').on('patterns:fill', this._onActionFill, this);
+
 	},
 	
 	analyse: function(entry) {
@@ -46,9 +48,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 				'Analysis.NewEmail: Store suggestion ['+tags.join(',')+']'
 			);
 			var action = this.get('actions').createAction(entry, tags);
-			var suggestion = this.get('suggestions').createSuggestion(entry, action);
 			this.get('patterns').fillAction(entry, action);
-			this.get('suggestions').add(suggestion);
 		} else {
 			this.get('context').get('logger').info(
 				'gtd.Analysis.NewEmail: Found similar ['+tags.join(',')+'] to ['+similarAction.get('tags').join(',')+']'
@@ -56,6 +56,11 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 //			this.get('patterns').fillAction(entry, similarAction);
 			this._applyAction(entry.get('msgid'), similarAction);
 		}
+	},
+	
+	_onActionFill: function(entry, action) {
+		var suggestion = this.get('suggestions').createSuggestion(entry, action);
+		this.get('suggestions').add(suggestion);
 	},
 	
 	_maxSimilarity: function(similarList, tags) {

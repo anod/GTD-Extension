@@ -19,9 +19,9 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			'iconClicked' : false,
 			'suggestion' : null,
 			'label' : 'GTD-NextAction',
-			'date' : '2013-05-01',
-			'context' : 'Study',
-			'project' : 'GTD',
+			'date' : '',
+			'context' : '',
+			'project' : '',
 			'priority' : ''
 		});
 		this.dialog = new window.gtd.Contentscript.Dialog({
@@ -116,6 +116,15 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	_message: function(message, sender) {
 		if (message && message.action == 'show') {
 			this.model.set({ 'suggestion' : message.suggestion });
+			var action = message.suggestion.action;
+			if (action) {
+				this.model.set({
+					'label': (action.label) ? action.label : 'GTD-NextAction',
+					'date' : action.date,
+					'context' : action.context,
+					'project' : action.project
+				});
+			}
 		}
 	},
 	

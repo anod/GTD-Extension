@@ -31,7 +31,7 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		this.$context = this.$el.find("input[name=context]");
 		this.$project = this.$el.find("input[name=project]");
 		this.$date = this.$el.find("input[name=date]");
-
+		
 		this.$el.find('span#context-clear').click(_.bind(function() {
 			this.$context.val('');
 		},this));
@@ -68,9 +68,9 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		var noty = this.notyPlugin(_.extend(defaultOptions,{
 			template: this.$el,
 			buttons: [
-				{ addClass: 'btn btn-primary', text: 'Do it now', onClick: this._onDoItNowClick },
 				{ addClass: 'btn btn-primary', text: 'Apply & Leave', onClick: this._onApplyClick },
-				{ addClass: 'btn btn-primary', text: 'Apply & Archive', onClick: this._onApplyArchiveClick }
+				{ addClass: 'btn btn-primary', text: 'Apply & Archive', onClick: this._onApplyArchiveClick },
+				{ addClass: 'btn btn-primary', text: 'Close', onClick: this._onDoItNowClick }
 			]
 		}));
 		noty.$bar.css({ 
