@@ -91,10 +91,24 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 			return null;
 		}
 		var date = null;
+		var patt = null;
 		dateStr = dateStr.toLowerCase().replace(' ','');
 		if  (dateStr == "weekend" || dateStr == "thisweekend") {
 			date = this.context.get('dateutils').getThisWeekend();
+		} else if(dateStr == "nextweekend") {
+			date = this.context.get('dateutils').getNextWeekend();
+		} else if (dateStr == "today") {
+			date = this.context.get('dateutils').getToday();
+		} else if (dateStr == "tomorrow") {
+			date = this.context.get('dateutils').getTomorrow();
+		} else if (dateStr == "nextweek") {
+			date = this.context.get('dateutils').getNextWeek();
+		} else if (dateStr == "nextmonth") {
+			date = this.context.get('dateutils').getNextMonth();
+		} else {
+			date = this.context.get('dateutils').parseDate(dateStr);
 		}
+		return date;
 	},
 	
 	_getModifiers: function(pattern) {

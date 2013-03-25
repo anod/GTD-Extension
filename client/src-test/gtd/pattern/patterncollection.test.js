@@ -26,12 +26,11 @@ new TestCase("Pattern.PatternCollection", {
 		assertEquals(expected,actual);
 	},
 	
-	test_testPatternDate1: function() {
+	test_testPatternDate: function() {
 		this._testPatternDate('Buy milk this weekend', 'this weekend');
 		this._testPatternDate('Buy milk tomorrow', 'tomorrow');
 		this._testPatternDate('Buy milk this or next  weekend', 'next  weekend');
 		this._testPatternDate('Buy milk today', 'today');
-		this._testPatternDate('Call Peter at 7pm', '7pm' );
 		this._testPatternDate('Call Peter today at 7pm', 'today' );
 		this._testPatternDate('no date related stuff here', null );
 		this._testPatternDate('Order pizza next week', 'next week' );
@@ -41,4 +40,5 @@ new TestCase("Pattern.PatternCollection", {
 		this._testPatternDate('Cancel subscription at 1-7-2013', '1-7-2013' );
 		this._testPatternDate('Cancel subscription at 08-11-2013', '08-11-2013' );
 	}
+	
 });
