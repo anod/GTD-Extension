@@ -37,6 +37,15 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 
 	},
 	
+	/**
+	 * Sync from db
+	 * @override
+	 * @returns
+	 */
+	sync: function() {
+		console.log(arguments);
+	},
+	
 	fillAction: function(entry, action) {
 		var db = this.context.get('db');
 		db.values(this.STORE_NAME).done(_.bind(function(records) {
@@ -63,6 +72,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		return pattern;
 	},
 	
+	/**
+	 * Insert directly to Db
+	 * @Override
+	 * @param pattern
+	 */
 	add: function(pattern) {
 		if (_.isArray(pattern)) {
 			return; //Not supported

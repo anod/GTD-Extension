@@ -1,15 +1,28 @@
 "use strict";
 
 window.gtd.Settings.SettingsView = Backbone.View.extend({
+	actionsView: null,
+	patternsView: null,
 	
 	events: {
-		'change input[type="checkbox"]' : '_onCheckBoxChange'
+		'change input[type="checkbox"]' : '_onCheckBoxChange',
+		'click #closeBtn' : '_onCloseClick'
 	},
 	
 	checkboxes: [ 'enabled', 'autoActions', 'advancedMode' ],
 	
-	initialize: function() {
+	initialize: function(options) {
+		this.actionsView = new window.gtd.Settings.ActionsView({
+			'el' : this.$el.find('#actionsList'),
+			'collection' : options.context.get('actions')
+		});
+		this.patternsView = new window.gtd.Settings.PatternsView({
+			'el' : this.$el.find('#patternsList'),
+			'collection' : options.context.get('patterns')
+		});
 		this.render();
+		this.actionsView.render();
+		this.patternsView.render();
 	},
 	
 	render: function() {
@@ -24,6 +37,10 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		var id = $chkbox.attr('id');
 		var checked = $chkbox.prop('checked');
 		this.model.set(id, checked);
+	},
+	
+	_onCloseClick: function(e) {
+		window.close();
 	}
 	
 });

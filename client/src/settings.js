@@ -20,7 +20,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	new window.gtd.Settings.SettingsView({
 		'el' : '#accent',
-		'model' : settings
+		'model' : settings,
+		'context' : context
 	});
 	
 	settings.set('firstTime' , false);
