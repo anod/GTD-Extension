@@ -2,7 +2,7 @@
 
 window.gtd.Settings.Settings = Backbone.Model.extend({
 
-	db: null,
+	context: null,
 	
 	defaults: {
 		firstTime: true,
@@ -13,7 +13,7 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 	},
 	
 	initialize: function(attributes, options) {
-		this.db = options.db;
+		this.context = options.context;
 		this.localStorage = options.localStorage;
 		this._initLocal();
 		this.on('change', function() {
