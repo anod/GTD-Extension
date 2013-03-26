@@ -12,7 +12,7 @@ window.gtdBootstrap = {
 	
 	init: function() {
 
-		var db = this._initDb();
+		var db = window.gtd.Db.init();
 		var settings = new window.gtd.Settings.Settings({},{ 'db': db, 'localStorage' : window.localStorage });
 	
 		var context = new window.gtd.Context({
@@ -80,36 +80,8 @@ window.gtdBootstrap = {
 		if (this.app) {
 			this.app.runBackground();
 		}
-	},
-
-	/**
-	 * Create and initialize the database. Depending on platform, this will
-	 * create IndexedDB or WebSql or even localStorage storage mechanism.
-	 * @return {ydn.db.Storage} 
-	 */
-	_initDb: function() {
-		var schema = {
-			stores : [
-				{ name: 'actions', keyPath: 'id', autoIncrement: true, indexes: [
-					{ keyPath: 'tags', name: 'tags', unique: false, multiEntry: true },
-					{ keyPath: 'label', name: 'label', unique: false, multiEntry: false }
-				]},
-				{ name: 'settings', keyPath: 'id' },
-				{ name: 'patterns', keyPath: 'id', autoIncrement: true },
-				{ name: 'suggestions', keyPath: 'id' },
-				{ name: 'tested', keyPath: 'id'}
-			]
-		};
-	
-		var db = new window.ydn.db.Storage('gtd', schema, { mechanisms: ["indexeddb"] });
-		return db;
-	},
-	
-	// shortcut to reset data in db: window.gtdBootstrap.resetDB();
-	resetDB: function() {
-		var db = this._initDb();
-		db.clear();
 	}
+
 };
 
 _.bindAll(window.gtdBootstrap);
