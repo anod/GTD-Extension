@@ -1,12 +1,14 @@
 "use strict";
 
 window.gtd.Settings.Settings = Backbone.Model.extend({
+
 	db: null,
 	
 	defaults: {
 		firstTime: true,
 		enabled: true,
-		mode: 1,
+		autoActions: true,
+		advancedMode: false,
 		suggestionTreshold: 80
 	},
 	
@@ -17,6 +19,14 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 		this.on('change', function() {
 			this._saveLocal();
 		}, this);
+	},
+	
+	loadPatterns: function() {
+		
+	},
+	
+	loadActions: function() {
+		
 	},
 	
 	_initLocal: function() {
