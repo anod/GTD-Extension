@@ -29,11 +29,18 @@ window.gtd.Application = Backbone.Model.extend({
 	_registerPullAlarm: function() {
 		this.context.get('chrome').alarms.onAlarm.addListener(_.bind(function(alarm) {
 			if (alarm.name == "loadNewEmails") {
+				if (!this._checkConnection()) {
+					return;
+				}				
 				this.get('gmail').loadNewEmails();
 			}
 		},this));
 		
 		this.context.get('chrome').alarms.create('loadNewEmails', {periodInMinutes : this.PULL_TIME});
+	},
+	
+	_checkConnection: function() {
+		return window.navigator.onLine;
 	},
 	
 	_applyLabel: function(emailId, action) {
