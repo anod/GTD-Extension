@@ -42,8 +42,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	 * @override
 	 * @returns
 	 */
-	sync: function() {
-		console.log(arguments);
+	sync: function(method, self, options) {
+		var db = this.context.get('db');
+		db.values(this.STORE_NAME).done(_.bind(function(records) {
+			options.success(records, null, null);
+		}));
 	},
 	
 	fillAction: function(entry, action) {
@@ -77,14 +80,14 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	 * @Override
 	 * @param pattern
 	 */
-	add: function(pattern) {
+	insertDb: function(pattern) {
 		if (_.isArray(pattern)) {
 			return; //Not supported
 		}
 		var plain = pattern.toJSON();
 		var req = this.context.get('db').put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
-			this.trigger('change:add', pattern );
+			this.trigger('change:insertdb', pattern );
 		}, this));
 		req.fail(_.bind(function(error) {
 			this.context.get('logger').exception(error);

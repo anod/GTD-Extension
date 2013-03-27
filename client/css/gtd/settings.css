@@ -83,3 +83,29 @@ body {
 	margin: 0;	
 	padding: 8px 24px;
 }
+
+.holo-list li {
+	position: relative;
+}
+.holo-list li div.item-data {
+	display: inline-block;
+	height: 40px;
+	font-size: 10px;
+}
+
+.holo-list li a.act-btn {
+	width: 40px;
+	height: 40px;
+	float:right;
+	padding: 0;
+	position: absolute;
+	top: 1px;
+}
+
+.holo-list li a.act-btn.act-edit {
+	right: 80px;
+}
+
+.holo-list li a.act-btn.act-delete {
+	right: 40px;
+}

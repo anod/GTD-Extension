@@ -14,7 +14,8 @@ document.addEventListener('DOMContentLoaded', function () {
 
 	var patterns = new window.gtd.Pattern.PatternCollection([], { 'context': context });
 	context.set({'patterns' : patterns});
-
+	patterns.fetch();
+	
 	var actions = new window.gtd.Analysis.ActionCollection([], { 'context': context });
 	context.set('actions', actions);
 
@@ -23,6 +24,6 @@ document.addEventListener('DOMContentLoaded', function () {
 		'model' : settings,
 		'context' : context
 	});
-	
+
 	settings.set('firstTime' , false);
 });

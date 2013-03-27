@@ -26,7 +26,7 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		return suggestion;
 	},
 	
-	add: function(suggestion) {
+	insertDb: function(suggestion) {
 		if (_.isArray(suggestion)) {
 			return; //Not supported
 		}
@@ -34,7 +34,7 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		var db =this.context.get('db');
 		var req = db.put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
-			this.trigger('change:add', suggestion );
+			this.trigger('change:insertdb', suggestion );
 		}, this));
 		req.fail(_.bind(function(error) {
 			this.context.get('logger').exception(error);

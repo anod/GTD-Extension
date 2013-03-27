@@ -60,7 +60,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	
 	_onActionFill: function(entry, action) {
 		var suggestion = this.get('suggestions').createSuggestion(entry, action);
-		this.get('suggestions').add(suggestion);
+		this.get('suggestions').insertDb(suggestion);
 	},
 	
 	_maxSimilarity: function(similarList, tags) {
@@ -101,7 +101,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	_applySuggestion: function(suggestion)  {
 		//Save as action
 		var action = suggestion.get('action');
-		this.get('actions').add(action);
+		this.get('actions').insertDb(action);
 		this._applyAction(suggestion.get('id'),action);
 	}
 });

@@ -55,14 +55,14 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		return action;
 	},
 	
-	add: function(action) {
+	insertDb: function(action) {
 		if (_.isArray(action)) {
 			return; //Not supported
 		}
 		var plain = action.toJSON();
 		var req = this.context.get('db').put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
-			this.trigger('change:add', action );
+			this.trigger('cchange:insertdb', action );
 		}, this));
 		req.fail(_.bind(function(error) {
 			this.context.get('logger').exception(error);

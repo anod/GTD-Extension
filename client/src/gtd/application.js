@@ -30,8 +30,9 @@ window.gtd.Application = Backbone.Model.extend({
 		this.context.get('chrome').alarms.onAlarm.addListener(_.bind(function(alarm) {
 			if (alarm.name == "loadNewEmails") {
 				if (!this._checkConnection()) {
+					console.log('offline');
 					return;
-				}				
+				}
 				this.get('gmail').loadNewEmails();
 			}
 		},this));
