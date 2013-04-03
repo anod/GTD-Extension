@@ -3,14 +3,14 @@ namespace GTD\Response;
 
 class MessageResponse extends AbstractResponse{
 	/**
-	 * @var \Zend\Mail\Storage\Message
+	 * @var \Anod\Gmail\Message
 	 */
 	private $message;
 	
 	/**
-	 * @param \Zend\Mail\Storage\Message $message
+	 * @param \Anod\Gmail\Message $message
 	 */
-	public function __construct(\Zend\Mail\Storage\Message $message) {
+	public function __construct(\Anod\Gmail\Message $message) {
 		parent::__construct(self::STATUS_OK);
 		$this->message = $message;
 	}
@@ -35,7 +35,7 @@ class MessageResponse extends AbstractResponse{
 			'body' => $body,
 			'from' => $this->message->getHeader('from', 'string'),
 			'to' => $this->message->getHeader('to', 'string'),
-			'thrid' => \Anod\Gmail\Math::bcdechex($this->message->getHeader('x-gm-thrid', 'string'))
+			'thrid' => \Anod\Gmail\Math::bcdechex($message->getThreadId())
 		);
 	}
 	

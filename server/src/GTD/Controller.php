@@ -1,5 +1,7 @@
 <?php
 namespace GTD;
+use GTD\Response\ArrayResponse;
+
 use GTD\Response\MessageResponse;
 use GTD\Response\OkResponse;
 use GTD\Response\AbstractResponse;
@@ -13,6 +15,7 @@ use GTD\Response\ErrorResponse;
 class Controller {
 	const ACTION_LABEL = 1;
 	const ACTION_CONTENT = 2;
+	const ACTION_THREAD_LABELS = 3;
 	
 	private $email;
 	private $token;
@@ -59,29 +62,11 @@ class Controller {
 		$uid = $this->gmail->getUID($this->msgid);
 		
 		if ($this->action == self::ACTION_LABEL) {
-			$labels = isset($request['labels']) && is_array($request['labels']) ? $request['labels'] : array();
-			if (!$labels) {
-				throw new ControllerException("Request missing parameter: labels");
-			}
-			$currentLabels = $this->gmail->getLabels($uid);
-			$removeLabels = array();
-			foreach($currentLabels AS $label) {
-				if (strpos($label,'GTD%2F') === 0) {
-					$removeLabels[] = $label;
-				}
-			} 
-			if ($removeLabels) {
-				$this->gmail->removeLabels($uid, $removeLabels);
-			}
-			$this->gmail->applyLabels($uid, $labels);
-			if ($this->archive) {
-				$this->gmail->archive($uid);
-			}
-			
-			return new OkResponse();
+			return $this->actionLabels($uid);
 		} elseif ($this->action == self::ACTION_CONTENT) {
-			$message = $this->gmail->getMessageData($uid);
-			return new MessageResponse($message);
+			return $this->actionContent($uid);
+		} elseif ($this->action == self::ACTION_THREAD_LABELS) {
+			return $this->actionThreadLabels($uid);
 		}
 		throw new ControllerException("Unknown action: '".$this->action."'");
 	}
@@ -112,6 +97,69 @@ class Controller {
 		$this->msgid = \Anod\Gmail\Math::bchexdec($request['msgid']);
 		$this->debug = isset($request['debug']) ? (bool)$request['debug'] : false;
 	}
+	
+	/**
+	 * 
+	 * @param string $uid
+	 * @return \GTD\Response\MessageResponse
+	 */
+	private function actionContent($uid) {
+		$message = $this->gmail->getMessageData($uid);
+		return new MessageResponse($message);
+	}
+	
+	/**
+	 * 
+	 * @param string $uid
+	 * @throws ControllerException
+	 * @return \GTD\Response\OkResponse
+	 */
+	private function actionLabels($uid) {
+		$labels = isset($request['labels']) && is_array($request['labels']) ? $request['labels'] : array();
+		if (!$labels) {
+			throw new ControllerException("Request missing parameter: labels");
+		}
+		$currentLabels = $this->gmail->getLabels($uid);
+		$removeLabels = $this->getGtdLabels($uid);
+		if ($removeLabels) {
+			$this->gmail->removeLabels($uid, $removeLabels);
+		}
+		$this->gmail->applyLabels($uid, $labels);
+		if ($this->archive) {
+			$this->gmail->archive($uid);
+		}
+		return new OkResponse();
+	}
+	
+	/**
+	 * 
+	 * @param string $uid
+	 * @return \GTD\Response\ArrayResponse
+	 */
+	private function actionThreadLabels($uid) {
+		$thrId = $this->gmail->getThreadId($uid);
+		$msgId = \Anod\Gmail\Math::bcdechex($thrId);
+		$initialUid = $this->gmail->getUID($msgId);
+		$labels = $this->getGtdLabels($initialUid);
+		return new ArrayResponse(array('labels' => $labels));
+	}
+	
+	/**
+	 * 
+	 * @param string $uid
+	 * @return array
+	 */
+	private function getGtdLabels($uid) {
+		$allLabels = $this->gmail->getLabels($uid);
+		$gtdLabels = array();
+		foreach($allLabels AS $label) {
+			if (strpos($label,'GTD%2F') === 0) {
+				$gtdLabels[] = $label;
+			}
+		}
+		return $gtdLabels;
+	}
+	
 }
 
 class ControllerException extends \Exception {}
