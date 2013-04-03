@@ -1,6 +1,7 @@
 "use strict";
 
 window.gtd.External.Notifier = Backbone.Model.extend({
+	_labelsMap: null,
 	defaults : {
 		'$' : window.$,
 		'oauth' : window.oauth,
@@ -10,6 +11,7 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 	
 	initialize: function() {
 		this.get('context').on('analysis:apply:action', this._notifyAction, this);
+		this._labelsMap = this._initLabelsMap();
 	},
 
 	_notifyAction: function(emailId, action) {
@@ -21,7 +23,7 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 	
 	_createRequest: function(emailId, email, action) {
 		
-		var labelId = this._labelToId(action.get('label'));
+		var labelId = this._labelsMap[action.get('label')];
 		var start_date = '';
 		var deadline = '';
 		if (labelId == window.gtd.External.Api.Consts.DELAYED_LABEL_ID) {
@@ -52,15 +54,15 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 		return data;
 	},
 	
-	_labelToId: function(label) {
-		var labels = {
-			'GTD-NextAction': window.gtd.External.Api.Consts.NEXT_ACTION_LABEL_ID,
-			'GTD-WaitingFor': window.gtd.External.Api.Consts.WATING_ON_LABEL_ID,
-			'GTD-Calendar': window.gtd.External.Api.Consts.DELAYED_LABEL_ID,
-			'GTD-Someday': window.gtd.External.Api.Consts.SOMEDAY_LABEL_ID,
-			'GTD-Project': window.gtd.External.Api.Consts.PROJECT_LABEL_ID
-		};
-		return labels[label];
+	_initLabelsMap: function() {
+		var labels = {};
+		labels[window.gtd.Label.NEXT_ACTION] = window.gtd.External.Api.Consts.NEXT_ACTION_LABEL_ID;
+		labels[window.gtd.Label.WAITINGFOR] = window.gtd.External.Api.Consts.WATING_ON_LABEL_ID;
+		labels[window.gtd.Label.CALENDAR] = window.gtd.External.Api.Consts.DELAYED_LABEL_ID;
+		labels[window.gtd.Label.SOMEDAY] = window.gtd.External.Api.Consts.SOMEDAY_LABEL_ID;
+		labels[window.gtd.Label.PROJECT] = window.gtd.External.Api.Consts.PROJECT_LABEL_ID;
+		
+		return labels;
 	},
 	
 	_sendRequest: function(params, callback) {

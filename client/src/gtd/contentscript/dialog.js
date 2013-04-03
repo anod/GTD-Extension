@@ -189,7 +189,13 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	
 
 	_renderLabelSelect: function() {
-		var labelValues = [ 'GTD-NextAction', 'GTD-Project', 'GTD-WaitingFor', 'GTD-Calendar', 'GTD-Someday' ];
+		var labelValues = [ 
+			window.gtd.Label.NEXT_ACTION,
+			window.gtd.Label.PROJECT,
+			window.gtd.Label.WAITINGFOR,
+			window.gtd.Label.CALENDAR,
+			window.gtd.Label.SOMEDAY
+		];
 		var labelTitles = [ 'Next Action', 'Project', 'Waiting for', 'Calendar', 'Someday' ];
 		var labelSelect = '<select class="noty_gtd_label span4">';
 		for (var i=0; i<labelTitles.length; i++) {

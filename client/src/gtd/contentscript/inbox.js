@@ -18,7 +18,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			'openMsgId' : 0,
 			'iconClicked' : false,
 			'suggestion' : null,
-			'label' : 'GTD-NextAction',
+			'label' : window.gtd.Label.NEXT_ACTION,
 			'date' : '',
 			'context' : '',
 			'project' : '',
@@ -119,7 +119,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			var action = message.suggestion.action;
 			if (action) {
 				this.model.set({
-					'label': (action.label) ? action.label : 'GTD-NextAction',
+					'label': (action.label) ? action.label : window.gtd.Label.NEXT_ACTION,
 					'date' : action.date,
 					'context' : action.context,
 					'project' : action.project

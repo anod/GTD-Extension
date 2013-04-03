@@ -11,14 +11,14 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		oauth : null
 	},
 	
-	applyLabel: function(emailId, label, archive) {
+	applyLabels: function(emailId, labels, archive) {
 		this._sendRequest({ 
 			'action': this.ACTION_LABEL,
 			'msgid' : emailId,
-			'label' : label,
+			'labels' : labels,
 			'archive' : (archive) ? 1 : 0
 		}, function(response) {
-			console.log("gtd.Gmail.Imap: Label '"+label+"' applied to email #"+emailId);
+			console.log("gtd.Gmail.Imap: Labels ["+labels.join(',')+"] applied to email #"+emailId);
 		});
 	},
 	

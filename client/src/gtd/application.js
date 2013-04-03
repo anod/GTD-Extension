@@ -21,7 +21,7 @@ window.gtd.Application = Backbone.Model.extend({
 		
 		this.get('gmail').on("gmail:newlist", this._notifyList, this);
 		this.get('gmail').loadNewEmails();
-		this.context.on("analysis:apply:action", this._applyLabel, this);
+		this.context.on("analysis:apply:action", this._applyLabels, this);
 
 		this._registerPullAlarm();
 	},
@@ -44,8 +44,20 @@ window.gtd.Application = Backbone.Model.extend({
 		return window.navigator.onLine;
 	},
 	
-	_applyLabel: function(emailId, action) {
-		this.get('imap').applyLabel(emailId, action.get('label'), action.get('archive'));
+	_applyLabels: function(emailId, action) {
+		var labels = [];
+		labels.push(action.get('label'));
+		if (action.get('project')) {
+			labels.push('GTD%2FP-'+action.get('project'));
+		}
+		if (action.get('date')) {
+			labels.push('GTD%2FD-'+action.get('date'));
+		}
+		if (action.get('context')) {
+			labels.push('GTD%2FC-'+action.get('context'));
+		}
+		
+		this.get('imap').applyLabels(emailId, labels, action.get('archive'));
 	},
 	
 	_notifyList: function(collection) {

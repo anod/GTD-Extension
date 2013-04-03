@@ -59,7 +59,7 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 	remove: function(id, options) {
 		var self = this;
 		this.context.get('db')
-			.clear(this.STORE_NAME, id)
+			.remove(this.STORE_NAME, id)
 			.done(function() {
 				self.trigger('remove:done', options);
 			})
