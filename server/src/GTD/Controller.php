@@ -138,10 +138,13 @@ class Controller {
 	 */
 	private function actionThreadLabels($uid) {
 		$thrId = $this->gmail->getThreadId($uid);
-		$msgId = \Anod\Gmail\Math::bcdechex($thrId);
-		$initialUid = $this->gmail->getUID($msgId);
+		$thrIdHex = \Anod\Gmail\Math::bcdechex($thrId);
+		$initialUid = $this->gmail->getUID($thrIdHex);
 		$labels = $this->getGtdLabels($initialUid);
-		return new ArrayResponse(array('labels' => $labels));
+		return new ArrayResponse(array(
+			'thrid' => $thrIdHex,
+			'labels' => $labels
+		));
 	}
 	
 	/**
