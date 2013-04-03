@@ -3,6 +3,7 @@
 window.gtd.Gmail.Imap = Backbone.Model.extend({
 	ACTION_LABEL: 1,
 	ACTION_CONTENT: 2,
+	ACTION_THREAD_LABELS: 3,
 	
 	url : 'http://gtd.anodsplace.info/handler.php',
 	defaults : {
@@ -31,9 +32,15 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 			callback(response);
 		});
 	},
-	
-	archive: function(emailId) {
-		//TODO
+
+	getThreadLabels: function(emailId, callback) {
+		this._sendRequest({ 
+			'action': this.ACTION_THREAD_LABELS,
+			'msgid' : emailId
+		}, function(response) {
+			console.log("gtd.Gmail.Imap: getThreadLabels finished for email #"+emailId);
+			callback(response);
+		});
 	},
 	
 	_sendRequest: function(params, callback) {

@@ -17,7 +17,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		this.get('context').on('suggestion:apply', this._applySuggestion, this);
 		this.get('actions').on('search:result', this._searchResult, this);
 		this.get('context').on('patterns:fill', this._onActionFill, this);
-
+		this.get('replyemail').on('check:finish', this._onReplyCheckFinish, this);
 	},
 	
 	analyse: function(entry) {
@@ -32,8 +32,15 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		tags = this.get('tagfilter').filter(tags);
 		
 		if (tags.length > this.MIN_TAGS_LENGTH) {
-			this.get('actions').search(entry,tags);
+			this.get('replyemail').check(entry, tags);
 		}
+	},
+	
+	_onReplyCheckFinish: function(entry, tags, applied) {
+		if (applied) {
+			return;
+		}
+		this.get('actions').search(entry,tags);
 	},
 	
 	_searchResult: function(similarList, entry, tags) {
