@@ -6,13 +6,13 @@ $vendorDir = dirname(dirname(__FILE__));
 $baseDir = dirname($vendorDir);
 
 return array(
-    'Zend\\Stdlib\\' => $vendorDir . '/zendframework/zend-stdlib/',
-    'Zend\\Mime\\' => $vendorDir . '/zendframework/zend-mime/',
-    'Zend\\Mail\\' => $vendorDir . '/zendframework/zend-mail/',
-    'Zend\\Loader\\' => $vendorDir . '/zendframework/zend-loader/',
-    'Symfony\\Component\\Yaml\\' => $vendorDir . '/symfony/yaml/',
-    'Psr\\Log\\' => $vendorDir . '/psr/log/',
-    'Monolog' => $vendorDir . '/monolog/monolog/src/',
-    'GTD' => $baseDir . '/src/',
-    'Anod' => $vendorDir . '/anod/gmail-imap/src/',
+    'Zend\\Stdlib\\' => $vendorDir . '/zendframework/zend-stdlib',
+    'Zend\\Mime\\' => $vendorDir . '/zendframework/zend-mime',
+    'Zend\\Mail\\' => $vendorDir . '/zendframework/zend-mail',
+    'Zend\\Loader\\' => $vendorDir . '/zendframework/zend-loader',
+    'Symfony\\Component\\Yaml\\' => $vendorDir . '/symfony/yaml',
+    'Psr\\Log\\' => $vendorDir . '/psr/log',
+    'Monolog' => $vendorDir . '/monolog/monolog/src',
+    'GTD' => $baseDir . '/src',
+    'Anod' => $vendorDir . '/anod/gmail-imap/src',
 );
