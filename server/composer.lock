@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anod/gmail-imap-php.git",
-                "reference": "0941c05f512a887b08e7d77da629e13cba520637"
+                "reference": "19a7a7bae19774eac47d07302b7dca19a30e68da"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/0941c05f512a887b08e7d77da629e13cba520637",
-                "reference": "0941c05f512a887b08e7d77da629e13cba520637",
+                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/19a7a7bae19774eac47d07302b7dca19a30e68da",
+                "reference": "19a7a7bae19774eac47d07302b7dca19a30e68da",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "gmail",
                 "imap"
             ],
-            "time": "2013-04-03 03:14:18"
+            "time": "2013-04-03 15:49:27"
         },
         {
             "name": "monolog/monolog",
