@@ -6,11 +6,11 @@ window.gtdBootstrap = {
 	authorize: function() {
 		window.oauth.authorize(_.bind(function() {
 			console.log("Authorize - Token:" + window.oauth.getAccessToken());
-			this.init();
+			this.run();
 		}, this));
 	},
 	
-	init: function() {
+	run: function() {
 
 		var db = window.gtd.Db.init();
 		var settings = new window.gtd.Settings.Settings({},{ 'db': db, 'localStorage' : window.localStorage });
@@ -80,10 +80,22 @@ window.gtdBootstrap = {
 		if (this.app) {
 			this.app.runBackground();
 		}
+	},
+	
+	start: function() {
+		if (this._checkConnection()) {
+			this.authorize();
+		} else {
+			window.addEventListener("online", this.authorize);
+		}
+	},
+	
+	_checkConnection: function() {
+		return window.navigator.onLine;
 	}
 
 };
 
 _.bindAll(window.gtdBootstrap);
-document.addEventListener('DOMContentLoaded', window.gtdBootstrap.authorize);
+document.addEventListener('DOMContentLoaded', window.gtdBootstrap.start);
 window.chrome.browserAction.onClicked.addListener(window.gtdBootstrap.refresh);
