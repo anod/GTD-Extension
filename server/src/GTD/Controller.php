@@ -59,11 +59,21 @@ class Controller {
 		$uid = $this->gmail->getUID($this->msgid);
 		
 		if ($this->action == self::ACTION_LABEL) {
-			$label = isset($request['label']) ? trim($request['label']) : '';
-			if (empty($label)) {
-				throw new ControllerException("Request missing parameter: label");
+			$labels = isset($request['labels']) && is_array($request['labels']) ? $request['labels'] : array();
+			if (!$labels) {
+				throw new ControllerException("Request missing parameter: labels");
 			}
-			$this->gmail->applyLabel($uid, $label);
+			$currentLabels = $this->gmail->getLabels($uid);
+			$removeLabels = array();
+			foreach($currentLabels AS $label) {
+				if (strpos($label,'GTD%2F') === 0) {
+					$removeLabels[] = $label;
+				}
+			} 
+			if ($removeLabels) {
+				$this->gmail->removeLabels($uid, $removeLabels);
+			}
+			$this->gmail->applyLabels($uid, $labels);
 			if ($this->archive) {
 				$this->gmail->archive($uid);
 			}
