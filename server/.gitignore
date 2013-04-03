@@ -5,6 +5,7 @@
 /vendor/php-tail
 /vendor/monolog
 /vendor/psr
+/vendor/anod
 composer.phar
 composer.lock
 extapi_log.log
