@@ -1,0 +1,12 @@
+# Eclipse project files
+.classpath
+.project
+.settings
+.buildpath
+
+#Composer
+vendor/
+composer.lock
+
+#Project
+example.php
