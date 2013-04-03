@@ -1,5 +1,5 @@
 {
-    "hash": "78408fe60f783ab859fabdad7e284392",
+    "hash": "9d6e7bc112570e31ff595ed1621aff5a",
     "packages": [
         {
             "name": "anod/gmail-imap",
@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anod/gmail-imap-php.git",
-                "reference": "2d1b7a6b74a79e090f0b4fa0fd5a309d261b74d0"
+                "reference": "0941c05f512a887b08e7d77da629e13cba520637"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/2d1b7a6b74a79e090f0b4fa0fd5a309d261b74d0",
-                "reference": "2d1b7a6b74a79e090f0b4fa0fd5a309d261b74d0",
+                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/0941c05f512a887b08e7d77da629e13cba520637",
+                "reference": "0941c05f512a887b08e7d77da629e13cba520637",
                 "shasum": ""
             },
             "require": {
@@ -23,6 +23,11 @@
                 "phpunit/phpunit": "3.7.*"
             },
             "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0.x-dev"
+                }
+            },
             "autoload": {
                 "psr-0": {
                     "Anod": "src/"
@@ -44,7 +49,7 @@
                 "gmail",
                 "imap"
             ],
-            "time": "2013-03-29 08:02:58"
+            "time": "2013-04-03 03:14:18"
         },
         {
             "name": "monolog/monolog",
