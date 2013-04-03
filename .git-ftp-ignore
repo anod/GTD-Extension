@@ -2,3 +2,4 @@ client/.*
 server/\..*
 server/composer.*
 server/README.md
+server/vendor/.git
