@@ -57,7 +57,8 @@ window.gtdBootstrap = {
 			'termextraction': context.get('termextraction'),
 			'strikeamatch': context.get('strikeamatch'),
 			'tagfilter' : context.get('tagfilter'),
-			'patterns' : context.get('patterns')
+			'patterns' : context.get('patterns'),
+			'replyemail' : context.get('replyemail')
 		}));
 		context.set('router', router);
 		context.set('notifier', new window.gtd.External.Notifier({ 'context' : context, 'imap' : imap  }));
