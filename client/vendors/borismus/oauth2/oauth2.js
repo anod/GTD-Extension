@@ -91,14 +91,15 @@ OAuth2.prototype.updateLocalStorage = function() {
  * Opens up an authorization popup window. This starts the OAuth 2.0 flow.
  *
  * @param {Function} callback Method to call when the user finished auth.
+ * @param {Boolean} activeTab 
  */
-OAuth2.prototype.openAuthorizationCodePopup = function(callback) {
+OAuth2.prototype.openAuthorizationCodePopup = function(callback, activeTab) {
   // Store a reference to the callback so that the newly opened window can call
   // it later.
   window['oauth-callback'] = callback;
 
   // Create a new tab with the OAuth 2.0 prompt
-  chrome.tabs.create({url: this.adapter.authorizationCodeURL(this.getConfig()), active: false},
+  chrome.tabs.create({url: this.adapter.authorizationCodeURL(this.getConfig()), active: activeTab},
   function(tab) {
     // 1. user grants permission for the application to access the OAuth 2.0
     // endpoint
@@ -414,7 +415,7 @@ OAuth2.prototype.authorize = function(callback) {
     var data = that.get();
     if (!data.accessToken) {
       // There's no access token yet. Start the authorizationCode flow
-      that.openAuthorizationCodePopup(callback);
+      that.openAuthorizationCodePopup(callback, true);
     } else if (that.isAccessTokenExpired()) {
       // There's an existing access token but it's expired
       if (data.refreshToken) {
@@ -432,7 +433,7 @@ OAuth2.prototype.authorize = function(callback) {
         });
       } else {
         // No refresh token... just do the popup thing again
-        that.openAuthorizationCodePopup(callback);
+        that.openAuthorizationCodePopup(callback, false);
       }
     } else {
       // We have an access token, and it's not expired yet
