@@ -115,7 +115,7 @@ class Controller {
 	 * @return \GTD\Response\OkResponse
 	 */
 	private function actionLabels($uid, array $request) {
-		$labels = isset($request['labels']) && is_array($request['labels']) ? $request['labels'] : array();
+		$labels = isset($request['labels']) && is_array($request['labels']) ? (array)$request['labels'] : array();
 		if (!$labels) {
 			throw new ControllerException("Request missing parameter: labels");
 		}
