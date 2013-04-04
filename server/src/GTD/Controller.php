@@ -58,7 +58,7 @@ class Controller {
 		$this->gmail->connect();
 		$this->gmail->authenticate($this->email, $this->token);
 		$this->gmail->sendId();
-		$this->gmail->selectInbox();
+		$this->gmail->selectAllMail();
 		$uid = $this->gmail->getUID($this->msgid);
 		
 		if ($this->action == self::ACTION_LABEL) {
