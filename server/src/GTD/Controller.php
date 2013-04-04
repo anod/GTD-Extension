@@ -120,7 +120,7 @@ class Controller {
 			throw new ControllerException("Request missing parameter: labels");
 		}
 		//TODO extract to separate action
-		$this->gmail->createFolder('GTD');
+		$this->gmail->getProtocol()->create('GTD');
 		$currentLabels = $this->gmail->getLabels($uid);
 		$removeLabels = $this->getGtdLabels($uid);
 		if ($removeLabels) {
