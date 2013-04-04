@@ -45,16 +45,19 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 	
 	_sendRequest: function(params, callback) {
 		var data = params || {};
-		data['email'] = this.get('context').get('userinfo').get('email');
-		data['token'] = this.get('oauth').getAccessToken();
+		this.get('oauth').authorize(_.bind(function() {
+			data['email'] = this.get('context').get('userinfo').get('email');
+			data['token'] = this.get('oauth').getAccessToken();
+			this.get('$').post(this.url, data, function(response){
+				var obj = (response) ? JSON.parse(response) : null;
+				if (!obj || obj.status == 'error') {
+					console.error(response);
+				} else {
+					callback(obj);
+				}
+			});
+		}, this));
 
-		this.get('$').post(this.url, data, function(response){
-			var obj = (response) ? JSON.parse(response) : null;
-			if (!obj || obj.status == 'error') {
-				console.error(response);
-			} else {
-				callback(obj);
-			}
-		});
+
 	}
 });

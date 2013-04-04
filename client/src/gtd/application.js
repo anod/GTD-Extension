@@ -48,13 +48,13 @@ window.gtd.Application = Backbone.Model.extend({
 		var labels = [];
 		labels.push(action.get('label'));
 		if (action.get('project')) {
-			labels.push('GTD%2FP-'+action.get('project'));
+			labels.push('GTD/P-'+action.get('project'));
 		}
 		if (action.get('date')) {
-			labels.push('GTD%2FD-'+action.get('date'));
+			labels.push('GTD/D-'+action.get('date'));
 		}
 		if (action.get('context')) {
-			labels.push('GTD%2FC-'+action.get('context'));
+			labels.push('GTD/C-'+action.get('context'));
 		}
 		
 		this.get('imap').applyLabels(emailId, labels, action.get('archive'));

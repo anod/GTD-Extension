@@ -33,12 +33,12 @@ window.gtd.Analysis.ReplyEmail = Backbone.Model.extend({
 		for(var label in labels) {
 			if (this._labelsMap[label]) {
 				action.set('label', label);
-			} else if (label.indexOf('GTD%2FP-') === 0) {
-				action.set('project', label.replace('GTD%2FP-', ''));
-			} else if (label.indexOf('GTD%2FD-') === 0) {
-				action.set('date', label.replace('GTD%2FD-', ''));
-			} else if (label.indexOf('GTD%2FP-') === 0) {
-				action.set('context', label.replace('GTD%2FC-', ''));
+			} else if (label.indexOf('GTD/P-') === 0) {
+				action.set('project', label.replace('GTD/P-', ''));
+			} else if (label.indexOf('GTD/D-') === 0) {
+				action.set('date', label.replace('GTD/D-', ''));
+			} else if (label.indexOf('GTD/C-') === 0) {
+				action.set('context', label.replace('GTD/C-', ''));
 			} 
 		}
 		return action;
