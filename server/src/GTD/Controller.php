@@ -157,7 +157,7 @@ class Controller {
 		$allLabels = $this->gmail->getLabels($uid);
 		$gtdLabels = array();
 		foreach($allLabels AS $label) {
-			if (strpos($label,'GTD%2F') === 0) {
+			if (strpos($label,'GTD/') === 0) {
 				$gtdLabels[] = $label;
 			}
 		}
