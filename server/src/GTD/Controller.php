@@ -116,7 +116,13 @@ class Controller {
 	 */
 	private function actionLabels($uid, array $request) {
 		$labels = isset($request['labels']) && is_array($request['labels']) ? (array)$request['labels'] : array();
-		if (!$labels) {
+		$validLabels = array();
+		foreach($labels AS $label) {
+			if (trim($label)) {
+				$validLabels[]=$label;
+			}
+		}
+		if (!$validLabels) {
 			throw new ControllerException("Request missing parameter: labels");
 		}
 		//TODO extract to separate action
@@ -126,7 +132,7 @@ class Controller {
 		if ($removeLabels) {
 			$this->gmail->removeLabels($uid, $removeLabels);
 		}
-		$this->gmail->applyLabels($uid, $labels);
+		$this->gmail->applyLabels($uid, $validLabels);
 		if ($this->archive) {
 			$this->gmail->archive($uid);
 		}
