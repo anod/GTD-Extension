@@ -35,7 +35,7 @@ class MessageResponse extends AbstractResponse{
 			'body' => $body,
 			'from' => $this->message->getHeader('from', 'string'),
 			'to' => $this->message->getHeader('to', 'string'),
-			'thrid' => \Anod\Gmail\Math::bcdechex($message->getThreadId())
+			'thrid' => \Anod\Gmail\Math::bcdechex($this->message->getThreadId())
 		);
 	}
 	
