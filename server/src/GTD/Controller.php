@@ -62,7 +62,7 @@ class Controller {
 		$uid = $this->gmail->getUID($this->msgid);
 		
 		if ($this->action == self::ACTION_LABEL) {
-			return $this->actionLabels($uid);
+			return $this->actionLabels($uid, $request);
 		} elseif ($this->action == self::ACTION_CONTENT) {
 			return $this->actionContent($uid);
 		} elseif ($this->action == self::ACTION_THREAD_LABELS) {
@@ -114,7 +114,7 @@ class Controller {
 	 * @throws ControllerException
 	 * @return \GTD\Response\OkResponse
 	 */
-	private function actionLabels($uid) {
+	private function actionLabels($uid, array $request) {
 		$labels = isset($request['labels']) && is_array($request['labels']) ? $request['labels'] : array();
 		if (!$labels) {
 			throw new ControllerException("Request missing parameter: labels");
