@@ -15,7 +15,7 @@ window.gtd.Analysis.ReplyEmail = Backbone.Model.extend({
 		this.get('context').get('imap').getThreadLabels(msgid, _.bind(function(data) {
 			var applied = false;
 			if (data && data['labels']) {
-				var action = this._createAction(data['labels']);
+				var action = this._createAction(data['labels'], entry, tags);
 				if (action) {
 					this._applyAction(msgid, action);
 					applied = true;
