@@ -48,7 +48,11 @@ window.gtdBootstrap = {
 		});
 		
 		context.set('actions', new window.gtd.Analysis.ActionCollection([], { 'context': context }));
-		context.set('replyemail', new window.gtd.Analysis.ReplyEmail({ 'context' : context }));
+		var replyemail = new window.gtd.Analysis.ReplyEmail({ 
+			'context' : context,
+			'actions' : context.get('actions')
+		});
+		context.set('replyemail', replyemail);
 		context.set('suggestions', suggestions);
 		context.set('newemail', new window.gtd.Analysis.NewEmail({
 			'context' : context,
