@@ -15,7 +15,8 @@ new TestCase("Analysis.NewEmailTest", {
 		this.newemail = new window.gtd.Analysis.NewEmail({
 			'context' : this.context,
 			'actions' : this.actions,
-			'strikeamatch' : this.strikeamatch
+			'strikeamatch' : this.strikeamatch,
+			'replyemail' : new window.gtd.Analysis.ReplyEmail({ 'context' : this.context, 'actions' : this.actions })
 		});
 	},
 	

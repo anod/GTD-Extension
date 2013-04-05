@@ -30,7 +30,7 @@ window.gtd.Analysis.ReplyEmail = Backbone.Model.extend({
 			return null;
 		}
 		var action = this.get('actions').createAction(entry, tags);
-		for(var label in labels) {
+		_.each(labels, function(label) {
 			if (this._labelsMap[label]) {
 				action.set('label', label);
 			} else if (label.indexOf('GTD/P-') === 0) {
@@ -40,7 +40,7 @@ window.gtd.Analysis.ReplyEmail = Backbone.Model.extend({
 			} else if (label.indexOf('GTD/C-') === 0) {
 				action.set('context', label.replace('GTD/C-', ''));
 			} 
-		}
+		}, this);
 		return action;
 	},
 	
