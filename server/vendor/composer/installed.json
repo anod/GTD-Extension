@@ -286,58 +286,6 @@
         }
     },
     {
-        "name": "anod/gmail-imap",
-        "version": "dev-master",
-        "version_normalized": "9999999-dev",
-        "source": {
-            "type": "git",
-            "url": "https://github.com/anod/gmail-imap-php.git",
-            "reference": "0fac72f9c4478c307b054cf4af69e4c5bed270cd"
-        },
-        "dist": {
-            "type": "zip",
-            "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/0fac72f9c4478c307b054cf4af69e4c5bed270cd",
-            "reference": "0fac72f9c4478c307b054cf4af69e4c5bed270cd",
-            "shasum": ""
-        },
-        "require": {
-            "php": ">=5.3.3",
-            "zendframework/zend-mail": "2.0.*"
-        },
-        "require-dev": {
-            "phpunit/phpunit": "3.7.*"
-        },
-        "time": "2013-04-03 16:21:46",
-        "type": "library",
-        "extra": {
-            "branch-alias": {
-                "dev-master": "1.0.x-dev"
-            }
-        },
-        "installation-source": "source",
-        "autoload": {
-            "psr-0": {
-                "Anod": "src/"
-            }
-        },
-        "notification-url": "https://packagist.org/downloads/",
-        "license": [
-            "MIT"
-        ],
-        "authors": [
-            {
-                "name": "Alex Gavrishev",
-                "email": "alex.gavrishev@gmail.com"
-            }
-        ],
-        "description": "API to work with Gmail using IMAP built on top of Zend Imap Library",
-        "homepage": "http://github.com/anod/gmail-imap-php",
-        "keywords": [
-            "gmail",
-            "imap"
-        ]
-    },
-    {
         "name": "symfony/yaml",
         "version": "v2.2.0",
         "version_normalized": "2.2.0.0",
@@ -752,6 +700,58 @@
             "phpunit",
             "testing",
             "xunit"
+        ]
+    },
+    {
+        "name": "anod/gmail-imap",
+        "version": "dev-master",
+        "version_normalized": "9999999-dev",
+        "source": {
+            "type": "git",
+            "url": "https://github.com/anod/gmail-imap-php.git",
+            "reference": "f3cce1cf217fc92aeb9267ce5c359b8b03e731d9"
+        },
+        "dist": {
+            "type": "zip",
+            "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/f3cce1cf217fc92aeb9267ce5c359b8b03e731d9",
+            "reference": "f3cce1cf217fc92aeb9267ce5c359b8b03e731d9",
+            "shasum": ""
+        },
+        "require": {
+            "php": ">=5.3.3",
+            "zendframework/zend-mail": "2.0.*"
+        },
+        "require-dev": {
+            "phpunit/phpunit": "3.7.*"
+        },
+        "time": "2013-04-05 19:28:29",
+        "type": "library",
+        "extra": {
+            "branch-alias": {
+                "dev-master": "1.0.x-dev"
+            }
+        },
+        "installation-source": "source",
+        "autoload": {
+            "psr-0": {
+                "Anod": "src/"
+            }
+        },
+        "notification-url": "https://packagist.org/downloads/",
+        "license": [
+            "MIT"
+        ],
+        "authors": [
+            {
+                "name": "Alex Gavrishev",
+                "email": "alex.gavrishev@gmail.com"
+            }
+        ],
+        "description": "API to work with Gmail using IMAP built on top of Zend Imap Library",
+        "homepage": "http://github.com/anod/gmail-imap-php",
+        "keywords": [
+            "gmail",
+            "imap"
         ]
     }
 ]

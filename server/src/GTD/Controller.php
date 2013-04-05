@@ -134,7 +134,13 @@ class Controller {
 		}
 		$this->gmail->applyLabels($uid, $validLabels);
 		if ($this->archive) {
-			$this->gmail->archive($uid);
+			$this->gmail->selectInbox();
+			try {
+				$inboxUid = $this->gmail->getUID($this->msgid);
+				$this->gmail->archive($inboxUid);
+			} catch (\Exception $e) {
+				
+			}
 		}
 		return new OkResponse();
 	}
