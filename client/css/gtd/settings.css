@@ -8,7 +8,7 @@ body {
 	padding: 0 16px;
 }
 
-.holo-list li { line-height: 42px; }
+.holo-list li { line-height: normal; }
 .holo-label { height: 42px; }
 
 .holo-switch label:before,
@@ -89,7 +89,7 @@ body {
 }
 .holo-list li div.item-data {
 	display: inline-block;
-	height: 40px;
+	min-height: 40px;
 	font-size: 10px;
 }
 
