@@ -55,8 +55,8 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		var html = '<li><div class="item-data">' +
 			lines.join('<br/>') + 
 			'</div>' +
-			'<a href="#" class="act-btn act-edit">Edit</a>' +
-			'<a href="#" class="act-btn act-delete">Delete</a>' +
+			'<a href="#" class="act-btn act-edit"><i class="icon-edit"></i></a>' +
+			'<a href="#" class="act-btn act-delete"><i class="icon-delete"></i></a>' +
 			'</li>'
 		;
 		return html;
