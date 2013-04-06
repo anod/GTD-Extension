@@ -9,7 +9,8 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 		enabled: true,
 		autoActions: true,
 		advancedMode: false,
-		suggestionTreshold: 80
+		suggestionTreshold: 80,
+		hotkey: 'ctrl+shift+a'
 	},
 	
 	initialize: function(attributes, options) {
@@ -19,14 +20,6 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 		this.on('change', function() {
 			this._saveLocal();
 		}, this);
-	},
-	
-	loadPatterns: function() {
-		
-	},
-	
-	loadActions: function() {
-		
 	},
 	
 	_initLocal: function() {

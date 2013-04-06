@@ -25,6 +25,10 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 		if (message.action == 'openTab') {
 			this._openTab(message.msgId);
 		}
+		if (message.action == 'getSettings') {
+			var settings = this.get('context').get('settings').toJSON();
+			this.get('context').trigger('message:send', options, 'newSettings', { 'settings': settings });
+		}
 	},
 
 	_emailOpen: function(msgId, options) {
@@ -32,7 +36,7 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 	},
 	
 	_emailLoaded: function(suggestion, options) {
-		this.trigger('suggestion:show', suggestion, options);
+		this.get('context').trigger('message:send', options, 'show', {'suggestion': suggestion});
 	},
 	
 	_openTab: function(msgId) {

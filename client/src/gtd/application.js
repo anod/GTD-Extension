@@ -13,7 +13,7 @@ window.gtd.Application = Backbone.Model.extend({
 	initialize: function(attributes) {
 		this.context = attributes.context;
 		this.context.get('chrome').extension.onMessage.addListener(_.bind(this._message, this));
-		this.get('router').on('suggestion:show', this._onSuggestionShow, this);
+		this.context.on('message:send', this._sendMessage, this);
 	},
 	
 	runBackground: function(oauth) {
@@ -73,13 +73,11 @@ window.gtd.Application = Backbone.Model.extend({
 		this.get('router').route(message, { tabId : sender.tab.id});
 	},
 
-	_onSuggestionShow: function(suggestion, options) {
-		var message = {
-			'action' : 'show',
-			'suggestion' : suggestion
-		};
-		console.log("[Extension] Send:", message, options);
-		this.context.get('chrome').tabs.sendMessage(options.tabId, message);
+	_sendMessage: function(options, action, data) {
+		var message = (data) ? data : {};
+		message['action'] = action;
+		console.log("[Extension] Send:", message, options.tabId);
+		this.context.get('chrome').tabs.sendMessage(options.tabId, message);		
 	}
 
 });

@@ -13,7 +13,7 @@ window.gtdBootstrap = {
 	run: function() {
 
 		var db = window.gtd.Db.init();
-		var settings = new window.gtd.Settings.Settings({},{ 'db': db, 'localStorage' : window.localStorage });
+		var settings = new window.gtd.Settings.Settings({},{ 'localStorage' : window.localStorage });
 	
 		var context = new window.gtd.Context({
 			'$' : window.$,

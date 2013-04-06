@@ -1,9 +1,9 @@
 "use strict";
 
 window.gtd.Contentscript.Shortcut = Backbone.View.extend({
-
-	initialize: function() {
+	initialize: function(options) {
 		_.bindAll(this, 'show', 'hide');
+		
 		this.model.on('change:insideEmail', function(model, value) {
 			if (value) {
 				this._onEmailOpen();
@@ -11,10 +11,14 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 				this._onEmailClose();
 			}
 		}, this);
+		this.model.on('change:settings', function() {
+			this.render();
+		}, this);
 	},
 	
 	show: function() {
 		this.render();
+		this.$el.find('#gtd-shortcut').show();
 	},
 	
 	hide: function() {
@@ -23,7 +27,12 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 	},
 	
 	render: function() {
-		this.$el.html(this._template());
+		var settings = this.model.get('settings');
+		if (!settings) {
+			return;
+		}
+		var hotkey = settings.hotkey;
+		this.$el.html(this._template(hotkey));
 		
 		$('body').append(this.$el);
 		
@@ -38,8 +47,6 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 			}
 			this.model.set('showDialog', true);
 		},this));
-		
-		this.$el.find('#gtd-shortcut').show();
 	},
 	
 	_onEmailOpen: function() {
@@ -48,7 +55,7 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 				.delay(200)
 				.animate({
 					opacity: 1.0,
-					width: '148px'
+					width: '188px'
 				}, 500);
 		}, this),_.bind(function() {
 			this.$el.find('.gtd-info')
@@ -64,14 +71,22 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		this.$el.unbind('mouseenter mouseleave');
 	},
 	
-	_template: function() {
+	_template: function(hotkey) {
+		var hotkeyText = this._toTitleCase(hotkey);
 		var html = '<div id="gtd-shortcut">' +
 			'<div>' +
 			'<div class="gtd-section gtd-icon" role="button" tabindex="0"><span class="Tq">&nbsp;</span></div>' +
-			'<div class="gtd-section gtd-info" title="Press Shift+A to show action dialog">Press <span class="gtd-key">Shift+A</span> for action</div>' +
+			'<div class="gtd-section gtd-info" title="Press '+hotkeyText+' to show action dialog">Press <span class="gtd-key">'+hotkeyText+'</span> for action</div>' +
 			'</div>' +
 		'</div>'
 		;
 		return html;
+	},
+	
+	_toTitleCase: function(str) {
+		return str.replace(/[^\+]*/g, function(txt){
+			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
+		});
 	}
+	
 });

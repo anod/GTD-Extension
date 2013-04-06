@@ -22,7 +22,8 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			'date' : '',
 			'context' : '',
 			'project' : '',
-			'priority' : ''
+			'priority' : '',
+			'settings' : null
 		});
 		this.dialog = new window.gtd.Contentscript.Dialog({
 			model: this.model
@@ -51,16 +52,12 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 				this.model.set('iconClicked', false, {silent: true});
 			}
 		}, this);
-		
-		this.shortcut.show();
-
 	},
 	
-	run: function() {	
+	run: function() {
 		this.get('extension').onMessage.addListener(this._message);
+		this.get('extension').sendMessage( { 'action' : 'getSettings' } );
 		$(window).on('hashchange', _.bind(this._checkUrl, this));
-		$(document).bind('keydown', 'shift+a', this._shortcutPress);
-		$(document).bind('keydown', 'esc', this._closeAll);
 		this._checkUrl();
 	},
 	
@@ -114,7 +111,10 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 	
 	_message: function(message, sender) {
-		if (message && message.action == 'show') {
+		if (!message) {
+			return;
+		}
+		if (message.action == 'show') {
 			this.model.set({ 'suggestion' : message.suggestion });
 			var action = message.suggestion.action;
 			if (action) {
@@ -125,6 +125,8 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 					'project' : action.project
 				});
 			}
+		} else if (message.action == 'newSettings') {
+			this._onNewSettings(message.settings);
 		}
 	},
 	
@@ -141,7 +143,19 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		
 	_closeAll: function() {
 		this.model.set('showDialog', false);
-	}
+	},
 	
+	_onNewSettings: function(json) {
+		this.model.set('settings', json);
 
+		$(document).unbind('keydown', this._shortcutPress);
+		$(document).unbind('keydown', this._closeAll);
+		
+		var hotkey = json.hotkey;
+		$(document).bind('keydown', hotkey, this._shortcutPress);
+		$(document).bind('keydown', 'esc', this._closeAll);
+		
+		this.shortcut.show();
+
+	}
 });
