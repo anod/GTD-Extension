@@ -23,6 +23,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			'context' : '',
 			'project' : '',
 			'priority' : '',
+			'tags' : [],
 			'settings' : null
 		});
 		this.dialog = new window.gtd.Contentscript.Dialog({
@@ -67,6 +68,14 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 
 	_checkUrl: function() {
+		this.model.set({
+			'label': window.gtd.Label.NEXT_ACTION,
+			'date' : '',
+			'context' : '',
+			'project' : '',
+			'tags' : ''
+		});
+		
 		var hash = document.location.hash;
 		if (!hash) {
 			this.model.set('insideEmail', false);
@@ -122,7 +131,8 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 					'label': (action.label) ? action.label : window.gtd.Label.NEXT_ACTION,
 					'date' : action.date,
 					'context' : action.context,
-					'project' : action.project
+					'project' : action.project,
+					'tags' : action.tags
 				});
 			}
 		} else if (message.action == 'newSettings') {

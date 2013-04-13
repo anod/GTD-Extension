@@ -114,6 +114,7 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		s.action.context  = this.model.get('context');
 		s.action.project  = this.model.get('project');
 		s.action.archive = archive;
+		s.action.tags = this.model.get('tags');
 		var message = {
 			'action' : 'apply',
 			'suggestion' : s

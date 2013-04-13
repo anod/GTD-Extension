@@ -44,6 +44,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	_searchResult: function(similarList, entry, tags) {
+		console.log('Analysis.NewEmail: Search result', similarList);
 		var similarAction = null;
 		// store as suggestion
 		if (similarList.length > 0) {
