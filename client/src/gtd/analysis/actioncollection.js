@@ -31,7 +31,7 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 			return true; // continue to next cursor position
 		});
 		
-		req.done(_.bind(function() {
+		req.then(_.bind(function() {
 			if (keys.length > 0) {
 				db.values(this.STORE_NAME, keys).done(_.bind(function(results) {
 					this.trigger('search:result',results,entry, tags);

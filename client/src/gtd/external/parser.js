@@ -49,11 +49,6 @@ window.gtd.External.Parser = Backbone.Model.extend({
 		//#label 2
 		//#deadline 2013-02-28 18:24
 		return data;
-	},
-	
-	_idToLabel: function(id) {
-		var labels = [ 'GTD-NextAction', 'GTD-WaitingFor', 'GTD-Calendar', 'GTD-Someday', 'GTD-Project' ];
-		return labels[id-1];
 	}
 	
 });
