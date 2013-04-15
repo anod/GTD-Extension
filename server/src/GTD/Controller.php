@@ -77,7 +77,7 @@ class Controller {
 		$this->gmail->setId("GTD Gmail Extension","0.1","Alex Gavrishev","alex.gavrishev@gmail.com");
 	}
 	
-	private function initRequest(array $request) {
+	protected function initRequest(array $request) {
 		if (!isset($request['email']) || !$request['email']) {
 			throw new ControllerException("Request missing parameter: email");
 		}
