@@ -9,3 +9,4 @@ vendor/.git
 composer.phar
 composer.lock
 extapi_log.log
+report/
