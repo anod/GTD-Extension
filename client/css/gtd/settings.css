@@ -8,7 +8,7 @@ body {
 	padding: 0 16px;
 }
 
-.holo-list li { line-height: normal; }
+.holo-list li { line-height: 42px; }
 .holo-label { height: 42px; }
 
 .holo-switch label:before,
@@ -71,6 +71,9 @@ body {
 	height:120px;
 	overflow: auto;
 }
+
+.holo-list.gtd-box li { line-height: normal; }
+
 .holo-buttons.gtd-close {
 	display:block;
 }
@@ -90,7 +93,9 @@ body {
 .holo-list li div.item-data {
 	display: inline-block;
 	min-height: 40px;
-	font-size: 10px;
+	font-size: 14px;
+	color: #585858;
+	font-weight: normal;
 }
 
 .holo-list li a.act-btn {

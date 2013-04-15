@@ -41,7 +41,7 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 			lines.push(firstLine);
 		}
 		if (pattern.get('content')) {
-			lines.push('<div clss="pattern-content">Content: '+pattern.escape('content')+'</div>');
+			lines.push('<div clss="pattern-content">Match: '+this._renderRegex(pattern.escape('content'))+'</div>');
 		} else {
 			if (pattern.get('subject')) {
 				lines.push('<div clss="pattern-content">Subject: '+pattern.escape('subject')+'</div>');
@@ -50,16 +50,58 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 				lines.push('<div clss="pattern-content">Summary: '+pattern.escape('summary')+'</div>');
 			}
 		}
-		
+		lines.push('<div clss="pattern-content">Action: '+this._renderType(pattern.get('type'))+'</div>');
 		
 		var html = '<li><div class="item-data">' +
-			lines.join('<br/>') + 
+			lines.join('') + 
 			'</div>' +
 			'<a href="#" class="act-btn act-edit"><i class="icon-edit"></i></a>' +
 			'<a href="#" class="act-btn act-delete"><i class="icon-delete"></i></a>' +
 			'</li>'
 		;
 		return html;
+	},
+	
+	_renderRegex: function(regex) {
+		console.log(regex);
+		var stripped = regex.substring(1,regex.length - 1);
+		stripped = stripped.replace(/\\b/g, '');
+		stripped = stripped.replace(/&#x2F;/g, '');
+		stripped = stripped.replace(/\[\^\\s\]\+/g, '(\\w)');
+		stripped = stripped.replace(/\\s[\+\*]?/g, ' ');
+		stripped = stripped.replace(/\\d\{1,2\}\\\\d\{1,2\}/g, 'DD\\MM');
+		stripped = stripped.replace(/\\d\{1,2\}-\\d\{1,2\}/g, 'DD-MM');
+		stripped = stripped.replace(/\\d\{2,4\}/g, 'YYYY');
+		stripped = stripped.replace(/\\\./g, '.');
+
+		var parts = stripped.split('|');
+		return parts.join(', ');
+	},
+	
+	_escapeRegExp: function(str) {
+		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
+	},
+	
+	_renderType: function(type) {
+		/*
+		 * TYPE_DATE: 0,
+		 * TYPE_PROJECT_NAME: 1,
+		 * TYPE_ACTION: 2,
+		 * TYPE_SKIP_ACTION: 3,
+		 * TYPE_CONTEXT: 4,
+		 */
+		if (type === 0) {
+			return 'Fill date';
+		} else if (type === 1) {
+			return 'Match project name';
+		} else if (type === 2) {
+			return 'Fill action';
+		} else if (type === 3) {
+			return 'Skip action';
+		} else if (type === 4) {
+			return 'Fill context';
+		}
+		throw "Unknown type: " + type;
 	}
 
 	
