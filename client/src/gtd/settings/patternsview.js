@@ -32,25 +32,25 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		var lines = [];
 		var firstLine = '';
 		if (pattern.get('from')) {
-			firstLine = '<div clss="pattern-from">From: '+pattern.escape('from')+'</div>';
+			firstLine = '<div class="pattern-from">From: '+pattern.escape('from')+'</div>';
 		}
 		if (pattern.get('to')) {
-			firstLine += '<div clss="pattern-to">To: '+pattern.escape('to')+'</div>';
+			firstLine += '<div class="pattern-to">To: '+pattern.escape('to')+'</div>';
 		}
 		if (firstLine !== '') {
 			lines.push(firstLine);
 		}
 		if (pattern.get('content')) {
-			lines.push('<div clss="pattern-content">Match: '+this._renderRegex(pattern.escape('content'))+'</div>');
+			lines.push('<div class="pattern-content">Match: '+this._renderRegex(pattern.escape('content'))+'</div>');
 		} else {
 			if (pattern.get('subject')) {
-				lines.push('<div clss="pattern-content">Subject: '+this._renderRegex(pattern.escape('subject'))+'</div>');
+				lines.push('<div class="pattern-content">Subject: '+this._renderRegex(pattern.escape('subject'))+'</div>');
 			}
 			if (pattern.get('summary')) {
-				lines.push('<div clss="pattern-content">Summary: '+this._renderRegex(pattern.escape('summary'))+'</div>');
+				lines.push('<div class="pattern-content">Summary: '+this._renderRegex(pattern.escape('summary'))+'</div>');
 			}
 		}
-		lines.push('<div clss="pattern-content">Action: '+this._renderType(pattern.get('type'))+'</div>');
+		lines.push('<div class="pattern-content">Action: '+this._renderType(pattern.get('type'))+'</div>');
 		
 		var html = '<li><div class="item-data">' +
 			lines.join('') + 
