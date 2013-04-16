@@ -2,6 +2,11 @@
 
 window.gtd.Settings.PatternsView = Backbone.View.extend({
 	
+	events: {
+		"click a.act-edit": "_onEditClick",
+		"click a.act-delete": "_onDeleteClick"
+	},
+	
 	initialize: function() {
 		this.collection.on('reset', this.render, this);
 	},
@@ -101,7 +106,15 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 			return 'Fill context';
 		}
 		throw "Unknown type: " + type;
-	}
-
+	},
 	
+	_onEditClick: function(e) {
+		console.log('edit');
+		e.preventDefault();
+	},
+
+	_onDeleteClick: function(e) {
+		console.log('delete');
+		e.preventDefault();
+	}
 });
