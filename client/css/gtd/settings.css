@@ -74,6 +74,10 @@ body {
 
 .holo-list.gtd-box li { line-height: normal; }
 
+.holo-list.gtd-box li.noitems {
+	line-height:48px;
+}
+
 .holo-buttons.gtd-close {
 	display:block;
 }

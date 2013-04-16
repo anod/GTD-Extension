@@ -109,7 +109,10 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	_applySuggestion: function(suggestion)  {
 		//Save as action
 		var action = suggestion.get('action');
-		this.get('actions').insertDb(action);
 		this._applyAction(suggestion.get('id'),action);
+		//Store action only in case we have tags (Came from suggestion)
+		if (action.get('tags')) {
+			this.get('actions').insertDb(action);
+		}
 	}
 });

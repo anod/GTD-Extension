@@ -8,6 +8,18 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		this.context = options.context;
 	},
 	
+	/**
+	 * Sync from db
+	 * @override
+	 * @returns
+	 */
+	sync: function(method, self, options) {
+		var db = this.context.get('db');
+		db.values(this.STORE_NAME).done(_.bind(function(records) {
+			options.success(records, null, null);
+		}));
+	},
+	
 	search: function(entry, tags) {
 		tags.sort();
 		var tagsHash = _.object(tags, tags);

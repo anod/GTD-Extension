@@ -18,6 +18,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	
 	var actions = new window.gtd.Analysis.ActionCollection([], { 'context': context });
 	context.set('actions', actions);
+	actions.fetch();
 
 	new window.gtd.Settings.SettingsView({
 		'el' : '#accent',

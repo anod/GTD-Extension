@@ -24,7 +24,7 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 	},
 	
 	_renderEmpty: function() {
-		var el = this.make('li', {'class': 'noitmes'}, 'No itmes');
+		var el = this.make('li', {'class': 'noitems'}, 'No itmes');
 		this.$el.append(el);
 	},
 	
@@ -44,10 +44,10 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 			lines.push('<div clss="pattern-content">Match: '+this._renderRegex(pattern.escape('content'))+'</div>');
 		} else {
 			if (pattern.get('subject')) {
-				lines.push('<div clss="pattern-content">Subject: '+pattern.escape('subject')+'</div>');
+				lines.push('<div clss="pattern-content">Subject: '+this._renderRegex(pattern.escape('subject'))+'</div>');
 			}
 			if (pattern.get('summary')) {
-				lines.push('<div clss="pattern-content">Summary: '+pattern.escape('summary')+'</div>');
+				lines.push('<div clss="pattern-content">Summary: '+this._renderRegex(pattern.escape('summary'))+'</div>');
 			}
 		}
 		lines.push('<div clss="pattern-content">Action: '+this._renderType(pattern.get('type'))+'</div>');
@@ -63,7 +63,6 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 	},
 	
 	_renderRegex: function(regex) {
-		console.log(regex);
 		var stripped = regex.substring(1,regex.length - 1);
 		stripped = stripped.replace(/\\b/g, '');
 		stripped = stripped.replace(/&#x2F;/g, '');
