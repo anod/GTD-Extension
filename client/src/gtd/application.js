@@ -33,6 +33,9 @@ window.gtd.Application = Backbone.Model.extend({
 					console.log('offline');
 					return;
 				}
+				if (!this.context.get('settings').get('enabled')) {
+					return;
+				}
 				this.get('gmail').loadNewEmails();
 			}
 		},this));

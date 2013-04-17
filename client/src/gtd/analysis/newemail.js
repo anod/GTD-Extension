@@ -3,7 +3,6 @@
 window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	MIN_TAGS_LENGTH: 1,
 	RANK_EQUALS: 1.0,
-	RANK_MATCHED: 0.7,
 	defaults : {
 		context: null,
 		termextraction: null,
@@ -21,7 +20,6 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	analyse: function(entry) {
-		
 		var extparser = this.get('context').get('extparser');
 		if (extparser.test(entry.get('title'))) {
 			extparser.parse(entry);
@@ -47,7 +45,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		console.log('Analysis.NewEmail: Search result', similarList);
 		var similarAction = null;
 		// store as suggestion
-		if (similarList.length > 0) {
+		if (similarList.length > 0 && this.get('context').get('settings').get('autoActions')) {
 			similarAction = this._maxSimilarity(similarList, tags);
 		}
 
@@ -75,6 +73,8 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		var similarAction = null;
 		var similarityRank = 0;
 		
+		var rankMatched = this.get('context').get('settings').get('actionTreshold') / 100;
+		
 		this.get('context').get('logger').info('gtd.Analysis.NewEmail: _maxSimilarity, tags: [' + tags.join(',') + ']');
 		_.find(similarList, function(action) {
 			var rank = this.get('strikeamatch').compare(tags, action.tags);
@@ -93,7 +93,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			}
 			return false;
 		}, this);
-		if (similarityRank < this.RANK_MATCHED) {
+		if (similarityRank < rankMatched) {
 			return null;
 		}
 		if (similarAction === null) {

@@ -12,10 +12,10 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	context: null,
 	
 	_initPatterns: [
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.DATE, 'type' : 0 , 'insensitive': true},
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.PROJECT_NAME, 'type' : 1, 'insensitive' : true },
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.ACTION, 'type' : 2, 'insensitive' : true },
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.CONTEXT, 'type' : 4, 'insensitive' : true }
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.DATE, 'type' : 0 , 'insensitive': true , 'editable' : false},
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.PROJECT_NAME, 'type' : 1, 'insensitive' : true, 'editable' : false },
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.ACTION, 'type' : 2, 'insensitive' : true, 'editable' : false },
+		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.CONTEXT, 'type' : 4, 'insensitive' : true, 'editable' : false }
 	],
 	
 	initialize: function(model, options) {

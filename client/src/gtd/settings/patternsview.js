@@ -58,13 +58,12 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		}
 		lines.push('<div class="pattern-content">Action: '+this._renderType(pattern.get('type'))+'</div>');
 		
-		var html = '<li><div class="item-data">' +
-			lines.join('') + 
-			'</div>' +
-			'<a href="#" class="act-btn act-edit advanced-mode" title="Edit pattern"><i class="icon-edit"></i></a>' +
-			'<a href="#" class="act-btn act-delete" title="Delete pattern"><i class="icon-delete"></i></a>' +
-			'</li>'
-		;
+		var html = '<li><div class="item-data">' + lines.join('') + '</div>';
+		if (pattern.get('editable')) {
+			html += '<a href="#" class="act-btn act-edit advanced-mode" title="Edit pattern"><i class="icon-edit"></i></a>' +
+					'<a href="#" class="act-btn act-delete" title="Delete pattern"><i class="icon-delete"></i></a>';
+		}
+		html += '</li>';
 		return html;
 	},
 	

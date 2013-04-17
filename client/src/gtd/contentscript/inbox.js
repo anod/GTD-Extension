@@ -76,6 +76,12 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			'tags' : ''
 		});
 		
+		if (!this.model.get('settings').enabled) {
+			this.model.set('insideEmail', false);
+			this._closeAll();
+			return false;
+		}
+		
 		var hash = document.location.hash;
 		if (!hash) {
 			this.model.set('insideEmail', false);

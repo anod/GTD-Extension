@@ -10,7 +10,10 @@ window.gtd.Pattern.Pattern = Backbone.Model.extend({
 		'summary' : null,
 		'content' : null,
 		'type' : null,
-		'action': null
+		'action': null,
+		'ediatable' : true,
+		'insensitive'  : true,
+		'value' : ''
 	}
 	
 });
