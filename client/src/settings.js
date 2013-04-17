@@ -27,4 +27,8 @@ document.addEventListener('DOMContentLoaded', function () {
 	});
 
 	settings.set('firstTime' , false);
+	
+	settings.on('change', function() {
+		window.chrome.extension.sendMessage( { 'action' : 'refreshSettings' } );
+	});
 });

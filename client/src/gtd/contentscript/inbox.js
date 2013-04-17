@@ -123,6 +123,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		if (!message) {
 			return;
 		}
+		console.log('Incomming message', message);
 		if (message.action == 'show') {
 			this.model.set({ 'suggestion' : message.suggestion });
 			var action = message.suggestion.action;

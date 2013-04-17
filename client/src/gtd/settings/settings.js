@@ -16,13 +16,23 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 	initialize: function(attributes, options) {
 		this.context = options.context;
 		this.localStorage = options.localStorage;
-		this._initLocal();
+		this._readLocal();
 		this.on('change', function() {
 			this._saveLocal();
 		}, this);
 	},
 	
-	_initLocal: function() {
+	
+	/**
+	 * Sync from db
+	 * @override
+	 * @returns
+	 */
+	sync: function(method, self, options) {
+		this._readLocal();
+	},
+	
+	_readLocal: function() {
 		if (!this.localStorage['gtd_settings']) {
 			return false;
 		}

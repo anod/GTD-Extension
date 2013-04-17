@@ -26,11 +26,26 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 			this._openTab(message.msgId);
 		}
 		if (message.action == 'getSettings') {
-			var settings = this.get('context').get('settings').toJSON();
-			this.get('context').trigger('message:send', options, 'newSettings', { 'settings': settings });
+			this._sendSettings(options);
+		}
+		if (message.action == 'refreshSettings') {
+			var tabOptions = options;
+			this.get('context').get('settings').fetch();
+			this.get('context').get('chrome').tabs.query({ url: 'https://mail.google.com/mail/*' }, _.bind(function(tabs) {
+				for (var i = 0; i< tabs.length; i++) {
+					var tab = tabs[i];
+					tabOptions.tabId = tab.id;
+					this._sendSettings(tabOptions);
+				}
+			}, this));
 		}
 	},
-
+	
+	_sendSettings: function(options) {
+		var settings = this.get('context').get('settings').toJSON();
+		this.get('context').trigger('message:send', options, 'newSettings', { 'settings': settings });
+	},
+	
 	_emailOpen: function(msgId, options) {
 		this.get('suggestions').load(msgId, options);
 	},
