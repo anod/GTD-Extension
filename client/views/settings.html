@@ -49,6 +49,24 @@
 				<input type="checkbox" checked id="autoActions"/>
 				<label class="holo-label" for="autoActions">Auto actions</label>
 			</div>
+			<ul class="holo-list">
+			<li>
+			<div class="holo-field advanced-mode">
+				<label class="holo-label" for="actionTreshold">Action threshold</label>
+				<div class="field-wrapper" style="width:60px">
+					<div class="holo-field-bracket"></div>
+					<input id="actionTreshold" type="number" name="actionTreshold" max="100" min="0" maxlength="3" placeholder="Action threshold"/>
+				</div>
+			</div>
+			</li>
+			</ul>
+			<div class="holo-field advanced-mode" title="Modifiers should be defined by an alphabetical order e.g. alt+ctrl+shift">
+				<label class="holo-label" for="hotkey">Dialog hotkey</label>
+				<div class="field-wrapper">
+					<div class="holo-field-bracket"></div>
+					<input id="hotkey" type="text" name="hotkey" placeholder="Dialog hotkey"/>
+				</div>
+			</div>
 		</li>
 	</ul>
 	<h2 class="holo-divider">Previous decisions</h2>
@@ -59,6 +77,9 @@
 		<li>Item 3</li>
 		<li>Item 4</li>
 	</ul>
+	<div class="holo-buttons">
+		<a class="add-link add-pattrn" title="Add new pattern"><i class="icon-add"></i></a>
+	</div>
 	<h2 class="holo-divider">Patterns</h2>
 	<ul id="patternsList" class="holo-list gtd-box">
 		<li>Item 1</li>

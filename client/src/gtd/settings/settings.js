@@ -9,7 +9,7 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 		enabled: true,
 		autoActions: true,
 		advancedMode: false,
-		suggestionTreshold: 80,
+		actionTreshold: 80,
 		hotkey: 'ctrl+shift+a'
 	},
 	

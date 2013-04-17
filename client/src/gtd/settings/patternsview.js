@@ -18,6 +18,7 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		} else {
 			this._renderList();
 		}
+		this.trigger('render:finish');
 	},
 	
 	_renderList: function() {
@@ -60,8 +61,8 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		var html = '<li><div class="item-data">' +
 			lines.join('') + 
 			'</div>' +
-			'<a href="#" class="act-btn act-edit"><i class="icon-edit"></i></a>' +
-			'<a href="#" class="act-btn act-delete"><i class="icon-delete"></i></a>' +
+			'<a href="#" class="act-btn act-edit advanced-mode" title="Edit pattern"><i class="icon-edit"></i></a>' +
+			'<a href="#" class="act-btn act-delete" title="Delete pattern"><i class="icon-delete"></i></a>' +
 			'</li>'
 		;
 		return html;

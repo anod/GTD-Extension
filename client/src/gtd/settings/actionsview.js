@@ -13,6 +13,7 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 		} else {
 			this._renderList();
 		}
+		this.trigger('render:finish');
 	},
 	
 	_renderList: function() {
@@ -32,7 +33,7 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 		var lines = [];
 		
 		lines.push('<div class="pattern-content">Tags: '+action.get('tags').join(',')+'</div>');
-		lines.push('<div class="pattern-content">Action: '+action.get('label'));
+		lines.push('<div class="pattern-content">Action: '+action.get('label').replace('GTD/',''));
 		if (action.get('project')) {
 			lines.push(' Project: '+action.get('project'));
 		}
@@ -44,8 +45,8 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 		var html = '<li><div class="item-data">' +
 			lines.join('') + 
 			'</div>' +
-			'<a href="#" class="act-btn act-edit"><i class="icon-edit"></i></a>' +
-			'<a href="#" class="act-btn act-delete"><i class="icon-delete"></i></a>' +
+			'<a href="#" class="act-btn act-edit advanced-mode" title="Edit action"><i class="icon-edit"></i></a>' +
+			'<a href="#" class="act-btn act-delete" title="Delete action"><i class="icon-delete"></i></a>' +
 			'</li>'
 		;
 		return html;

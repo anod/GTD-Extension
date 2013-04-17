@@ -10,26 +10,46 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 	},
 	
 	checkboxes: [ 'enabled', 'autoActions', 'advancedMode' ],
+	inputs: ['hotkey', 'actionTreshold'],
 	
 	initialize: function(options) {
+		var context = options.context;
 		this.actionsView = new window.gtd.Settings.ActionsView({
 			'el' : this.$el.find('#actionsList'),
-			'collection' : options.context.get('actions')
+			'collection' : context.get('actions')
 		});
 		this.patternsView = new window.gtd.Settings.PatternsView({
 			'el' : this.$el.find('#patternsList'),
-			'collection' : options.context.get('patterns')
+			'collection' : context.get('patterns')
 		});
-		this.render();
 		this.actionsView.render();
 		this.patternsView.render();
+		this.render();
+		this.actionsView.on('render:finish', this._renderAdvanced, this);
+		this.patternsView.on('render:finish', this._renderAdvanced, this);
+		this.model.on('change:advancedMode', this._renderAdvanced, this);
 	},
 	
 	render: function() {
+		this._renderAdvanced();
+		
 		_.each(this.checkboxes, function(id) {
 			var checked = this.model.get(id);
 			this.$el.find('#'+id).prop('checked', checked);
 		}, this);
+		
+		_.each(this.inputs, function(id) {
+			var value = this.model.get(id);
+			this.$el.find('#'+id).val(value);
+		}, this);
+	},
+	
+	_renderAdvanced: function() {
+		if (this.model.get('advancedMode')) {
+			this.$el.find('.advanced-mode').show();
+		} else {
+			this.$el.find('.advanced-mode').hide();
+		}
 	},
 	
 	_onCheckBoxChange: function(e) {
