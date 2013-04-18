@@ -3,6 +3,7 @@
 window.gtd.Settings.PatternsView = Backbone.View.extend({
 	
 	events: {
+		"click a.add-link": "_onAddClick",
 		"click a.act-edit": "_onEditClick",
 		"click a.act-delete": "_onDeleteClick"
 	},
@@ -23,8 +24,8 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 	
 	_renderList: function() {
 		var html = [];
-		this.collection.each(function(pattern) {
-			html.push(this._renderItem(pattern));
+		this.collection.each(function(pattern, idx) {
+			html.push(this._renderItem(pattern, idx));
 		}, this);
 		this.$el.html(html.join(''));
 	},
@@ -34,7 +35,7 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		this.$el.append(el);
 	},
 	
-	_renderItem: function(pattern) {
+	_renderItem: function(pattern, idx) {
 		var lines = [];
 		var firstLine = '';
 		if (pattern.get('from')) {
@@ -60,8 +61,8 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		
 		var html = '<li><div class="item-data">' + lines.join('') + '</div>';
 		if (pattern.get('editable')) {
-			html += '<a href="#" class="act-btn act-edit advanced-mode" title="Edit pattern"><i class="icon-edit"></i></a>' +
-					'<a href="#" class="act-btn act-delete" title="Delete pattern"><i class="icon-delete"></i></a>';
+			html += '<a href="#" class="act-btn act-edit advanced-mode" data-idx="'+idx+'" title="Edit pattern"><i class="icon-edit"></i></a>' +
+					'<a href="#" class="act-btn act-delete" data-idx="'+idx+'" title="Delete pattern"><i class="icon-delete"></i></a>';
 		}
 		html += '</li>';
 		return html;
@@ -108,8 +109,14 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		throw "Unknown type: " + type;
 	},
 	
+	_onAddClick: function(e) {
+		this.trigger('edit:click', new window.gtd.Pattern.Pattern() );
+		e.preventDefault();
+	},
+	
 	_onEditClick: function(e) {
-		console.log('edit');
+		var $el = $(e.target);
+		this.trigger('edit:click', this.collection.get($el.data('idx')));
 		e.preventDefault();
 	},
 

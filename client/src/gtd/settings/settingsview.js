@@ -3,6 +3,7 @@
 window.gtd.Settings.SettingsView = Backbone.View.extend({
 	actionsView: null,
 	patternsView: null,
+	patternEditView: null,
 	
 	events: {
 		'change input[type="checkbox"]' : '_onCheckBoxChange',
@@ -24,12 +25,12 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 			'el' : this.$el.find('#patternsList'),
 			'collection' : context.get('patterns')
 		});
-		
 		this.actionsView.render();
 		this.patternsView.render();
 		this.render();
 		this.actionsView.on('render:finish', this._renderAdvanced, this);
 		this.patternsView.on('render:finish', this._renderAdvanced, this);
+		this.patternsView.on('edit:click', this._onPatternEdit, this);
 		this.model.on('change:advancedMode', this._renderAdvanced, this);
 	},
 	
@@ -78,6 +79,14 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		var $hotkey = $(e.target);
 		var val = $hotkey.val();
 		this.model.set('hotkey', val);
+	},
+	
+	_onPatternEdit: function(pattern) {
+		this.patternEditView = new window.gtd.Settings.PatternsView({
+			'el' : this.$el,
+			'model' : pattern
+		});
+		this.patternEditView.render();
 	}
 	
 });
