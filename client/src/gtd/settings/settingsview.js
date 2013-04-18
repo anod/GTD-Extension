@@ -6,12 +6,14 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 	
 	events: {
 		'change input[type="checkbox"]' : '_onCheckBoxChange',
+		'change input[name="actionTreshold"]' : '_onActionTresholdChange',
+		'change input[name="hotkey"]' : '_onHotkeyChange',
 		'click #closeBtn' : '_onCloseClick'
 	},
 	
 	checkboxes: [ 'enabled', 'autoActions', 'advancedMode' ],
 	inputs: ['hotkey', 'actionTreshold'],
-	
+		
 	initialize: function(options) {
 		var context = options.context;
 		this.actionsView = new window.gtd.Settings.ActionsView({
@@ -22,6 +24,7 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 			'el' : this.$el.find('#patternsList'),
 			'collection' : context.get('patterns')
 		});
+		
 		this.actionsView.render();
 		this.patternsView.render();
 		this.render();
@@ -61,6 +64,20 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 	
 	_onCloseClick: function(e) {
 		window.close();
+	},
+	
+	_onActionTresholdChange: function(e) {
+		var $treshold = $(e.target);
+		var val = $treshold.val();
+		if (val >=0 && val <= 100) {
+			this.model.set('actionTreshold', parseInt(val,10));
+		}
+	},
+	
+	_onHotkeyChange: function(e) {
+		var $hotkey = $(e.target);
+		var val = $hotkey.val();
+		this.model.set('hotkey', val);
 	}
 	
 });
