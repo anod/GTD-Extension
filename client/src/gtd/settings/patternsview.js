@@ -3,7 +3,6 @@
 window.gtd.Settings.PatternsView = Backbone.View.extend({
 	
 	events: {
-		"click a.add-link": "_onAddClick",
 		"click a.act-edit": "_onEditClick",
 		"click a.act-delete": "_onDeleteClick"
 	},
@@ -107,11 +106,6 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 			return 'Fill context';
 		}
 		throw "Unknown type: " + type;
-	},
-	
-	_onAddClick: function(e) {
-		this.trigger('edit:click', new window.gtd.Pattern.Pattern() );
-		e.preventDefault();
 	},
 	
 	_onEditClick: function(e) {

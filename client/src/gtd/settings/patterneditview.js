@@ -8,13 +8,16 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		3: "Skip Action"
 	},
 	
+	events: {
+		'click #pattern-cancel' : '_onCancelClick'
+	},
+	
 	$modal: null,
 	
 	render: function() {
 		this.$el.find('#pattern-edit').remove();
 		this.$modal = $(this._template(this.model));
-		this.$el.add(this.$modal);
-		this.$modal.show();
+		this.$modal.appendTo(this.$el);
 	},
 	
 	_close: function() {
@@ -24,28 +27,29 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	_template: function(pattern) {
 		var type = pattern.get('type');
 		var action = pattern.get('action');
-		var html = '<div id="pattern-edit" class="modal-overlay"><div>' +
-			'<div class="p holo-spinner">' +
-				this._renderSelect(this.types, type, 'type', { value: -1, name: 'Select type'}) +
-			'</div>' +
-			'<div class="p holo-spinner">' +
-				this._renderSelect(window.gtd.Label, action, 'action', { value: '', name: ''}) +
-			'</div>' +
-			'<div class="holo-field">' +
-				'<div class="holo-field-bracket"></div>' + 
+		var html = '<div id="pattern-edit" class="modal-overlay holo holo-light holo-accent-blue">' +
+			'<div class="holo-action-bar"><h1>Edit Pattern</h1></div>' +
+			'<div class="holo-content">' +
+				'<div class="p holo-spinner">' +
+					this._renderSelect(this.types, type, 'type', { value: -1, name: 'Select type'}) +
+				'</div>' +
+				'<div class="p holo-spinner">' +
+					this._renderSelect(window.gtd.Label, action, 'action', { value: '', name: 'Select action'}) +
+				'</div>' +
+				'<div class="holo-field">' +
+					'<div class="holo-field-bracket"></div>' + 
 					'<input type="text" name="from" placeholder="From:" value="'+pattern.escape('from')+'" />' +
 				'</div>' +
-			'</div>' +
-			'<div class="holo-field">' +
-			'	<div class="holo-field-bracket"></div>' + 
+				'<div class="holo-field">' +
+				'	<div class="holo-field-bracket"></div>' + 
 					'<input type="text" name="content" placeholder="Content:" value="'+pattern.escape('content')+'" />' +
 				'</div>' +
-			'</div>' +
-			'<div class="holo-field">' +
-			'	<div class="holo-field-bracket"></div>' + 
+				'<div class="holo-field">' +
+				'	<div class="holo-field-bracket"></div>' + 
 					'<input type="text" name="value" placeholder="Value:" value="'+pattern.escape('value')+'" />' +
 				'</div>' +
-			'</div>' +
+				'<div class="holo-buttons gtd-close"><button id="pattern-cancel" class="holo-button">Cancel</button></div>' + 
+				'<div class="holo-buttons gtd-close" style="margin-right: 130px"><button id="pattern-save" class="holo-button">Save</button></div>' + 
 			'</div></div>'
 		;
 		
@@ -59,6 +63,11 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 			optHtml+='<option value="'+key+'">'+value+'</option>';
 		});
 		return '<select name="'+name+'">' + optHtml + '</select>';
+	},
+	
+	_onCancelClick: function(e) {
+		this._close();
+		e.preventDefault();
 	}
 	
 });

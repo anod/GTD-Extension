@@ -182,22 +182,26 @@ body {
 
 
 .modal-overlay {
-	visibility: hidden;
 	position: absolute;
 	left: 0px;
 	top: 0px;
 	width:100%;
 	height:100%;
-	text-align:center;
 	z-index: 1000;
 }
 
-.modal-overlay div {
-	width:300px;
-	margin: 100px auto;
-	background-color: #fff;
-	border:1px solid #000;
-	padding:15px;
-	text-align:center;
+.holo-spinner select {
+   background: transparent;
+   width: 268px;
+   padding: 5px;
+   font-size: 16px;
+   line-height: 1;
+   height: 34px;
+   -webkit-appearance: none;
+   border: 0;
+   border-bottom: 1px solid #BBB;
+   background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAASUlEQVR42mN49+6dLhacg4537979nwHKwaoAWSFM8X9iFMIU6xKjENkZBBXiVIxNIVbFuBRiKManEEUxIYVwxcQoBCsmViHJigF9C6T0CfWyfgAAAABJRU5ErkJggg==) no-repeat right bottom transparent;
+   border-radius:0;
+   margin-left: -5px;
 }
 

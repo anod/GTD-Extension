@@ -9,7 +9,8 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		'change input[type="checkbox"]' : '_onCheckBoxChange',
 		'change input[name="actionTreshold"]' : '_onActionTresholdChange',
 		'change input[name="hotkey"]' : '_onHotkeyChange',
-		'click #closeBtn' : '_onCloseClick'
+		'click #closeBtn' : '_onCloseClick',
+		"click a.add-link": "_onAddClick"
 	},
 	
 	checkboxes: [ 'enabled', 'autoActions', 'advancedMode' ],
@@ -81,8 +82,14 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		this.model.set('hotkey', val);
 	},
 	
+	
+	_onAddClick: function(e) {
+		this._onPatternEdit( new window.gtd.Pattern.Pattern() );
+		e.preventDefault();
+	},
+
 	_onPatternEdit: function(pattern) {
-		this.patternEditView = new window.gtd.Settings.PatternsView({
+		this.patternEditView = new window.gtd.Settings.PatternEditView({
 			'el' : this.$el,
 			'model' : pattern
 		});
