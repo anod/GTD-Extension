@@ -84,14 +84,15 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 	
 	
 	_onAddClick: function(e) {
-		this._onPatternEdit( new window.gtd.Pattern.Pattern() );
+		this._onPatternEdit( new window.gtd.Pattern.Pattern(), true );
 		e.preventDefault();
 	},
 
-	_onPatternEdit: function(pattern) {
+	_onPatternEdit: function(pattern, addMode) {
 		this.patternEditView = new window.gtd.Settings.PatternEditView({
 			'el' : this.$el,
-			'model' : pattern
+			'model' : pattern,
+			'addMode' : addMode
 		});
 		this.patternEditView.render();
 	}

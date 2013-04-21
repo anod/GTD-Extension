@@ -2,8 +2,12 @@
 body {
 	min-width: 600px;
 	padding-bottom: 40px;
+	padding-top: 0px;
 }
-
+.holo-action-bar {
+	position: relative;
+	top: 0;
+}
 .holo-action-bar h1 {
 	padding: 0 16px;
 }
@@ -202,6 +206,6 @@ body {
    border-bottom: 1px solid #BBB;
    background: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAsAAAAMCAYAAAC0qUeeAAAASUlEQVR42mN49+6dLhacg4537979nwHKwaoAWSFM8X9iFMIU6xKjENkZBBXiVIxNIVbFuBRiKManEEUxIYVwxcQoBCsmViHJigF9C6T0CfWyfgAAAABJRU5ErkJggg==) no-repeat right bottom transparent;
    border-radius:0;
-   margin-left: -5px;
+   margin-left: -5px
 }
 

@@ -21,7 +21,7 @@ document.addEventListener('DOMContentLoaded', function () {
 	actions.fetch();
 
 	new window.gtd.Settings.SettingsView({
-		'el' : '#accent',
+		'el' : 'body',
 		'model' : settings,
 		'context' : context
 	});

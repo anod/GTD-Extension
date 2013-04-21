@@ -12,10 +12,10 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	context: null,
 	
 	_initPatterns: [
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.DATE, 'type' : 0 , 'insensitive': true , 'editable' : false},
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.PROJECT_NAME, 'type' : 1, 'insensitive' : true, 'editable' : false },
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.ACTION, 'type' : 2, 'insensitive' : true, 'editable' : false },
-		{ 'from' : null, 'subject': null, 'summary' : null, 'content' : window.gtd.Pattern.Regex.CONTEXT, 'type' : 4, 'insensitive' : true, 'editable' : false }
+		{ 'from' : null, 'content' : window.gtd.Pattern.Regex.DATE, 'type' : 0 , 'insensitive': true , 'editable' : false},
+		{ 'from' : null, 'content' : window.gtd.Pattern.Regex.PROJECT_NAME, 'type' : 1, 'insensitive' : true, 'editable' : false },
+		{ 'from' : null, 'content' : window.gtd.Pattern.Regex.ACTION, 'type' : 2, 'insensitive' : true, 'editable' : false },
+		{ 'from' : null, 'content' : window.gtd.Pattern.Regex.CONTEXT, 'type' : 4, 'insensitive' : true, 'editable' : false }
 	],
 	
 	initialize: function(model, options) {
@@ -63,11 +63,9 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		
 	},
 	
-	createPattern: function(from,subject,summary,content,type,action) {
+	createPattern: function(from,content,type,action) {
 		var pattern = new window.gtd.Pattern.Pattern({
 			'from' : from,
-			'subject' : subject,
-			'summary' : summary,
 			'content' : content,
 			'type' : type,
 			'action': action
@@ -98,7 +96,9 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		var type = pattern.get('type');
 		var matches = pattern.get('data');
 		var match = matches[0];
+		
 		console.log("Matched", type, match);
+
 		if (type == this.TYPE_DATE) {
 			var date = this._matchToDate(match);
 			if (date !== null) {
@@ -220,29 +220,6 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 				data.push(result);
 			}
 			
-		} else {
-			if (pattern.get('subject')) {
-				var subject = entry.get('title');
-				patt = new RegExp(pattern.get('subject'),modifiers+'g');
-				result = patt.exec(subject);
-				if (!result) {
-					return false;
-				}
-				if (result) {
-					data.push(result);
-				}
-			}
-			if (pattern.get('summary')) {
-				var summary = entry.get('summary');
-				patt = new RegExp(pattern.get('summary'),modifiers+'g');
-				result = patt.exec(summary);
-				if (!result) {
-					return false;
-				}
-				if (result) {
-					data.push(result);
-				}
-			}
 		}
 		pattern.set('data',data);
 		return true;
