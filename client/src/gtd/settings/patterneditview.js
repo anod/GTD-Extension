@@ -9,7 +9,8 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	},
 	
 	events: {
-		'click #pattern-cancel' : '_onCancelClick'
+		'click #pattern-cancel' : '_onCancelClick',
+		'click #pattern-save' : '_onSaveClick'
 	},
 	
 	$modal: null,
@@ -42,6 +43,7 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		
 		var html = '<div id="pattern-edit" class="modal-overlay holo holo-light holo-accent-blue">' +
 			'<div class="holo-action-bar"><h1>' + title + '</h1></div>' +
+			'<div id="error" class="holo-content alert alert-error" style="display: none;"></div>' +
 			'<div class="holo-content">' +
 				'<div class="p holo-spinner">' +
 					this._renderSelect(this.types, type, 'type', { value: -1, name: 'Select type'}) +
@@ -76,6 +78,31 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 			optHtml+='<option value="'+key+'">'+value+'</option>';
 		});
 		return '<select name="'+name+'">' + optHtml + '</select>';
+	},
+	
+	_onSaveClick: function(e) {
+		var $error = this.$el.find('#error');
+		$error.animate({ opacity: 0 }, "fast", null, _.bind(function() {
+			$error.hide();
+		}, this));
+		
+		var type = parseInt(this.$el.find('select[name="type"]').val(), 10);
+		var action = (this.$el.find('select[name="action"]').val().trim()) ? parseInt(this.$el.find('select[name="action"]').val(),10) : null; 
+		this.model.set({
+			'type' : (type >= 0) ? type : null,
+			'action' : action,
+			'from' : this.$el.find('input[name="from"]').val().trim(),
+			'content' : this.$el.find('input[name="content"]').val().trim(),
+			'value' : this.$el.find('input[name="value"]').val().trim()
+		}, { validate:false } );
+		
+		if (!this.model.isValid()) {
+			$error.html(this.model.get('validationError'));
+			$error.show();
+			$error.css('opacity', 0);
+			$error.animate({ opacity: 1 }, "fast");
+		}
+		e.preventDefault();
 	},
 	
 	_onCancelClick: function(e) {
