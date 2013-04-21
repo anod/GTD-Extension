@@ -22,11 +22,16 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	render: function() {
 		this.$el.find('#pattern-edit').remove();
 		this.$modal = $(this._template(this.model));
+		this.$modal.css('opacity', 0);
 		this.$modal.appendTo(this.$el);
+		this.$modal.animate({ opacity: 1 }, "fast");
 	},
 	
 	_close: function() {
-		this.$modal.remove();
+		this.$modal.animate({ opacity: 0 }, "fast", null, _.bind(function() {
+			this.$modal.hide();
+			this.$modal.remove();
+		}, this));
 	},
 	
 	_template: function(pattern) {
