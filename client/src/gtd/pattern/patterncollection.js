@@ -95,6 +95,19 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}, this));
 	},
 	
+	removeDb: function(id, refresh) {
+		var req = this.context.get('db').remove(this.STORE_NAME, id);
+		req.done(_.bind(function(key) {
+			this.trigger('change:removedb', id );
+			if (refresh) {
+				this.fetch();
+			}
+		}, this));
+		req.fail(_.bind(function(error) {
+			this.context.get('logger').exception(error);
+		}, this));
+	},
+	
 	_applyPattern: function(pattern, entry, action) {
 		var type = pattern.get('type');
 		var matches = pattern.get('data');

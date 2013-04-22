@@ -119,7 +119,9 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 	},
 
 	_onDeleteClick: function(e) {
-		console.log('delete');
+		var $el = $(e.target);
+		var pattern = this.collection.get($el.data('id'));
+		this.collection.removeDb(pattern.get('id'), true);
 		e.preventDefault();
 	}
 });
