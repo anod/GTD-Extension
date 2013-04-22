@@ -105,10 +105,13 @@ body {
 }
 
 .holo-buttons a.add-link {
-	width:32px;
-	height: 32px;
-	padding: 0px 8px;
+	width: 22px;
+	height: 22px;
+	padding: 0px 0px;
+	margin-right: 8px;
 	cursor: pointer;
+	background-repeat:no-repeat;
+	background-position:center; 
 }
 
 .holo-list li {
@@ -161,7 +164,7 @@ body {
 }
 
 .icon-add {
-	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgAgMAAAAOFJJnAAAAA3NCSVQICAjb4U/gAAAACXBIWXMAAA3XAAAN1wFCKJt4AAAAGXRFWHRTb2Z0d2FyZQB3d3cuaW5rc2NhcGUub3Jnm+48GgAAAAlQTFRF////MjIyNDQ0D9yeOQAAAAN0Uk5TAE2ZNnLedgAAACFJREFUGNNjYCAOMDpAGUwNtGFkrQKClcgM2tmF5B1CAAAtUBIh/cLEvAAAAABJRU5ErkJggg==);
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABIAAAASCAYAAABWzo5XAAAARElEQVR42mNgIACMjIxijI2NHRkoBUCD6kF41KBhaRAoncAU48BTTExMpuBTY2Bg4MUASmxUMWg01kYNwgNAaYSYdAIAvxdITf5nVokAAAAASUVORK5CYII=);
 }
 
 .holo-list li a {

@@ -47,6 +47,7 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 			var value = this.model.get(id);
 			this.$el.find('#'+id).val(value);
 		}, this);
+		
 	},
 	
 	_renderAdvanced: function() {
@@ -55,6 +56,8 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		} else {
 			this.$el.find('.advanced-mode').hide();
 		}
+		
+		this.$el.find('input').blur();
 	},
 	
 	_onCheckBoxChange: function(e) {

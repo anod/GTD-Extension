@@ -26,6 +26,7 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		this.$modal.css('opacity', 0);
 		this.$modal.appendTo(this.$el);
 		this.$modal.animate({ opacity: 1 }, "fast");
+		this.$modal.find('input').blur();
 	},
 	
 	_close: function() {
@@ -74,8 +75,8 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	_renderSelect: function(options, selected, name, firstOpt) {
 		var optHtml = (firstOpt) ? '<option value="'+firstOpt.value+'">'+firstOpt.name+'</option>' : '';
 		_.each(options, function(value, key) {
-			var selected = (key == selected) ? 'selected="selected"' : '';
-			optHtml+='<option value="'+key+'">'+value+'</option>';
+			var selText = (key == selected) ? 'selected="selected"' : '';
+			optHtml+='<option value="'+key+'" '+selText+'>'+value+'</option>';
 		});
 		return '<select name="'+name+'">' + optHtml + '</select>';
 	},
