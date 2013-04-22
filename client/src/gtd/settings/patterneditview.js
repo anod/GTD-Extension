@@ -30,6 +30,7 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	},
 	
 	_close: function() {
+		this.undelegateEvents();
 		this.$modal.animate({ opacity: 0 }, "fast", null, _.bind(function() {
 			this.$modal.hide();
 			this.$modal.remove();
@@ -83,12 +84,10 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	
 	_onSaveClick: function(e) {
 		var $error = this.$el.find('#error');
-		$error.animate({ opacity: 0 }, "fast", null, _.bind(function() {
-			$error.hide();
-		}, this));
+		$error.hide();
 		
 		var type = parseInt(this.$el.find('select[name="type"]').val(), 10);
-		var action = (this.$el.find('select[name="action"]').val().trim()) ? parseInt(this.$el.find('select[name="action"]').val(),10) : null; 
+		var action = (this.$el.find('select[name="action"]').val().trim()) ? this.$el.find('select[name="action"]').val() : null;
 		this.model.set({
 			'type' : (type >= 0) ? type : null,
 			'action' : action,
@@ -98,10 +97,13 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		}, { validate:false } );
 		
 		if (!this.model.isValid()) {
-			$error.html(this.model.get('validationError'));
+			$error.html(this.model.validationError);
 			$error.show();
 			$error.css('opacity', 0);
 			$error.animate({ opacity: 1 }, "fast");
+		} else {
+			this.collection.insertDb(this.model, true);
+			this._close();
 		}
 		e.preventDefault();
 	},

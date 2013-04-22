@@ -8,7 +8,7 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 	},
 	
 	initialize: function() {
-		this.collection.on('reset', this.render, this);
+		this.collection.on('sync', this.render, this);
 	},
 	
 	render: function() {
@@ -30,13 +30,15 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 	},
 	
 	_renderEmpty: function() {
-		var el = this.make('li', {'class': 'noitems'}, 'No itmes');
+		var el = '<li class="noitems">No itmes</li>';
 		this.$el.append(el);
 	},
 	
 	_renderItem: function(pattern, idx) {
 		var lines = [];
 		var firstLine = '';
+		var id = pattern.get('id');
+		
 		if (pattern.get('from')) {
 			firstLine = '<div class="pattern-from">From: '+pattern.escape('from')+'</div>';
 		}
@@ -48,27 +50,29 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		}
 		if (pattern.get('content')) {
 			lines.push('<div class="pattern-content">Match: '+this._renderRegex(pattern.escape('content'))+'</div>');
-		} else {
-			if (pattern.get('subject')) {
-				lines.push('<div class="pattern-content">Subject: '+this._renderRegex(pattern.escape('subject'))+'</div>');
-			}
-			if (pattern.get('summary')) {
-				lines.push('<div class="pattern-content">Summary: '+this._renderRegex(pattern.escape('summary'))+'</div>');
-			}
 		}
-		lines.push('<div class="pattern-content">Action: '+this._renderType(pattern.get('type'))+'</div>');
+		if (pattern.get('action')) {
+			lines.push('<div class="pattern-content">Action: '+window.gtd.Label[pattern.escape('action')].replace('GTD/','')+'</div>');
+		}
+
+		var res = 'Result: '+this._renderType(pattern.get('type'));
+		if (pattern.get('value')) {
+			res+=" with value '"+pattern.get('value')+"'";
+		}
+		
+		lines.push('<div class="pattern-content">'+res+'</div>');
 		
 		var html = '<li><div class="item-data">' + lines.join('') + '</div>';
 		if (pattern.get('editable')) {
-			html += '<a href="#" class="act-btn act-edit advanced-mode" data-idx="'+idx+'" title="Edit pattern"><i class="icon-edit"></i></a>' +
-					'<a href="#" class="act-btn act-delete" data-idx="'+idx+'" title="Delete pattern"><i class="icon-delete"></i></a>';
+			html += '<a href="#" class="act-btn act-edit advanced-mode" title="Edit pattern"><i class="icon-edit" data-id="'+id+'" ></i></a>' +
+					'<a href="#" class="act-btn act-delete" title="Delete pattern"><i class="icon-delete" data-id="'+id+'" ></i></a>';
 		}
 		html += '</li>';
 		return html;
 	},
 	
 	_renderRegex: function(regex) {
-		var stripped = regex.substring(1,regex.length - 1);
+		var stripped = regex;//.substring(1,regex.length - 1);
 		stripped = stripped.replace(/\\b/g, '');
 		stripped = stripped.replace(/&#x2F;/g, '');
 		stripped = stripped.replace(/\[\^\\s\]\+/g, '(\\w)');
@@ -97,7 +101,7 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		if (type === 0) {
 			return 'Fill date';
 		} else if (type === 1) {
-			return 'Match project name';
+			return 'Fill project name';
 		} else if (type === 2) {
 			return 'Fill action';
 		} else if (type === 3) {
@@ -110,7 +114,7 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 	
 	_onEditClick: function(e) {
 		var $el = $(e.target);
-		this.trigger('edit:click', this.collection.get($el.data('idx')));
+		this.trigger('edit:click', this.collection.get($el.data('id')));
 		e.preventDefault();
 	},
 

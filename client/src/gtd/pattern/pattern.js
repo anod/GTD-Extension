@@ -15,7 +15,7 @@ window.gtd.Pattern.Pattern = Backbone.Model.extend({
 	
 	validate: function(attrs, options) {
 		if (attrs.type === null) {
-			return 'Type needs to be defined';
+			return 'Type needs to be selected';
 		}
 		/*
 		TYPE_PROJECT_NAME: 1,
@@ -24,8 +24,8 @@ window.gtd.Pattern.Pattern = Backbone.Model.extend({
 		TYPE_CONTEXT: 4,
 		*/
 		if (attrs.type === 1 || attrs.type === 4) {
-			if (!attrs.from || !attrs.content) {
-				return 'From or content pattern required';
+			if (!attrs.from && !attrs.content) {
+				return 'From or content pattern are required';
 			}
 			if (!attrs.value) {
 				return 'Value is required';

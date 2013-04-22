@@ -78,7 +78,7 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	 * @Override
 	 * @param pattern
 	 */
-	insertDb: function(pattern) {
+	insertDb: function(pattern, refresh) {
 		if (_.isArray(pattern)) {
 			return; //Not supported
 		}
@@ -86,6 +86,9 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		var req = this.context.get('db').put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
 			this.trigger('change:insertdb', pattern );
+			if (refresh) {
+				this.fetch();
+			}
 		}, this));
 		req.fail(_.bind(function(error) {
 			this.context.get('logger').exception(error);

@@ -5,12 +5,15 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 	patternsView: null,
 	patternEditView: null,
 	
+	patterns: null,
+	actions: null,
+	
 	events: {
 		'change input[type="checkbox"]' : '_onCheckBoxChange',
 		'change input[name="actionTreshold"]' : '_onActionTresholdChange',
 		'change input[name="hotkey"]' : '_onHotkeyChange',
 		'click #closeBtn' : '_onCloseClick',
-		"click a.add-link": "_onAddClick"
+		"click a.add-link": "_onPatternAddClick"
 	},
 	
 	checkboxes: [ 'enabled', 'autoActions', 'advancedMode' ],
@@ -18,13 +21,16 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		
 	initialize: function(options) {
 		var context = options.context;
+		this.patterns = context.get('patterns');
+		this.actions = context.get('actions');
 		this.actionsView = new window.gtd.Settings.ActionsView({
 			'el' : this.$el.find('#actionsList'),
-			'collection' : context.get('actions')
+			'collection' : this.actions
 		});
+		
 		this.patternsView = new window.gtd.Settings.PatternsView({
 			'el' : this.$el.find('#patternsList'),
-			'collection' : context.get('patterns')
+			'collection' : this.patterns
 		});
 		this.actionsView.render();
 		this.patternsView.render();
@@ -85,19 +91,22 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		this.model.set('hotkey', val);
 	},
 	
-	
-	_onAddClick: function(e) {
+	_onPatternAddClick: function(e) {
 		this._onPatternEdit( new window.gtd.Pattern.Pattern(), true );
 		e.preventDefault();
 	},
 
 	_onPatternEdit: function(pattern, addMode) {
+
 		this.patternEditView = new window.gtd.Settings.PatternEditView({
 			'el' : this.$el,
 			'model' : pattern,
-			'addMode' : addMode
+			'addMode' : addMode,
+			'collection' : this.patterns
 		});
 		this.patternEditView.render();
 	}
+	
+	
 	
 });

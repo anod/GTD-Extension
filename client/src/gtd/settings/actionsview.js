@@ -7,7 +7,7 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 	},
 	
 	initialize: function() {
-		this.collection.on('reset', this.render, this);
+		this.collection.on('sync', this.render, this);
 	},
 	
 	render: function() {
@@ -29,7 +29,7 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 	},
 	
 	_renderEmpty: function() {
-		var el = this.make('li', {'class': 'noitems'}, 'No actions stored');
+		var el = '<li class="noitems">No actions stored</li>';
 		this.$el.append(el);
 	},
 	
