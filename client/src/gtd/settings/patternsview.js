@@ -40,22 +40,19 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		var id = pattern.get('id');
 		
 		if (pattern.get('from')) {
-			firstLine = '<div class="pattern-from">From: '+pattern.escape('from')+'</div>';
-		}
-		if (pattern.get('to')) {
-			firstLine += '<div class="pattern-to">To: '+pattern.escape('to')+'</div>';
+			firstLine = '<div class="pattern-from"><strong>From:</strong> '+pattern.escape('from')+'</div>';
 		}
 		if (firstLine !== '') {
 			lines.push(firstLine);
 		}
 		if (pattern.get('content')) {
-			lines.push('<div class="pattern-content">Match: '+this._renderRegex(pattern.escape('content'))+'</div>');
+			lines.push('<div class="pattern-content"><strong>Match:</strong> '+this._renderRegex(pattern.escape('content'))+'</div>');
 		}
 		if (pattern.get('action')) {
-			lines.push('<div class="pattern-content">Action: '+window.gtd.Label[pattern.escape('action')].replace('GTD/','')+'</div>');
+			lines.push('<div class="pattern-content"><strong>Action:</strong> '+window.gtd.Label[pattern.escape('action')].replace('GTD/','')+'</div>');
 		}
 
-		var res = 'Result: '+this._renderType(pattern.get('type'));
+		var res = '<strong>Result:</strong> '+this._renderType(pattern.get('type'));
 		if (pattern.get('value')) {
 			res+=" with value '"+pattern.get('value')+"'";
 		}

@@ -58,8 +58,6 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	run: function() {
 		this.get('extension').onMessage.addListener(this._message);
 		this.get('extension').sendMessage( { 'action' : 'getSettings' } );
-		$(window).on('hashchange', _.bind(this._checkUrl, this));
-		this._checkUrl();
 	},
 	
 	_closeDialog: function() {
@@ -163,6 +161,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 	
 	_onNewSettings: function(json) {
+		var init = (this.model.get('settings') == null);
 		this.model.set('settings', json);
 
 		$(document).unbind('keydown', this._shortcutPress);
@@ -173,6 +172,9 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		$(document).bind('keydown', 'esc', this._closeAll);
 		
 		this.shortcut.show();
-
+		if (init) {
+			$(window).on('hashchange', _.bind(this._checkUrl, this));
+			this._checkUrl();
+		}
 	}
 });

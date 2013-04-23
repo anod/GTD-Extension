@@ -74,12 +74,23 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		var plain = action.toJSON();
 		var req = this.context.get('db').put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
-			this.trigger('cchange:insertdb', action );
+			this.trigger('change:insertdb', action );
 		}, this));
 		req.fail(_.bind(function(error) {
 			this.context.get('logger').exception(error);
 		}, this));
-	}
+	},
 	
-	
+	removeDb: function(id, refresh) {
+		var req = this.context.get('db').remove(this.STORE_NAME, id);
+		req.done(_.bind(function(key) {
+			this.trigger('change:removedb', id );
+			if (refresh) {
+				this.fetch();
+			}
+		}, this));
+		req.fail(_.bind(function(error) {
+			this.context.get('logger').exception(error);
+		}, this));
+	},
 });
