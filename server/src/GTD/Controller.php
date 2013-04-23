@@ -185,7 +185,7 @@ class Controller {
 	 * @return \GTD\Response\OkResponse
 	 */
 	private function actionDelete($uid) {
-		$this->gmail->removeMessageUID($uid);
+		$this->gmail->trash($uid);
 		return new OkResponse();
 	}
 }

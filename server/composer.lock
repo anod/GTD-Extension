@@ -1,4 +1,8 @@
 {
+    "_readme": [
+        "This file locks the dependencies of your project to a known state",
+        "Read more about it at http://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file"
+    ],
     "hash": "9d6e7bc112570e31ff595ed1621aff5a",
     "packages": [
         {
@@ -7,12 +11,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anod/gmail-imap-php.git",
-                "reference": "63fe4a50fcf5eecc41955a4369bd4388007d1b26"
+                "reference": "8257ac28d523d2fb7a2eb57da7d73d16523166df"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/63fe4a50fcf5eecc41955a4369bd4388007d1b26",
-                "reference": "63fe4a50fcf5eecc41955a4369bd4388007d1b26",
+                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/8257ac28d523d2fb7a2eb57da7d73d16523166df",
+                "reference": "8257ac28d523d2fb7a2eb57da7d73d16523166df",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +53,7 @@
                 "gmail",
                 "imap"
             ],
-            "time": "2013-04-23 17:30:54"
+            "time": "2013-04-23 18:21:16"
         },
         {
             "name": "monolog/monolog",
