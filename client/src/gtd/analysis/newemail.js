@@ -25,6 +25,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			var suggestion = extparser.parse(entry);
 			if (suggestion) {
 				this._applySuggestion(suggestion);
+				this.get('context').get('imap').removeMessage(entry.get('msgid'));
 			}
 			return;
 		}

@@ -92,5 +92,5 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		req.fail(_.bind(function(error) {
 			this.context.get('logger').exception(error);
 		}, this));
-	},
+	}
 });
