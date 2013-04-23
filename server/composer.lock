@@ -7,12 +7,12 @@
             "source": {
                 "type": "git",
                 "url": "https://github.com/anod/gmail-imap-php.git",
-                "reference": "f3cce1cf217fc92aeb9267ce5c359b8b03e731d9"
+                "reference": "63fe4a50fcf5eecc41955a4369bd4388007d1b26"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/f3cce1cf217fc92aeb9267ce5c359b8b03e731d9",
-                "reference": "f3cce1cf217fc92aeb9267ce5c359b8b03e731d9",
+                "url": "https://api.github.com/repos/anod/gmail-imap-php/zipball/63fe4a50fcf5eecc41955a4369bd4388007d1b26",
+                "reference": "63fe4a50fcf5eecc41955a4369bd4388007d1b26",
                 "shasum": ""
             },
             "require": {
@@ -49,7 +49,7 @@
                 "gmail",
                 "imap"
             ],
-            "time": "2013-04-05 19:28:29"
+            "time": "2013-04-23 17:30:54"
         },
         {
             "name": "monolog/monolog",
@@ -157,14 +157,14 @@
             "target-dir": "Zend/Loader",
             "source": {
                 "type": "git",
-                "url": "git://github.com/zendframework/Component_ZendLoader.git",
+                "url": "https://github.com/zendframework/Component_ZendLoader.git",
                 "reference": "release-2.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/Zend_Loader-2.0.8.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-loader-2.0.8-release-2.0.8-c2ca20.zip",
+                "reference": "2.0.8",
+                "shasum": "7b65f76d989d9e6a6aa5a87a74ba761a6d657984"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -182,17 +182,14 @@
                 "BSD-3-Clause"
             ],
             "description": " ",
-            "homepage": "http://packages.zendframework.com/",
             "keywords": [
                 "loader",
                 "zf2"
             ],
             "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "source": "https://github.com/zendframework/Component_ZendLoader/tree/release-2.0.7"
+            },
+            "time": "2013-01-22 20:50:52"
         },
         {
             "name": "zendframework/zend-mail",
@@ -200,14 +197,14 @@
             "target-dir": "Zend/Mail",
             "source": {
                 "type": "git",
-                "url": "git://github.com/zendframework/Component_ZendMail.git",
+                "url": "https://github.com/zendframework/Component_ZendMail.git",
                 "reference": "release-2.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/Zend_Mail-2.0.8.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-mail-2.0.8-release-2.0.8-c2ca20.zip",
+                "reference": "2.0.8",
+                "shasum": "29d4633a4509950f7a27bdad92d4230efe0668be"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -229,17 +226,14 @@
                 "BSD-3-Clause"
             ],
             "description": "provides generalized functionality to compose and send both text and MIME-compliant multipart e-mail messages",
-            "homepage": "http://packages.zendframework.com/",
             "keywords": [
                 "mail",
                 "zf2"
             ],
             "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "source": "https://github.com/zendframework/Component_ZendMail/tree/release-2.0.7"
+            },
+            "time": "2013-01-27 09:20:56"
         },
         {
             "name": "zendframework/zend-mime",
@@ -247,14 +241,14 @@
             "target-dir": "Zend/Mime",
             "source": {
                 "type": "git",
-                "url": "git://github.com/zendframework/Component_ZendMime.git",
+                "url": "https://github.com/zendframework/Component_ZendMime.git",
                 "reference": "release-2.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/Zend_Mime-2.0.8.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-mime-2.0.8-release-2.0.8-c2ca20.zip",
+                "reference": "2.0.8",
+                "shasum": "04b0bfe5e7a3764b29856883956b757b3dc250a5"
             },
             "require": {
                 "php": ">=5.3.3",
@@ -270,17 +264,14 @@
                 "BSD-3-Clause"
             ],
             "description": " ",
-            "homepage": "http://packages.zendframework.com/",
             "keywords": [
                 "mime",
                 "zf2"
             ],
             "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "source": "https://github.com/zendframework/Component_ZendMime/tree/release-2.0.7"
+            },
+            "time": "2013-01-07 17:45:37"
         },
         {
             "name": "zendframework/zend-stdlib",
@@ -288,14 +279,14 @@
             "target-dir": "Zend/Stdlib",
             "source": {
                 "type": "git",
-                "url": "git://github.com/zendframework/Component_ZendStdlib.git",
+                "url": "https://github.com/zendframework/Component_ZendStdlib.git",
                 "reference": "release-2.0.8"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://packages.zendframework.com/composer/Zend_Stdlib-2.0.8.zip",
-                "reference": null,
-                "shasum": null
+                "url": "https://packages.zendframework.com/composer/zendframework-zend-stdlib-2.0.8-release-2.0.8-c2ca20.zip",
+                "reference": "2.0.8",
+                "shasum": "d736fef90f2c324a4abb8bee6fd5370c7cecc8b8"
             },
             "require": {
                 "php": ">=5.3.3"
@@ -313,17 +304,14 @@
                 "BSD-3-Clause"
             ],
             "description": " ",
-            "homepage": "http://packages.zendframework.com/",
             "keywords": [
                 "stdlib",
                 "zf2"
             ],
             "support": {
-                "email": "fw-general-subscribe@lists.zend.com",
-                "irc": "irc://irc.freenode.net/zftalk",
-                "issues": "https://github.com/zendframework/zf2/issues",
-                "source": "https://github.com/zendframework/zf2"
-            }
+                "source": "https://github.com/zendframework/Component_ZendStdlib/tree/release-2.0.7"
+            },
+            "time": "2013-01-22 20:50:52"
         }
     ],
     "packages-dev": [
@@ -683,17 +671,17 @@
         },
         {
             "name": "symfony/yaml",
-            "version": "v2.2.0",
+            "version": "v2.2.1",
             "target-dir": "Symfony/Component/Yaml",
             "source": {
                 "type": "git",
                 "url": "https://github.com/symfony/Yaml.git",
-                "reference": "v2.2.0-RC3"
+                "reference": "v2.2.1"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.2.0-RC3",
-                "reference": "v2.2.0-RC3",
+                "url": "https://api.github.com/repos/symfony/Yaml/zipball/v2.2.1",
+                "reference": "v2.2.1",
                 "shasum": ""
             },
             "require": {
@@ -726,7 +714,7 @@
             ],
             "description": "Symfony Yaml Component",
             "homepage": "http://symfony.com",
-            "time": "2013-01-27 16:49:19"
+            "time": "2013-03-23 07:49:54"
         }
     ],
     "aliases": [
