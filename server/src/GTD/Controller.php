@@ -16,6 +16,7 @@ class Controller {
 	const ACTION_LABEL = 1;
 	const ACTION_CONTENT = 2;
 	const ACTION_THREAD_LABELS = 3;
+	const ACTION_DELETE = 4;
 	
 	private $email;
 	private $token;
@@ -67,6 +68,8 @@ class Controller {
 			return $this->actionContent($uid);
 		} elseif ($this->action == self::ACTION_THREAD_LABELS) {
 			return $this->actionThreadLabels($uid);
+		} elseif ($this->action == self::ACTION_DELETE) {
+			return $this->actionDelete($uid);
 		}
 		throw new ControllerException("Unknown action: '".$this->action."'");
 	}
@@ -176,6 +179,9 @@ class Controller {
 		return $gtdLabels;
 	}
 	
+	private function actionDelete($uid) {
+		$this->gmail->removeMessageUID($uid);
+	}
 }
 
 class ControllerException extends \Exception {}
