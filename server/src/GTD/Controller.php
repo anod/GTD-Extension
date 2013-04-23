@@ -179,8 +179,14 @@ class Controller {
 		return $gtdLabels;
 	}
 	
+	/**
+	 * 
+	 * @param string $uid
+	 * @return \GTD\Response\OkResponse
+	 */
 	private function actionDelete($uid) {
 		$this->gmail->removeMessageUID($uid);
+		return new OkResponse();
 	}
 }
 
