@@ -6,7 +6,7 @@ window.gtd.External.Parser = Backbone.Model.extend({
 	},
 	
 	test: function(subject) {
-		return (subject.indexOf("#gtd") != -1);
+		return (subject.indexOf("#gtd") != -1 && subject.indexOf("#mailid") != -1);
 	},
 	
 	parse: function(entry) {

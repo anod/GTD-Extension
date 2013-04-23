@@ -12,7 +12,7 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 	parse: function(entry) {
 		var src = entry.get('title');
 		var data = this._parse(src);
-		console.log('External data received', data);
+		console.log('Instant data received', data);
 	},
 	
 	_parse: function(src) {
