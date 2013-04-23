@@ -22,7 +22,10 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	analyse: function(entry) {
 		var extparser = this.get('context').get('extparser');
 		if (extparser.test(entry.get('title'))) {
-			extparser.parse(entry);
+			var suggestion = extparser.parse(entry);
+			if (suggestion) {
+				this._applySuggestion(suggestion);
+			}
 			return;
 		}
 		var text = entry.get('title') + "\n" + entry.get('summary');
