@@ -4,6 +4,7 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 	ACTION_LABEL: 1,
 	ACTION_CONTENT: 2,
 	ACTION_THREAD_LABELS: 3,
+	ACTION_REMOVE: 4,
 	
 	url : 'http://gtd.anodsplace.info/handler.php',
 	defaults : {
@@ -40,6 +41,15 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		}, function(response) {
 			console.log("gtd.Gmail.Imap: getThreadLabels finished for email #"+emailId);
 			callback(response);
+		});
+	},
+	
+	removeMessage: function(emailId) {
+		this._sendRequest({ 
+			'action': this.ACTION_REMOVE,
+			'msgid' : emailId
+		}, function(response) {
+			console.log("gtd.Gmail.Imap: removeMessage #"+emailId);
 		});
 	},
 	
