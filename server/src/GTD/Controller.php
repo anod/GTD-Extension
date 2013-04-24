@@ -26,11 +26,8 @@ class Controller {
 	 * 
 	 * @var \Anod\Gmail\Gmail
 	 */
-	private $gmail;
+	protected $gmail;
 	private $debug = false;
-	
-	public function __construct() {
-	}
 	
 	/**
 	 * 
@@ -54,12 +51,14 @@ class Controller {
 	 */
 	public function runUnsafe(array $request) {
 		$this->initRequest($request);
-		$this->initLibraries();
-		
+		$this->gmail = $this->initGmail();
+
+		$this->gmail->setId("GTD Gmail Extension","0.1","Alex Gavrishev","alex.gavrishev@gmail.com");
 		$this->gmail->connect();
 		$this->gmail->authenticate($this->email, $this->token);
 		$this->gmail->sendId();
 		$this->gmail->selectAllMail();
+		
 		$uid = $this->gmail->getUID($this->msgid);
 		
 		if ($this->action == self::ACTION_LABEL) {
@@ -74,10 +73,9 @@ class Controller {
 		throw new ControllerException("Unknown action: '".$this->action."'");
 	}
 	
-	private function initLibraries() {
+	protected function initGmail() {
 		$protocol = new \Anod\Gmail\Imap($this->debug);
-		$this->gmail = new \Anod\Gmail\Gmail($protocol);
-		$this->gmail->setId("GTD Gmail Extension","0.1","Alex Gavrishev","alex.gavrishev@gmail.com");
+		return new \Anod\Gmail\Gmail($protocol);
 	}
 	
 	protected function initRequest(array $request) {
@@ -106,7 +104,7 @@ class Controller {
 	 * @param string $uid
 	 * @return \GTD\Response\MessageResponse
 	 */
-	private function actionContent($uid) {
+	protected function actionContent($uid) {
 		$message = $this->gmail->getMessageData($uid);
 		return new MessageResponse($message);
 	}
@@ -117,7 +115,7 @@ class Controller {
 	 * @throws ControllerException
 	 * @return \GTD\Response\OkResponse
 	 */
-	private function actionLabels($uid, array $request) {
+	protected function actionLabels($uid, array $request) {
 		$labels = isset($request['labels']) && is_array($request['labels']) ? (array)$request['labels'] : array();
 		$validLabels = array();
 		foreach($labels AS $label) {
@@ -130,7 +128,6 @@ class Controller {
 		}
 		//TODO extract to separate action
 		$this->gmail->getProtocol()->create('GTD');
-		$currentLabels = $this->gmail->getLabels($uid);
 		$removeLabels = $this->getGtdLabels($uid);
 		if ($removeLabels) {
 			$this->gmail->removeLabels($uid, $removeLabels);
@@ -153,7 +150,7 @@ class Controller {
 	 * @param string $uid
 	 * @return \GTD\Response\ArrayResponse
 	 */
-	private function actionThreadLabels($uid) {
+	protected function actionThreadLabels($uid) {
 		$thrId = $this->gmail->getThreadId($uid);
 		$initialUid = $this->gmail->getUID($thrId);
 		$labels = $this->getGtdLabels($initialUid);
@@ -168,7 +165,7 @@ class Controller {
 	 * @param string $uid
 	 * @return array
 	 */
-	private function getGtdLabels($uid) {
+	protected function getGtdLabels($uid) {
 		$allLabels = $this->gmail->getLabels($uid);
 		$gtdLabels = array();
 		foreach($allLabels AS $label) {
@@ -184,7 +181,7 @@ class Controller {
 	 * @param string $uid
 	 * @return \GTD\Response\OkResponse
 	 */
-	private function actionDelete($uid) {
+	protected function actionDelete($uid) {
 		$this->gmail->trash($uid);
 		return new OkResponse();
 	}
