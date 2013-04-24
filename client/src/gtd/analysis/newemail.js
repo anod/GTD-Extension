@@ -36,9 +36,9 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		// Check for Instant Action
 		var instantparser = this.get('context').get('instantparser');
 		if (instantparser.test(subject)) {
-			var action = instantparser.parse(entry);
-			if (action) {
-				this._applySuggestion(action);
+			var instantSuggestion = instantparser.parse(entry);
+			if (instantSuggestion) {
+				this._applySuggestion(instantSuggestion);
 				this.get('context').get('imap').removeMessage(entry.get('msgid'));
 			}
 			return;

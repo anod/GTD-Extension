@@ -42,25 +42,26 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 			return null;
 		}
 		
-		var text = data['#text'];
-		var tags = this._createTags(text);
+		if (!data['#text']) {
+			return null;
+		}
+		var tags = this._createTags(data['#text']);
 		var action = this.get('context').get('actions').createAction(entry, tags);
-		
 
-		action.label = this._labelsMap[data['#label']];
+		action.set('label', this._labelsMap[data['#label']]);
 		if (data['#project']) {
-			action.project = data['#project'];
+			action.set('project', data['#project']);
 		}
 		if (data['#context']) {
-			action.project = data['#context'];
+			action.set('context', data['#context']);
 		}
-		if (data['#deadline']) {
-			action.date = data['#deadline'];
+		if (data['#date']) {
+			action.set('date', data['#date']);
 		}
 
 		var suggestion = new window.gtd.Suggestion.Suggestion({
 			'id' : msgid,
-			'action': new window.gtd.Analysis.Action(action)
+			'action': action
 		});
 		return suggestion;
 	},

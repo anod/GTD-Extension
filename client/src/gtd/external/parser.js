@@ -33,7 +33,7 @@ window.gtd.External.Parser = Backbone.Model.extend({
 			action.project = data['#project'];
 		}
 		if (data['#context']) {
-			action.project = data['#context'];
+			action.context = data['#context'];
 		}
 		if (data['#deadline']) {
 			action.date = data['#deadline'];
