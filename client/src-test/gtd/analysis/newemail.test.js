@@ -10,6 +10,9 @@ new TestCase("Analysis.NewEmailTest", {
 		this.context = new window.gtd.Context({
 			'logger' : console
 		});
+		var settings = new window.gtd.Settings.Settings({}, { 'context' : this.context, 'localStorage' : {} });
+		this.context.set('settings', settings);
+		
 		this.actions = new window.gtd.Analysis.ActionCollection([], { 'context' : this.context });
 		this.strikeamatch = new window.gtd.Analysis.StrikeAMatch();
 		this.newemail = new window.gtd.Analysis.NewEmail({

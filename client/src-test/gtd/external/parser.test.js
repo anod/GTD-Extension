@@ -12,7 +12,7 @@ new TestCase("External.Parser", {
 	},
 	
 	testTest:function(){
-		assertTrue("Match incoming message", this.parser.test(' #gtd '));
+		assertTrue("Match incoming message", this.parser.test(' #gtd #mailid 9'));
 		assertFalse("Do not match incoming message", this.parser.test(' alex '));
 	},
 	
@@ -22,7 +22,7 @@ new TestCase("External.Parser", {
 		var expected1 = {
 			'#mailid' : '9',
 			'#label' : '2',
-			'#deadline' : '2013-02-28 18:24'
+			'#deadline' : '2013-02-28'
 		};
 		
 		var actual1 = this.parser._parse(src1);
@@ -32,7 +32,7 @@ new TestCase("External.Parser", {
 		var expected2 = {
 			'#mailid' : '9',
 			'#label' : '2',
-			'#deadline' : '2013-02-28 18:24'
+			'#deadline' : '2013-02-28'
 		};
 		
 		var actual2 = this.parser._parse(src2);
@@ -52,7 +52,7 @@ new TestCase("External.Parser", {
 			'#gtd' : null,
 			'#mailid' : '199',
 			'#label' : '2',
-			'#deadline' : '2013-02-28 18:24'
+			'#deadline' : '2013-02-28'
 		};
 			
 		var actual4 = this.parser._parse(src4);

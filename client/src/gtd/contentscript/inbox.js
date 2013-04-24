@@ -161,7 +161,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 	
 	_onNewSettings: function(json) {
-		var init = (this.model.get('settings') == null);
+		var init = (this.model.get('settings') === null);
 		this.model.set('settings', json);
 
 		$(document).unbind('keydown', this._shortcutPress);
