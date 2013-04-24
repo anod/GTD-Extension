@@ -10,13 +10,14 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 	},
 	
 	_keyWordsPrefix : {
-		'#next' : true,
-		'#wait' : true,
-		'#cale' : true,
-		'#some' : true,
-		'#proj' : true,
-		'#cont' : true,
-		'#date'	: true
+		'#gtd' : true,
+		'#nex' : true,
+		'#wai' : true,
+		'#cal' : true,
+		'#som' : true,
+		'#pro' : true,
+		'#con' : true,
+		'#dat' : true
 	},
 	
 	defaults : {
@@ -76,7 +77,7 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 		var label = null;
 
 		var data = {};
-		
+		var text = [];
 		//	#next, #waiting, #calendar, #someday
 		
 		for(var i = 0; i<parts.length; i++) {
@@ -85,33 +86,44 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 			}
 			var part = parts[i];
 			// Keyword detection
-			if (this._keyWordsPrefix[part.slice(0,4)]) {
-				state = 0;
+			var isKeyword = (this._keyWordsPrefix[part.slice(0,4)] === true);
+			if (state === 0 && !isKeyword) {
+				text.push(part);
+				continue;
 			}
-			if (state === 0) { //nothing
+			
+			if (isKeyword) {
+				state = 1;
+			}
+			
+			if (state === 1) { //nothing
 				key = part;
-				data[key] = null;
 				if (key == '#gtd') {
+					data[key] = null;
 					state = 0;
 				} else if (this._actions[key]){
-					label = this._actions[key];
-					data['#label'] = label;
+					if (label === null || label == "#project") {
+						label = this._actions[key];
+						data['#label'] = label;
+					}
 					// project has second part
-					state = (key == '#project') ? 1 : 0;
+					state = (key == '#project') ? 2 : 0;
 				} else {
-					state = 1;
-				}
-			} else if (state === 1) { //key detected
-				data[key] = part;
-				if (key == "#deadline") {
+					data[key] = null;
 					state = 2;
-				} else {
+				}
+			} else if (state === 2) { //key detected
+				data[key] = part;
+				if (key == "#date") {
 					state = 0;
+				} else {
+					state = 3;
 				}
 			} else { //detect next part
 				data[key] = data[key] + ' ' + part;
 			}
 		}
+		data['#text'] = text.join(' ');
 		//Buy milk #gtd #next #date 2012-01-01
 		//#label 2
 		//#deadline 2013-02-28 18:24

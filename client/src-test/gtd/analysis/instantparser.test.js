@@ -20,14 +20,16 @@ new TestCase("Analysis.InstantParser", {
 		
 		var src1 = "Buy a milk #gtd #next #date 2013-02-28  #context Creativity thinking #project Very nice prproject titlw";		
 		var expected1 = {
+			'#gtd' : null,
 			'#label' : window.gtd.Label.NEXT_ACTION,
 			'#date' : '2013-02-28',
 			'#context' : 'Creativity thinking',
-			'#project' : 'Very nice prproject titlw'
+			'#project' : 'Very nice prproject titlw',
+			'#text' : 'Buy a milk',
 		};
 		
 		var actual1 = this.parser._parse(src1);
-		assertEquals('Parse result 1', actual1, expected1);
+		assertEquals('Parse result 1', expected1, actual1);
 	
 	}
 });
