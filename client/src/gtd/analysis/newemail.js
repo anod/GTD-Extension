@@ -20,8 +20,11 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	analyse: function(entry) {
+		var subject = entry.get('title');
+		
+		// Check for notification from External API
 		var extparser = this.get('context').get('extparser');
-		if (extparser.test(entry.get('title'))) {
+		if (extparser.test(subject)) {
 			var suggestion = extparser.parse(entry);
 			if (suggestion) {
 				this._applySuggestion(suggestion);
@@ -29,13 +32,29 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			}
 			return;
 		}
-		var text = entry.get('title') + "\n" + entry.get('summary');
-		var tags = this.get('termextraction').extract(text);
-		tags = this.get('tagfilter').filter(tags);
+		
+		// Check for Instant Action
+		var instantparser = this.get('context').get('instantparser');
+		if (instantparser.test(subject)) {
+			var action = instantparser.parse(entry);
+			if (action) {
+				this._applySuggestion(action);
+				this.get('context').get('imap').removeMessage(entry.get('msgid'));
+			}
+			return;
+		}
+		
+		var text = subject + "\n" + entry.get('summary');
+		var tags = this._createTags(text);
 		
 		if (tags.length > this.MIN_TAGS_LENGTH) {
 			this.get('replyemail').check(entry, tags);
 		}
+	},
+	
+	_createTags: function(text) {
+		var tags = this.get('termextraction').extract(text);
+		return this.get('tagfilter').filter(tags);
 	},
 	
 	_onReplyCheckFinish: function(entry, tags, applied) {
