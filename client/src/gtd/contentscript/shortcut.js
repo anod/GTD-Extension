@@ -18,6 +18,18 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 	
 	show: function() {
 		this.render();
+		this.$el.on('click', 'div.gtd-icon', _.bind(function(e) {
+			this.model.trigger('shortcut:clicked', true);
+			e.preventDefault();
+		},this));
+		
+		this.$el.on('click', 'div.gtd-info', _.bind(function() {
+			if (this.model.get('showDialog')) {
+				this.model.set('highlightDialog', true);
+				return;
+			}
+			this.model.set('showDialog', true);
+		},this));
 		this.$el.find('#gtd-shortcut').show();
 	},
 	
@@ -35,18 +47,6 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		this.$el.html(this._template(hotkey));
 		
 		$('body').append(this.$el);
-		
-		this.$el.on('click', 'div.gtd-icon', _.bind(function() {
-			this.model.set('iconClicked', true);
-		},this));
-		
-		this.$el.on('click', 'div.gtd-info', _.bind(function() {
-			if (this.model.get('showDialog')) {
-				this.model.set('highlightDialog', true);
-				return;
-			}
-			this.model.set('showDialog', true);
-		},this));
 	},
 	
 	_onEmailOpen: function() {

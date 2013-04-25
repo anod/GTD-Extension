@@ -1,8 +1,8 @@
 "use strict";
 
 window.gtd.External.Api = {
-	//URL: 'http://gtdproject.example.com:8082/GTD/CreateTaskFromEmail',
-	URL: 'http://gtd.anodsplace.info/extapi_recv.php',
+	URL: 'http://gtdproject.example.com:8082/GTD/CreateTaskFromEmail',
+	//URL: 'http://gtd.anodsplace.info/extapi_recv.php',
 	
 	ACTION_LINK: 'http://gtdProject.example.com:8082/GTD/redirectToTaskOrProject.jsp?emailId=',
 		

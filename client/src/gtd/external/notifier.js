@@ -14,7 +14,10 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 		this._labelsMap = this._initLabelsMap();
 	},
 
-	_notifyAction: function(emailId, action) {
+	_notifyAction: function(emailId, action, silent) {
+		if (silent) {
+			return;
+		}
 		this.get('imap').getContent(emailId, _.bind(function(data) {
 			var params = this._createRequest(emailId, data, action);
 			this._sendRequest(params);

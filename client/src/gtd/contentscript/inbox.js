@@ -16,7 +16,6 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			'showDialog' : false,
 			'insideEmail' : false,
 			'openMsgId' : 0,
-			'iconClicked' : false,
 			'suggestion' : null,
 			'label' : window.gtd.Label.NEXT_ACTION,
 			'date' : '',
@@ -47,11 +46,8 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			}
 		}, this);
 		
-		this.model.on('change:iconClicked',  function(model, value) {
-			if (value) {
-				this._sendTabOpen();
-				this.model.set('iconClicked', false, {silent: true});
-			}
+		this.model.on('shortcut:clicked',  function() {
+			this._sendTabOpen();
 		}, this);
 	},
 	

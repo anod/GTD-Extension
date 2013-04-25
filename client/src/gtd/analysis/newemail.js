@@ -27,7 +27,7 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		if (extparser.test(subject)) {
 			var suggestion = extparser.parse(entry);
 			if (suggestion) {
-				this._applySuggestion(suggestion);
+				this._applySuggestion(suggestion, true);
 				this.get('context').get('imap').removeMessage(entry.get('msgid'));
 			}
 			return;
@@ -125,14 +125,14 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		return new window.gtd.Analysis.Action(similarAction);
 	},
 	
-	_applyAction: function(mailId, action) {
-		this.get('context').trigger('analysis:apply:action', mailId, action);
+	_applyAction: function(mailId, action, silent) {
+		this.get('context').trigger('analysis:apply:action', mailId, action, silent);
 	},
 		
-	_applySuggestion: function(suggestion)  {
+	_applySuggestion: function(suggestion, silent)  {
 		//Save as action
 		var action = suggestion.get('action');
-		this._applyAction(suggestion.get('id'),action);
+		this._applyAction(suggestion.get('id'), action, silent);
 		//Store action only in case we have tags (Came from suggestion)
 		if (action.get('tags')) {
 			this.get('actions').insertDb(action);

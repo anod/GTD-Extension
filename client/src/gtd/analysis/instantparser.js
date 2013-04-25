@@ -35,10 +35,10 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 	
 	parse: function(entry) {
 		var src = entry.get('title');
-		var msgid = entry.get('mailid');
+		var msgid = entry.get('msgid');
 		var data = this._parse(src);
 
-		if (!this._labelsMap[data['#label']]) {
+		if (!data['#label']) {
 			return null;
 		}
 		
@@ -48,7 +48,7 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 		var tags = this._createTags(data['#text']);
 		var action = this.get('context').get('actions').createAction(entry, tags);
 
-		action.set('label', this._labelsMap[data['#label']]);
+		action.set('label', data['#label']);
 		if (data['#project']) {
 			action.set('project', data['#project']);
 		}
