@@ -18,16 +18,17 @@ class Controller {
 	const ACTION_THREAD_LABELS = 3;
 	const ACTION_DELETE = 4;
 	
-	private $email;
-	private $token;
-	private $action;
-	private $msgid;
+	protected $email;
+	protected $token;
+	protected $action;
+	protected $msgid;
+	protected $archive;
 	/**
 	 * 
 	 * @var \Anod\Gmail\Gmail
 	 */
 	protected $gmail;
-	private $debug = false;
+	protected $debug = false;
 	
 	/**
 	 * 

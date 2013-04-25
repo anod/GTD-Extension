@@ -12,6 +12,11 @@ class ControllerMock extends \GTD\Controller {
 		$this->gmail = $gmail;
 	}
 	
+	public function setArchive($archive)  {
+		$this->archive = $archive;
+	}
+	
+	
 	/* (non-PHPdoc)
 	 * @see \GTD\Controller::initGmail()
 	 */
@@ -50,4 +55,15 @@ class ControllerMock extends \GTD\Controller {
 		}
 		return parent::actionDelete($uid);
 	}
+	
+	/* (non-PHPdoc)
+	 * @see \GTD\Controller::getGtdLabels()
+	 */
+	public function getGtdLabels($uid) {
+		if (array_key_exists(__FUNCTION__, $this->methodReturns)) {
+			return $this->methodReturns[__FUNCTION__];
+		}
+		return parent::getGtdLabels($uid);
+	}
+
 }

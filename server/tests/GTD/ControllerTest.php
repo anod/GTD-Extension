@@ -1,6 +1,7 @@
 <?php
 namespace GTD;
 
+include_once 'ImapMock.php';
 include_once 'GmailMock.php';
 include_once 'ControllerMock.php';
 
@@ -67,7 +68,7 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 	}
 	
 	/**
-	 * 
+	 * @covers \GTD\Controller::runUnsafe
 	 * @param string $method
 	 * @param int $action
 	 * @dataProvider providerRunUnsafe
@@ -102,6 +103,9 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 		);
 	}
 	
+	/**
+	 * @covers \GTD\Controller::actionContent
+	 */
 	public function testActionContent() {
 		$message = new \Anod\Gmail\Message(array('id' => 5));
 		
@@ -115,10 +119,73 @@ class ControllerTest extends \PHPUnit_Framework_TestCase {
 		$this->assertEquals(new \GTD\Response\MessageResponse($message), $response);
 	}
 	
-	public function testActionLabels() {
+	/**
+	 * @covers \GTD\Controller::actionLabels
+	 */
+	public function testActionLabelsException() {
+		$gmail = new GmailMock();
 		
+		$controller = new ControllerMock();
+		$controller->setGmail($gmail);
+		
+		$raised = false;
+		try {
+			$controller->actionLabels(25, array( 'labels' => array('  ') ));
+		} catch (ControllerException $e) {
+			$raised = true;
+		}
+		$this->assertTrue($raised);
 	}
 	
+	/**
+	 * @covers \GTD\Controller::actionLabels
+	 */
+	public function testActionLabels() {
+		$gmail = new GmailMock();
+		
+		$controller = new ControllerMock();
+		$controller->setGmail($gmail);
+		$controller->setMethodReturn('getGtdLabels', array());
+		
+		$result = $controller->actionLabels(25, array( 'labels' => array('a', 'b') ));
+		$this->assertInstanceOf('\GTD\Response\OkResponse', $result);
+	}
+	
+	/**
+	 * @covers \GTD\Controller::actionThreadLabels
+	 */
+	public function testActionThreadLabels() {
+		$gmail = new GmailMock();
+	
+		$controller = new ControllerMock();
+		$controller->setGmail($gmail);
+		$controller->setMethodReturn('getGtdLabels', array('GTD1', 'GTD2'));
+	
+		$actual = $controller->actionThreadLabels(145);
+		
+		$expected = new \GTD\Response\ArrayResponse(array(
+            'thrid' => \Anod\Gmail\Math::bcdechex(145),
+            'labels' => array('GTD1', 'GTD2')
+        ));
+		
+		$this->assertEquals($expected, $actual);
+	}
+	
+	/**
+	 * @covers \GTD\Controller::getGtdLabels
+	 */
+	public function testGetGtdLabels() {
+		$gmail = new GmailMock();
+		$gmail->setMethodReturn('getLabels', array('AAAa', 'GTD/P-DSER', 'GTD/Next', 'BbbBb'));
+		
+		$controller = new ControllerMock();
+		$controller->setGmail($gmail);
+		
+		$actual = $controller->getGtdLabels(145);
+		$expected =  array('GTD/P-DSER', 'GTD/Next');
+		
+		$this->assertEquals($expected, $actual);
+	}
 }
 
 
