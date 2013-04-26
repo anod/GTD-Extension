@@ -38,6 +38,18 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 		var msgid = entry.get('msgid');
 		var data = this._parse(src);
 
+		var action = this._createAction(entry, data);
+		if (!action) {
+			return null;
+		}
+		var suggestion = new window.gtd.Suggestion.Suggestion({
+			'id' : msgid,
+			'action': action
+		});
+		return suggestion;
+	},
+	
+	_createAction: function(entry, data) {
 		if (!data['#label']) {
 			return null;
 		}
@@ -58,12 +70,7 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 		if (data['#date']) {
 			action.set('date', data['#date']);
 		}
-
-		var suggestion = new window.gtd.Suggestion.Suggestion({
-			'id' : msgid,
-			'action': action
-		});
-		return suggestion;
+		return action;
 	},
 	
 	/**

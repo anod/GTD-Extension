@@ -13,9 +13,16 @@ window.gtd.Pattern.Pattern = Backbone.Model.extend({
 		'value' : ''
 	},
 	
+	errors: {
+		TYPE: 'Type needs to be selected',
+		FROM_OR_CONTENT: 'From or content pattern are required',
+		VALUE: 'Value is required',
+		ACTION: 'Action is required'
+	},
+	
 	validate: function(attrs, options) {
-		if (attrs.type === null) {
-			return 'Type needs to be selected';
+		if (!attrs.type || attrs.type === null) {
+			return this.errors.TYPE;
 		}
 		/*
 		TYPE_PROJECT_NAME: 1,
@@ -25,15 +32,15 @@ window.gtd.Pattern.Pattern = Backbone.Model.extend({
 		*/
 		if (attrs.type === 1 || attrs.type === 4) {
 			if (!attrs.from && !attrs.content) {
-				return 'From or content pattern are required';
+				return this.errors.FROM_OR_CONTENT;
 			}
 			if (!attrs.value) {
-				return 'Value is required';
+				return this.errors.VALUE;
 			}
 		}
 		if (attrs.type === 2) {
 			if (!attrs.action) {
-				return 'Action is required';
+				return this.errors.ACTION;
 			}
 		}
 		

@@ -25,22 +25,14 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		// Check for notification from External API
 		var extparser = this.get('context').get('extparser');
 		if (extparser.test(subject)) {
-			var suggestion = extparser.parse(entry);
-			if (suggestion) {
-				this._applySuggestion(suggestion, true);
-				this.get('context').get('imap').removeMessage(entry.get('msgid'));
-			}
+			this._processExternal(entry);
 			return;
 		}
 		
 		// Check for Instant Action
 		var instantparser = this.get('context').get('instantparser');
 		if (instantparser.test(subject)) {
-			var instantSuggestion = instantparser.parse(entry);
-			if (instantSuggestion) {
-				this._applySuggestion(instantSuggestion);
-				this.get('context').get('imap').removeMessage(entry.get('msgid'));
-			}
+			this._processInstant(entry);
 			return;
 		}
 		
@@ -48,7 +40,27 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 		var tags = this._createTags(text);
 		
 		if (tags.length > this.MIN_TAGS_LENGTH) {
-			this.get('replyemail').check(entry, tags);
+			this._checkReplyEmail(entry, tags);
+		}
+	},
+	
+	_checkReplyEmail: function(entry, tags) {
+		this.get('replyemail').check(entry, tags);
+	},
+	
+	_processExternal: function(entry) {
+		var suggestion = this.get('context').get('extparser').parse(entry);
+		if (suggestion) {
+			this._applySuggestion(suggestion, true);
+			this.get('context').get('imap').removeMessage(entry.get('msgid'));
+		}
+	},
+	
+	_processInstant: function(entry) {
+		var instantSuggestion = this.get('context').get('instantparser').parse(entry);
+		if (instantSuggestion) {
+			this._applySuggestion(instantSuggestion);
+			this.get('context').get('imap').removeMessage(entry.get('msgid'));
 		}
 	},
 	
@@ -65,7 +77,6 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 	},
 	
 	_searchResult: function(similarList, entry, tags) {
-		console.log('Analysis.NewEmail: Search result', similarList);
 		var similarAction = null;
 		// store as suggestion
 		if (similarList.length > 0 && this.get('context').get('settings').get('autoActions')) {
@@ -76,15 +87,18 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			this.get('context').get('logger').info(
 				'Analysis.NewEmail: Store suggestion ['+tags.join(',')+']'
 			);
-			var action = this.get('actions').createAction(entry, tags);
-			this.get('patterns').fillAction(entry, action);
+			this._fillAction(entry, tags);
 		} else {
 			this.get('context').get('logger').info(
 				'gtd.Analysis.NewEmail: Found similar ['+tags.join(',')+'] to ['+similarAction.get('tags').join(',')+']'
 			);
-//			this.get('patterns').fillAction(entry, similarAction);
 			this._applyAction(entry.get('msgid'), similarAction);
 		}
+	},
+	
+	_fillAction: function(entry, tags) {
+		var action = this.get('actions').createAction(entry, tags);
+		this.get('patterns').fillAction(entry, action);
 	},
 	
 	_onActionFill: function(entry, action) {

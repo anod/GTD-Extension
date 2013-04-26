@@ -3,6 +3,16 @@
 window.gtd.External.Parser = Backbone.Model.extend({
 	_labelsMap: null,
 	
+	
+	_keyWordsPrefix : {
+		'#gtd' : true,
+		'#pro' : true,
+		'#con' : true,
+		'#dea' : true,
+		'#lab' : true,
+		'#mai' : true
+	},
+	
 	defaults : {
 		'context' : null
 	},
@@ -22,12 +32,22 @@ window.gtd.External.Parser = Backbone.Model.extend({
 		if (!data['#mailid']) {
 			return null;
 		}
-		var msgid = data['#mailid'];
-		var action = {};
-		
 		if (!this._labelsMap[data['#label']]) {
 			return null;
 		}
+		var msgid = data['#mailid'];
+		var action = this._createAction(data);
+
+		var suggestion = new window.gtd.Suggestion.Suggestion({
+			'id' : msgid,
+			'action': new window.gtd.Analysis.Action(action)
+		});
+		return suggestion;
+	},
+	
+	_createAction: function(data) {
+		var action = {};
+		
 		action.label = this._labelsMap[data['#label']];
 		if (data['#project']) {
 			action.project = data['#project'];
@@ -38,12 +58,7 @@ window.gtd.External.Parser = Backbone.Model.extend({
 		if (data['#deadline']) {
 			action.date = data['#deadline'];
 		}
-
-		var suggestion = new window.gtd.Suggestion.Suggestion({
-			'id' : msgid,
-			'action': new window.gtd.Analysis.Action(action)
-		});
-		return suggestion;
+		return action;
 	},
 	
 	_parse: function(src) {
@@ -56,6 +71,17 @@ window.gtd.External.Parser = Backbone.Model.extend({
 				continue;
 			}
 			var part = parts[i];
+			var isKeyword = (this._keyWordsPrefix[part.slice(0,4)] === true);
+			if (isKeyword) {
+				state = 0;
+			} else if (state === 2 && !isKeyword) {
+				if (key == '#deadline') {
+					continue;
+				}
+				data[key] = data[key] + ' ' + part;
+				continue;
+			}
+			
 			if (state === 0) { //nothing
 				key = part;
 				data[key] = null;
@@ -66,13 +92,8 @@ window.gtd.External.Parser = Backbone.Model.extend({
 				}
 			} else if (state === 1) { //key detected
 				data[key] = part;
-				if (key == "#deadline") {
-					state = 2;
-				} else {
-					state = 0;
-				}
-			} else { //detect second part
-				//data[key] = data[key] + ' ' + part;
+				state = 2;
+			} else {
 				state = 0;
 			}
 		}

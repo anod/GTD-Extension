@@ -79,9 +79,6 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	 * @param pattern
 	 */
 	insertDb: function(pattern, refresh) {
-		if (_.isArray(pattern)) {
-			return; //Not supported
-		}
 		var plain = pattern.toJSON();
 		var req = this.context.get('db').put(this.STORE_NAME, plain);
 		req.done(_.bind(function(key) {
@@ -144,7 +141,8 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		if (!ctxStr) {
 			return "";
 		}
-		if (ctxStr.indexOf('context ') === 0) {
+		var str = ctxStr.toLowerCase();
+		if (str.indexOf('context ') === 0) {
 			return ctxStr.replace(/\bcontext\s+/i,'');
 		}
 		//youtube.com

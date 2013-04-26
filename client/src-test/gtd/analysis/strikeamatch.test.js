@@ -7,10 +7,12 @@ new TestCase("Analysis.StrikeAMatch", {
 		this.strikeamatch = new window.gtd.Analysis.StrikeAMatch();
 	},
 	
-	testEquals:function(){
+	testEquals1:function(){
 		var actual = this.strikeamatch.compare([ 'tag1', 'tag2', 'tag3'], [ 'tag1', 'tag2', 'tag3' ]);
 		assertEquals("Match by equals", 1.0, actual);
-		
+	},
+	
+	testEquals2: function() {
 		var actual1 = this.strikeamatch.compare([ 'tag2', 'tag3', 'tag1'], [ 'tag3', 'tag1', 'tag2' ]);
 		assertEquals("Match by equals", 1.0, actual1);
 	},
