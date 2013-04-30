@@ -16,6 +16,10 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 			this._emailOpen(message.msgId, options);
 			return;
 		}
+		if (message.action == 'checkEmails') {
+			this.get('context').trigger('check:newemails');
+			return;
+		}
 		if (message.action == 'apply') {
 			var suggestion = this.get('suggestions').fromJSON(message.suggestion);
 			this.get('suggestions').remove(suggestion.get('id'), options);

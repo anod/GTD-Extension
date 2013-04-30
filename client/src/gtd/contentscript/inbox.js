@@ -62,6 +62,9 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	},
 
 	_checkUrl: function() {
+
+		this.get('extension').sendMessage({	'action' : 'checkEmails' });
+
 		this.model.set({
 			'label': window.gtd.Label.NEXT_ACTION,
 			'date' : '',

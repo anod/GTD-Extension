@@ -22,25 +22,30 @@ window.gtd.Application = Backbone.Model.extend({
 		this.get('gmail').on("gmail:newlist", this._notifyList, this);
 		this.get('gmail').loadNewEmails();
 		this.context.on("analysis:apply:action", this._applyLabels, this);
-
+		this.context.on('check:newemails', this._checkNewEmails, this);
+		
 		this._registerPullAlarm();
 	},
 
 	_registerPullAlarm: function() {
 		this.context.get('chrome').alarms.onAlarm.addListener(_.bind(function(alarm) {
 			if (alarm.name == "loadNewEmails") {
-				if (!this._checkConnection()) {
-					console.log('offline');
-					return;
-				}
-				if (!this.context.get('settings').get('enabled')) {
-					return;
-				}
-				this.get('gmail').loadNewEmails();
+				this.context.trigger('check:newemails');
 			}
 		},this));
 		
 		this.context.get('chrome').alarms.create('loadNewEmails', {periodInMinutes : this.PULL_TIME});
+	},
+	
+	_checkNewEmails: function() {
+		if (!this._checkConnection()) {
+			console.log('offline');
+			return;
+		}
+		if (!this.context.get('settings').get('enabled')) {
+			return;
+		}
+		this.get('gmail').loadNewEmails();
 	},
 	
 	_checkConnection: function() {
