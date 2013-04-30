@@ -197,6 +197,61 @@ new TestCase("Pattern.PatternCollection", {
 		collection._applyPattern(new Backbone.Model({'type' : collection.TYPE_CONTEXT, 'data' : [''] }), null, action);
 		assertEquals('Balck', action.get('context'));
 	},
+	
+	testInsertDb: function() {
+		var db = {
+			put: function(store, obj) {
+				return {
+					done: this.done,
+					fail: this.fail
+				};
+			},
+			
+			done: function(callback) {
+				callback();
+			},
+			fail: function(callback) {
+				//
+			}
+		};
+		this.context.set('db', db);
+		
+		var collection1 = new window.gtd.Pattern.PatternCollection([], { 'context' : this.context });
+		var inserted = false;
+		collection1.on('change:insertdb', function(results ,entry, tags) {
+			inserted = true;
+		});
+		collection1.insertDb(new Backbone.Model());
+		assertTrue(inserted);
+	},
+	
+	testRemoveDb: function() {
+		var db = {
+				remove: function(store, obj) {
+					return {
+						done: this.done,
+						fail: this.fail
+					};
+				},
+				
+				done: function(callback) {
+					callback();
+				},
+				fail: function(callback) {
+					//
+				}
+			};
+			this.context.set('db', db);
+			
+			var collection1 = new window.gtd.Pattern.PatternCollection([], { 'context' : this.context });
+			var removed = false;
+			collection1.on('change:removedb', function(results ,entry, tags) {
+				removed = true;
+			});
+			collection1.removeDb(1, false);
+			assertTrue(removed);
+	},
+	
 	end: {}
 	
 });
