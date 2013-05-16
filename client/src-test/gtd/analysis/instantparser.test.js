@@ -51,6 +51,19 @@ new TestCase("Analysis.InstantParser", {
 		assertEquals('Parse result 2', expected2, actual2);
 	},
 	
+	testParse3: function() {
+		var src2 = "Taks subject #gtd #project Vacation June 2013 #next";		
+		var expected2 = {
+			'#gtd' : null,
+			'#label' : window.gtd.Label.NEXT_ACTION,
+			'#project' : 'Vacation June 2013',
+			'#text' : 'Taks subject'
+		};
+		
+		var actual2 = this.parser._parse(src2);
+		assertEquals('Parse result 2', expected2, actual2);
+	},
+	
 	testCreateAction1: function() {
 		var actual1 = this.parser._createAction(null, {});
 		assertNull(actual1);

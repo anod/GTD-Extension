@@ -110,7 +110,7 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 					data[key] = null;
 					state = 0;
 				} else if (this._actions[key]){
-					if (label === null || label == "#project") {
+					if (label === null || label == this._actions["#project"]) {
 						label = this._actions[key];
 						data['#label'] = label;
 					}
