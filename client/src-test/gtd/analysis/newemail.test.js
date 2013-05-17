@@ -77,7 +77,7 @@ new TestCase("Analysis.NewEmailTest", {
 	
 	
 	testAnalyse1: function() {
-		
+
 		var NewEmail = window.gtd.Analysis.NewEmail.extend({
 			exitPoint: '',
 			
@@ -134,6 +134,13 @@ new TestCase("Analysis.NewEmailTest", {
 	
 	testAnalyse3: function() {
 		
+		var SuggestionCollection = {
+			load: function(id, options, callback) {
+				callback(null);
+			}
+		};
+		
+		
 		var NewEmail = window.gtd.Analysis.NewEmail.extend({
 			exitPoint: '',
 			
@@ -154,6 +161,7 @@ new TestCase("Analysis.NewEmailTest", {
 			'context' : this.context, 
 			'actions' : this.actions, 
 			'strikeamatch' : this.strikeamatch, 
+			'suggestions' : SuggestionCollection,
 			'replyemail' : new window.gtd.Analysis.ReplyEmail({ 'context' : this.context, 'actions' : this.actions }),
 			'termextraction' : new window.gtd.Analysis.TermExtraction(),
 			'tagfilter' : new window.gtd.Analysis.TagFilter({'userinfo' : new Backbone.Model({'given_name': 'a', 'family_name' : 'b'})})

@@ -41,16 +41,18 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		}, this));
 	},
 
-	load: function(id, options) {
+	load: function(id, options, callback) {
 		var self = this;
 		this.context.get('db')
 			.get(this.STORE_NAME, id)
 			.done(function(value) {
 				if (_.isObject(value)) {
+					callback(value ,options);
 					self.trigger('load:done', value ,options);
 				}
 			})
 			.fail(_.bind(function(error) {
+				callback(null ,options);
 				this.context.get('logger').exception(error);
 			}, this)
 		);

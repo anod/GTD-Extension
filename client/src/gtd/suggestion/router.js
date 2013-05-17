@@ -8,7 +8,7 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 	},
 	
 	initialize: function(attributes, options) {
-		this.get('suggestions').on('load:done', this._emailLoaded, this);
+
 	},
 	
 	route: function(message, options) {
@@ -51,13 +51,13 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 	},
 	
 	_emailOpen: function(msgId, options) {
-		this.get('suggestions').load(msgId, options);
+		this.get('suggestions').load(msgId, options, function(suggestion, options) {
+			if (!suggestion) {
+				return;
+			}
+			this.get('context').trigger('message:send', options, 'show', {'suggestion': suggestion});
+		});
 	},
-	
-	_emailLoaded: function(suggestion, options) {
-		this.get('context').trigger('message:send', options, 'show', {'suggestion': suggestion});
-	},
-	
 	_openTab: function(msgId) {
 		var url = window.gtd.External.Api.ACTION_LINK + msgId;
 		this.get('context').get('chrome').tabs.create({

@@ -36,6 +36,14 @@ window.gtd.Analysis.NewEmail = Backbone.Model.extend({
 			return;
 		}
 		
+		this.get('suggestions').load(entry.get('msgid'), null, _.bind(function(suggestion) {
+			if (!suggestion) {
+				this._runCheck(subject, entry);
+			}
+		}, this));
+	},
+	
+	_runCheck: function(subject, entry) {
 		var text = subject + "\n" + entry.get('summary');
 		var tags = this._createTags(text);
 		
