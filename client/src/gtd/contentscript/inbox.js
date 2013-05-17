@@ -91,7 +91,7 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			return false;
 		}
 		// Detects #inbox/13bc733d5810f7ee in hash and extracts message id
-		var match = hash.match(/\/([0-9a-f]+)$/);
+		var match = hash.match(/\/([0-9a-f]+)/);
 		if (!match || match.length < 2) {
 			this.model.set('insideEmail', false);
 			this._closeAll();
