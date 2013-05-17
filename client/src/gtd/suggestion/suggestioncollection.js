@@ -48,7 +48,8 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 			.done(function(value) {
 				if (_.isObject(value)) {
 					callback(value ,options);
-					self.trigger('load:done', value ,options);
+				} else {
+					callback(null ,options);
 				}
 			})
 			.fail(_.bind(function(error) {
