@@ -19,6 +19,9 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 			return;
 		}
 		this.get('imap').getContent(emailId, _.bind(function(data) {
+			if (!data) {
+				return;
+			}
 			var params = this._createRequest(emailId, data, action);
 			this._sendRequest(params);
 		},this));

@@ -35,15 +35,13 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 				return tags[++i]; // jump to next index position.
 			}
 			var key = cursor.primaryKey();
+			console.log('Found key ', key);
 			// we got the result
 			if (!keysHash[key]) { // remove duplicate
 				keysHash[key] = true;
 				keys.push(key);
 			}
-			return true; // continue to next cursor position
-		});
-		
-		req.then(_.bind(function() {
+		}).then(_.bind(function() {
 			if (keys.length > 0) {
 				db.values(this.STORE_NAME, keys).done(_.bind(function(results) {
 					this.trigger('search:result',results,entry, tags);

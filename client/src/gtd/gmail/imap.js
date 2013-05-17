@@ -62,6 +62,7 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 				var obj = (response) ? JSON.parse(response) : null;
 				if (!obj || obj.status == 'error') {
 					console.error(response);
+					callback(null);
 				} else {
 					callback(obj);
 				}
