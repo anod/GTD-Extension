@@ -106,12 +106,18 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	},
 	
 	_applyPattern: function(pattern, entry, action) {
+		// User defined pattern
+		if (pattern.get('editable')) {
+			console.log("User pattern", pattern);
+			this._applyPatternUser(pattern,action);
+		}
+		
 		var type = pattern.get('type');
 		var matches = pattern.get('data');
 		var match = matches[0];
 		
-		console.log("Matched", type, match);
-
+		console.log("Predefined pattern", type, match);
+		
 		if (type == this.TYPE_DATE) {
 			var date = this._matchToDate(match);
 			if (date !== null) {
@@ -126,6 +132,24 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}
 	},
 
+	_applyPatternUser: function(pattern, action) {
+		var type = pattern.get('type');
+		
+		if (type == this.TYPE_PROJECT_NAME) {
+			action.set('project', pattern.get('value'));
+			if (pattern.get('action')) {
+				action.set('label', window.gtd.Label[pattern.get('action')]);
+			}
+		} else if (type == this.TYPE_ACTION) {
+			action.set('label', window.gtd.Label[pattern.get('action')]);
+			if (window.gtd.Label.PROJECT == action.get('label') && pattern.get('value')) {
+				action.set('project', pattern.get('value'));
+			}
+		} else if (type == this.TYPE_CONTEXT) {
+			action.set('context', pattern.get('value'));
+		}
+	},
+	
 	_matchToProject: function(match) {
 		var prjStr = match[0];
 		if (!prjStr) {

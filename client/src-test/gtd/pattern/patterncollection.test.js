@@ -252,6 +252,50 @@ new TestCase("Pattern.PatternCollection", {
 			assertTrue(removed);
 	},
 	
+	testApplyPatternUser1: function() {
+		var PatternCollection = window.gtd.Pattern.PatternCollection.extend({
+			initialize: function() {},
+			_matchToContext: function(match) { return 'Balck'; }
+		});
+		
+		var collection = new PatternCollection();
+		var action = new Backbone.Model();
+		collection._applyPatternUser(new Backbone.Model({
+			'type' : collection.TYPE_CONTEXT, 'value' : 'Baraban'
+		}), action);
+		assertEquals('Baraban', action.get('context'));
+	},
+	
+	testApplyPatternUser2: function() {
+		var PatternCollection = window.gtd.Pattern.PatternCollection.extend({
+			initialize: function() {},
+			_matchToContext: function(match) { return 'Balck'; }
+		});
+		
+		var collection = new PatternCollection();
+		var action = new Backbone.Model();
+		collection._applyPatternUser(new Backbone.Model({
+			'type' : collection.TYPE_PROJECT_NAME, 'value' : 'MMM', 'action': 'SOMEDAY'
+		}), action);
+		assertEquals('MMM', action.get('project'));
+		assertEquals(window.gtd.Label.SOMEDAY, action.get('label'));
+	},
+
+	testApplyPatternUser3: function() {
+		var PatternCollection = window.gtd.Pattern.PatternCollection.extend({
+			initialize: function() {},
+			_matchToContext: function(match) { return 'Balck'; }
+		});
+		
+		var collection = new PatternCollection();
+		var action = new Backbone.Model();
+		collection._applyPatternUser(new Backbone.Model({
+			'type' : collection.TYPE_ACTION, 'value' : 'CSI', 'action': 'PROJECT'
+		}), action);
+		assertEquals('CSI', action.get('project'));
+		assertEquals(window.gtd.Label.PROJECT, action.get('label'));
+	},
+	
 	end: {}
 	
 });

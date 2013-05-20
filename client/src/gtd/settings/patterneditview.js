@@ -4,8 +4,8 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	types: {
 		2: "Apply Action",
 		4: "Context",
-		1: "Project Name",
-		3: "Skip Action"
+		1: "Project Name"
+		/*3: "Skip Action"*/
 	},
 	
 	events: {

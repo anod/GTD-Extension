@@ -51,12 +51,12 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 	},
 	
 	_emailOpen: function(msgId, options) {
-		this.get('suggestions').load(msgId, options, function(suggestion, options) {
+		this.get('suggestions').load(msgId, options, _.bind(function(suggestion, options) {
 			if (!suggestion) {
 				return;
 			}
 			this.get('context').trigger('message:send', options, 'show', {'suggestion': suggestion});
-		});
+		},this));
 	},
 	_openTab: function(msgId) {
 		var url = window.gtd.External.Api.ACTION_LINK + msgId;
