@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Controller of cotnentscript injected into Gmail Inbox
+ * @author alex
+ */
 window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 	model: null,
 	dialog: null,
@@ -9,6 +12,9 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		extension: null
 	},
 	
+	/**
+	 * @override
+	 */
 	initialize: function() {
 		_.bindAll(this,'_closeDialog', '_shortcutPress', '_message', '_closeAll');
 		this.model = new Backbone.Model({
@@ -51,16 +57,27 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		}, this);
 	},
 	
+	/**
+	 * Start controller
+	 */
 	run: function() {
 		this.get('extension').onMessage.addListener(this._message);
 		this.get('extension').sendMessage( { 'action' : 'getSettings' } );
 	},
 	
+	/**
+	 * Hides visible dialog
+	 * @access private
+	 */
 	_closeDialog: function() {
 		this.dialog.closeAll();
 		this._checkUrl();
 	},
-
+	/**
+	 * Check for Hash tag in url, detects if user within an opened email
+	 * @access private
+	 * @returns {Boolean}
+	 */
 	_checkUrl: function() {
 
 		this.get('extension').sendMessage({	'action' : 'checkEmails' });
@@ -107,7 +124,10 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		this.get('extension').sendMessage(message);
 		return true;
 	},
-	
+	/**
+	 * Sends notification about email tab has been opened
+	 * @access private
+	 */
 	_sendTabOpen: function() {
 		var msgId = (this.model.get('insideEmail')) ? this.model.get('openMsgId') : 0;
 		var message = {
@@ -117,11 +137,16 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		console.log(message);
 		this.get('extension').sendMessage(message);
 	},
-	
+	/**
+	 * @access private
+	 */
 	_response: function(resp) {
 		console.log(resp);
 	},
-	
+	/**
+	 * Receives incoming message
+	 * @access private
+	 */
 	_message: function(message, sender) {
 		if (!message) {
 			return;
@@ -143,7 +168,10 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 			this._onNewSettings(message.settings);
 		}
 	},
-	
+	/**
+	 * Handles click on shortcut
+	 * @access private
+	 */
 	_shortcutPress: function() {
 		if (!this.model.get('insideEmail')) {
 			return;
@@ -154,11 +182,17 @@ window.gtd.Contentscript.GmailInbox = Backbone.Model.extend({
 		}
 		this.model.set('showDialog', true);
 	},
-		
+	/**
+	 * Hides dialog box
+	 * @access private
+	 */	
 	_closeAll: function() {
 		this.model.set('showDialog', false);
 	},
-	
+	/**
+	 * Updates modified settings
+	 * @access private
+	 */
 	_onNewSettings: function(json) {
 		var init = (this.model.get('settings') === null);
 		this.model.set('settings', json);

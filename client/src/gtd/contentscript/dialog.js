@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Message action dialog view
+ * @author alex
+ */
 window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	notyPlugin: window.noty,
 	notyOptions: {
@@ -14,15 +17,24 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 	$project: null,
 	$context: null,
 		
+	/**
+	 * @override
+	 */
 	initialize: function() {
 		_.bindAll(this, '_onApplyClick', '_onDoItNowClick', '_onLaterClick' , '_labelChange', '_projectChange', '_contextChange', '_dateChange', '_onApplyArchiveClick');
 	},
 	
+	/**
+	 * Close dialog
+	 */
 	closeAll: function() {
 		$.noty.closeAll();
 	},
 	
-	
+	/**
+	 * Create html from template
+	 * @acces private
+	 */
 	_init: function() {
 		this.$el.html(this._template());
 		this.$label = this.$el.find("select.noty_gtd_label");
@@ -52,10 +64,16 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		});
 	},
 	
+	/**
+	 * Highlight opened dialog
+	 */
 	highlight: function() {
 		this.$el.effect("highlight", { color: '#fff' });
 	},
 	
+	/**
+	 * Renders dialog on the screen
+	 */
 	render: function() {
 		this._init();
 		this.$label.val(this.model.get('label'));
@@ -84,22 +102,47 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		});
 	},
 	
+	/**
+	 * Button callback
+	 * @access private
+	 * @param {window.noty} noty
+	 */
 	_onLaterClick: function(noty) {
 		this.model.set('showDialog', false);
 	},
 	
+	/**
+	 * Button callback
+	 * @access private
+	 * @param {window.noty} noty
+	 */
 	_onDoItNowClick: function(noty) {
 		this.model.set('showDialog', false);
 	},
 	
+	/**
+	 * Button callback
+	 * @access private
+	 * @param {window.noty} noty
+	 */
 	_onApplyClick: function(noty) {
 		this._applyAction(false);
 	},
 	
+	/**
+	 * Button callback
+	 * @access private
+	 * @param {window.noty} noty
+	 */
 	_onApplyArchiveClick: function(noty) {
 		this._applyAction(true);
 	},
 	
+	/**
+	 * Create action from filled data
+	 * @access private
+	 * @param {Bollean} archive
+	 */
 	_applyAction: function(archive) {
 		if (!this.model.get('insideEmail')) {
 			return;
@@ -123,35 +166,69 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		this.model.set('showDialog', false);
 	},
 	
+	/**
+	 * Change of action label event
+	 * @access private
+	 * @param e
+	 */
 	_labelChange: function(e) {
 		this.model.set('label', this.$label.val());
 		this._setDateLabel();
 	},
 	
+	/**
+	 * Change of the date
+	 * @access private
+	 * @param e
+	 */
 	_dateChange: function(e) {
 		this.model.set('date', this.$date.val());
 	},
 	
+	/**
+	 * Change of the context
+	 * @access private
+	 * @param e
+	 */
 	_contextChange: function(e) {
 		this.model.set('context', this.$context.val());
 	},
 	
+	/**
+	 * Change of the project
+	 * @param e
+	 */
 	_projectChange: function(e) {
 		this.model.set('project', this.$project.val());
 	},
 	
+	/**
+	 * Checks if current action is Calendar
+	 * @access private
+	 * @returns {Boolean}
+	 */
 	_isCalendarSelected: function() {
 		return this.model.get('label') == 'GTD-Calendar';
 	},
 	
+	/**
+	 * Switch date label
+	 * @access private
+	 */
 	_setDateLabel: function() {
 		if (this._isCalendarSelected()) {
 			this.$dateLabel.html('Date:');
 		} else {
-			this.$dateLabel.html('Deadline:');
+			this.$dateLabel.html('Date:');
 		}
 	},
 	
+	/**
+	 * Html template
+	 * @access private
+	 * @param suggestion
+	 * @returns {String}
+	 */
 	_template: function(suggestion) {
 		var text = 'The email will be assigned to:';
 		
@@ -164,7 +241,7 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 			'</div>' + 
 			'<div class="row">'+ this._renderLabelSelect() + '</div>' +
 			'<div class="row"> ' +
-				'<div class="span2" id="dateLabel">Deadline:</div>' +
+				'<div class="span2" id="dateLabel">Date:</div>' +
 				'<div class="span2">Context:</div>' +
 			'</div>' +
 			'<div class="row"> ' +
@@ -188,7 +265,11 @@ window.gtd.Contentscript.Dialog = Backbone.View.extend({
 		'<div class="noty_close"></div></div>';
 	},
 	
-
+	/**
+	 * Create selectbox html
+	 * @access private
+	 * @returns {String}
+	 */
 	_renderLabelSelect: function() {
 		var labelValues = [ 
 			window.gtd.Label.NEXT_ACTION,

@@ -1,6 +1,12 @@
 "use strict";
-
+/**
+ * Shortcut view
+ * @author alex
+ */
 window.gtd.Contentscript.Shortcut = Backbone.View.extend({
+	/**
+	 * @override
+	 */
 	initialize: function(options) {
 		_.bindAll(this, 'show', 'hide');
 		
@@ -16,6 +22,9 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		}, this);
 	},
 	
+	/**
+	 * Show shortcut on the screen
+	 */
 	show: function() {
 		this.render();
 		this.$el.on('click', 'div.gtd-icon', _.bind(function(e) {
@@ -33,11 +42,17 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		this.$el.find('#gtd-shortcut').show();
 	},
 	
+	/**
+	 * Hide shortcut
+	 */
 	hide: function() {
 		this.$el.find('#gtd-shortcut').hide();
 		this.$el.remove();
 	},
 	
+	/**
+	 * renders from template
+	 */
 	render: function() {
 		var settings = this.model.get('settings');
 		if (!settings) {
@@ -49,6 +64,10 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		$('body').append(this.$el);
 	},
 	
+	/**
+	 * Adds dialog hint animation
+	 * @access private
+	 */
 	_onEmailOpen: function() {
 		this.$el.hover(_.bind(function() {
 			this.$el.find('.gtd-info')
@@ -67,10 +86,19 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		}, this));
 	},
 	
+	/**
+	 * Disable dilaog hint animation
+	 * @access private
+	 */
 	_onEmailClose: function() {
 		this.$el.unbind('mouseenter mouseleave');
 	},
 	
+	/**
+	 * Html template
+	 * @access private
+	 * @return {String}
+	 */
 	_template: function(hotkey) {
 		var hotkeyText = this._toTitleCase(hotkey);
 		var html = '<div id="gtd-shortcut">' +
@@ -83,6 +111,11 @@ window.gtd.Contentscript.Shortcut = Backbone.View.extend({
 		return html;
 	},
 	
+	/**
+	 * Formats text
+	 * @access private
+	 * @return {String}
+	 */
 	_toTitleCase: function(str) {
 		return str.replace(/[^\+]*/g, function(txt){
 			return txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase();
