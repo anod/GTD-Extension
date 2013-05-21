@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * External API constants
+ * @author alex
+ */
 window.gtd.External.Api = {
 	URL: 'http://gtdproject.example.com:8082/GTD/CreateTaskFromEmail',
 	//URL: 'http://gtd.anodsplace.info/extapi_recv.php',

@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Class to get Profile Information of user: Email, name
+ * @author alex
+ */
 window.gtd.Gmail.UserInfo = Backbone.Model.extend({
 	URL: 'https://www.googleapis.com/oauth2/v1/userinfo?access_token=',
 	defaults: {
@@ -11,7 +14,12 @@ window.gtd.Gmail.UserInfo = Backbone.Model.extend({
 		"family_name" : null
 	},
 	context: null,
-
+	
+	/**
+	 * @override
+	 * @param attrs
+	 * @param options
+	 */
 	initialize: function(attrs, options) {
 		this.context = options.context;
 		if (!this._initLocal()) {
@@ -19,6 +27,11 @@ window.gtd.Gmail.UserInfo = Backbone.Model.extend({
 		}
 	},
 	
+	/**
+	 * @access private
+	 * @use localStorage
+	 * @returns {Boolean}
+	 */
 	_initLocal: function() {
 		var localStorage = this.context.get('localStorage');
 		if (!localStorage['gtd_user']) {
@@ -29,6 +42,10 @@ window.gtd.Gmail.UserInfo = Backbone.Model.extend({
 		return true;
 	},
 	
+	/**
+	 * Send GET request to Google API to get the information
+	 * @access private
+	 */
 	_initRemote: function() {
 		var token = this.context.get('oauth').getAccessToken();
 		$.ajax({
@@ -46,6 +63,12 @@ window.gtd.Gmail.UserInfo = Backbone.Model.extend({
 		});
 	},
 	
+	/**
+	 * Save data in localStorage
+	 * @access private
+	 * @use loaclStorage
+	 * @param {Object} data
+	 */
 	_saveLocal: function(data) {
 		var localStorage = this.context.get('localStorage');
 		localStorage['gtd_user'] = JSON.stringify(data);

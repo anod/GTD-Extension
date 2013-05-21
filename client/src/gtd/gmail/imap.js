@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Class for communication with Gmail IMAP API
+ * @author alex
+ */
 window.gtd.Gmail.Imap = Backbone.Model.extend({
 	ACTION_LABEL: 1,
 	ACTION_CONTENT: 2,
@@ -13,6 +16,12 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		oauth : null
 	},
 	
+	/**
+	 * Apply labels to an email
+	 * @param {String} emailId
+	 * @param {Array} labels
+	 * @param {Boolean} archive
+	 */
 	applyLabels: function(emailId, labels, archive) {
 		this._sendRequest({ 
 			'action': this.ACTION_LABEL,
@@ -24,6 +33,11 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		});
 	},
 	
+	/**
+	 * Get content of the emails
+	 * @param {String} emailId
+	 * @param {Function} callback
+	 */
 	getContent: function(emailId, callback) {
 		this._sendRequest({ 
 			'action': this.ACTION_CONTENT,
@@ -34,6 +48,11 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		});
 	},
 
+	/**
+	 * Get GTD labels attached to the email
+	 * @param {String} emailId
+	 * @param {Function} callback
+	 */
 	getThreadLabels: function(emailId, callback) {
 		this._sendRequest({ 
 			'action': this.ACTION_THREAD_LABELS,
@@ -44,6 +63,10 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		});
 	},
 	
+	/**
+	 * Move email to Trash
+	 * @param {String} emailId
+	 */
 	removeMessage: function(emailId) {
 		this._sendRequest({ 
 			'action': this.ACTION_REMOVE,
@@ -53,6 +76,12 @@ window.gtd.Gmail.Imap = Backbone.Model.extend({
 		});
 	},
 	
+	/**
+	 * Send authorized request to the server using POST
+	 * @access private
+	 * @param {Object} params
+	 * @param {Function} callback
+	 */
 	_sendRequest: function(params, callback) {
 		var data = params || {};
 		this.get('oauth').authorize(_.bind(function() {

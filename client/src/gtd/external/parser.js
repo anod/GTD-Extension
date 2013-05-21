@@ -1,8 +1,12 @@
 "use strict";
-
+/**
+ * Parser for External notifications
+ * Format of the subject of the email:
+ *   "#gtd #mailid 123abs123 #label 2 #context Conext Name #project Project Name #deadline 2015-05-03 10:45"
+ * @author alex
+ */
 window.gtd.External.Parser = Backbone.Model.extend({
 	_labelsMap: null,
-	
 	
 	_keyWordsPrefix : {
 		'#gtd' : true,
@@ -17,14 +21,27 @@ window.gtd.External.Parser = Backbone.Model.extend({
 		'context' : null
 	},
 	
+	/**
+	 * @override
+	 */
 	initialize: function() {
 		this._labelsMap = this._initLabelsMap();
 	},
 	
+	/**
+	 * Check if subject is notification
+	 * @param subject
+	 * @returns {Boolean}
+	 */
 	test: function(subject) {
 		return (subject.indexOf("#gtd") != -1 && subject.indexOf("#mailid") != -1);
 	},
 	
+	/**
+	 * Create action from title of the email
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @returns {window.gtd.Suggestion.Suggestion}
+	 */
 	parse: function(entry) {
 		var src = entry.get('title');
 		var data = this._parse(src);
@@ -45,6 +62,11 @@ window.gtd.External.Parser = Backbone.Model.extend({
 		return suggestion;
 	},
 	
+	/**
+	 * Data into actions json object
+	 * @param {Object} data
+	 * @returns {Object}
+	 */
 	_createAction: function(data) {
 		var action = {};
 		
@@ -61,6 +83,11 @@ window.gtd.External.Parser = Backbone.Model.extend({
 		return action;
 	},
 	
+	/**
+	 * State machine
+	 * @param {String} src
+	 * @returns {Object}
+	 */
 	_parse: function(src) {
 		var parts = src.replace(/[\n]+/,' ').split(' ');
 		var state = 0;
@@ -103,6 +130,10 @@ window.gtd.External.Parser = Backbone.Model.extend({
 		return data;
 	},
 	
+	/**
+	 * Mapping from external labels to internal
+	 * @returns {Object}
+	 */
 	_initLabelsMap: function() {
 		var labels = {};
 		labels[window.gtd.External.Api.Consts.NEXT_ACTION_LABEL_ID] = window.gtd.Label.NEXT_ACTION;

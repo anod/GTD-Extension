@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Class describes Gmail email entry
+ * @author alex
+ */
 window.gtd.Gmail.Entry = Backbone.Model.extend({
 
 	defaults : {

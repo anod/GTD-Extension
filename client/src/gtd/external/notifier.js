@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Class handeling notifications to External API
+ * @author alex
+ */
 window.gtd.External.Notifier = Backbone.Model.extend({
 	_labelsMap: null,
 	defaults : {
@@ -9,11 +12,21 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 		'imap' : null
 	},
 	
+	/**
+	 * @override
+	 */
 	initialize: function() {
 		this.get('context').on('analysis:apply:action', this._notifyAction, this);
 		this._labelsMap = this._initLabelsMap();
 	},
 
+	/**
+	 * Notify about applied action
+	 * @access private
+	 * @param {String} emailId
+	 * @param {window.gtd.Analysis.Action} action
+	 * @param {Boolean} silent
+	 */
 	_notifyAction: function(emailId, action, silent) {
 		if (silent) {
 			return;
@@ -27,6 +40,12 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 		},this));
 	},
 	
+	/**
+	 * @param {String} emailId
+	 * @param {Object} email
+	 * @param {window.gtd.Analysis.Action} action
+	 * @returns {Object} parameters
+	 */
 	_createRequest: function(emailId, email, action) {
 		
 		var labelId = this._labelsMap[action.get('label')];
@@ -60,6 +79,10 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 		return data;
 	},
 	
+	/**
+	 * Map between external ids and internal types
+	 * @returns {Object}
+	 */
 	_initLabelsMap: function() {
 		var labels = {};
 		labels[window.gtd.Label.NEXT_ACTION] = window.gtd.External.Api.Consts.NEXT_ACTION_LABEL_ID;
@@ -71,6 +94,11 @@ window.gtd.External.Notifier = Backbone.Model.extend({
 		return labels;
 	},
 	
+	/**
+	 * Send request using POST
+	 * @param {Object} params
+	 * @param {Function} callback
+	 */
 	_sendRequest: function(params, callback) {
 		var data = params || {};
 		var self = this;

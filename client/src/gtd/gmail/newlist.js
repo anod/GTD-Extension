@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Class for checking new emails in inbox from the RSS feed
+ * @author alex
+ */
 window.gtd.Gmail.NewList = Backbone.Collection.extend({
 	model: window.gtd.Gmail.Entry,
 
@@ -7,11 +10,19 @@ window.gtd.Gmail.NewList = Backbone.Collection.extend({
 	feedUrl : 'https://mail.google.com/mail/feed/atom',
 	instanceId : 'gmc' + parseInt(Date.now() * Math.random(), 10),
 
+	/**
+	 * @override
+	 * @param {Array} models
+	 * @param {Object} options
+	 */
 	initialize: function(models, options) {
 		this.oauth = options.oauth;
 		_.bind(this.feedResponse, this);
 	},
 	
+	/**
+	 * Load asynchronius information about new emails
+	 */
 	loadNewEmails: function() {
 		var self = this;
 		var request = {
@@ -35,6 +46,12 @@ window.gtd.Gmail.NewList = Backbone.Collection.extend({
 		$.ajax(request);
 	},
 	
+	/**
+	 * Handle XML response
+	 * @param {Object} xmlDoc
+	 * @param {Object} xhr
+	 * @event gmail:newlist
+	 */
 	feedResponse: function(xmlDoc, xhr) {
 		var $xml = $(xmlDoc);
 		var $entries = $xml.find("entry");
