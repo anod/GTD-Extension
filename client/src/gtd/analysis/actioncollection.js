@@ -1,9 +1,18 @@
 "use strict";
-
+/**
+ * Class to handle collection of actions.
+ * With IndexedDb as backend
+ * @author alex
+ */
 window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 	STORE_NAME: 'actions',
 	context: null,
 	
+	/**
+	 * @override
+	 * @param model
+	 * @param options
+	 */
 	initialize: function(model, options) {
 		this.context = options.context;
 	},
@@ -20,6 +29,12 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		}));
 	},
 	
+	/**
+	 * Look in database for previously stored actions with similar tags
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @param {Array} tags
+	 * @event search:result when search is finished
+	 */
 	search: function(entry, tags) {
 		tags.sort();
 		var tagsHash = _.object(tags, tags);
@@ -55,6 +70,12 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		return actions;
 	},
 
+	/**
+	 * Create new action from email entry and tags
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @param {Array} tags
+	 * @returns {window.gtd.Analysis.Action}
+	 */
 	createAction: function(entry, tags) {
 		tags.sort();
 		var action = new window.gtd.Analysis.Action({
@@ -65,6 +86,11 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		return action;
 	},
 	
+	/**
+	 * Inserts new action into db
+	 * @param {window.gtd.Analysis.Action} action
+	 * @event change:insertdb
+	 */
 	insertDb: function(action) {
 		var plain = action.toJSON();
 		var req = this.context.get('db').put(this.STORE_NAME, plain);
@@ -76,6 +102,12 @@ window.gtd.Analysis.ActionCollection = Backbone.Collection.extend({
 		}, this));
 	},
 	
+	/**
+	 * Remove existing action from db
+	 * @param {number} id
+	 * @param {boolean} refresh
+	 * @event change:removedb
+	 */
 	removeDb: function(id, refresh) {
 		var req = this.context.get('db').remove(this.STORE_NAME, id);
 		req.done(_.bind(function(key) {

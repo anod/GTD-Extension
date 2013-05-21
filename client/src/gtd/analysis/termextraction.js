@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Convert text to the lsit of tags
+ * @author alex
+ */
 window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
 	STOP_WORDS:
     [
@@ -58,14 +61,27 @@ window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
 
     _stopWords : null,
 
+    /**
+     * @override
+     */
 	initialize : function() {
 		this._stopWords = this._createStopWords();
 	},
 
+	/**
+	 * Extract list of tags from the given text
+	 * @param {String} text
+	 * @returns {Array}
+	 */
 	extract : function(text) {
 		return this._tokenize(text);
 	},
 
+	/**
+	 * Convert list into hash
+	 * @access private
+	 * @returns {Object}
+	 */
 	_createStopWords : function() {
 		var result = {};
 		for ( var i = 0; i < this.STOP_WORDS.length; i++) {
@@ -76,6 +92,8 @@ window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
 	
 	/**
 	 * Converts a string into an array of tokens, removing stopwords and punctuation.
+	 * @access private
+	 * @returns {Array}
 	 */
 	_tokenize : function(s) {
 		var results = [];
@@ -99,6 +117,13 @@ window.gtd.Analysis.TermExtraction = Backbone.Model.extend({
 		return results;
 	},
 	
+	/**
+	 * filter not relevant words
+	 * @access private
+	 * @param {String} w
+	 * @param {Number} count
+	 * @returns {Boolean}
+	 */
 	_filter: function(w, count) {
 		if (w.length === 0) {
 			return true;

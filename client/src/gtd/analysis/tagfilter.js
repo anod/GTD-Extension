@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Class to filter not relevant information within tags
+ * @author alex
+ */
 window.gtd.Analysis.TagFilter = Backbone.Model.extend({
 	defaults : {
 		context: null,
@@ -8,6 +11,10 @@ window.gtd.Analysis.TagFilter = Backbone.Model.extend({
 	
 	list: {},
 	
+	/**
+	 * Adds user information to the list
+	 * @override
+	 */
 	initialize : function() {
 		var given_name = this.get('userinfo').get("given_name");
 		if (given_name) {
@@ -19,6 +26,11 @@ window.gtd.Analysis.TagFilter = Backbone.Model.extend({
 		}
 	},
 	
+	/**
+	 * Filters tags
+	 * @param {Array} tags
+	 * @returns {Array}
+	 */
 	filter: function(tags) {
 		return _.filter(tags, function(tag){ 
 			return (this.list[tag]) ? false : true;

@@ -1,5 +1,10 @@
 "use strict";
-
+/**
+ * Class responsible for detection and processing "Instant Action" messages
+ * Subject format of the "Instant Action" message:
+ *  "Task definition #gtd #next #date 2012-01-01 #project Project Name #context Context Name"
+ * @author alex
+ */
 window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 	_actions : {
 		'#next' : window.gtd.Label.NEXT_ACTION,
@@ -24,15 +29,20 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 		'context' : null
 	},
 	
+	/**
+	 * Test subject of the email if it contains Instant ACtion
+	 * @param subject
+	 * @returns {Boolean}
+	 */
 	test: function(subject) {
 		return (subject.indexOf("#gtd") != -1);
 	},
 	
-	_createTags: function(text) {
-		var tags = this.get('context').get('termextraction').extract(text);
-		return this.get('context').get('tagfilter').filter(tags);
-	},
-	
+	/**
+	 * Convert message into action
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @returns {window.gtd.Suggestion.Suggestion}
+	 */
 	parse: function(entry) {
 		var src = entry.get('title');
 		var msgid = entry.get('msgid');
@@ -48,7 +58,25 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 		});
 		return suggestion;
 	},
+
+	/**
+	 * Split text into tags
+	 * @access private
+	 * @param text
+	 * @returns {Array}
+	 */
+	_createTags: function(text) {
+		var tags = this.get('context').get('termextraction').extract(text);
+		return this.get('context').get('tagfilter').filter(tags);
+	},
 	
+	/**
+	 * Create action from data object
+	 * @access private
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @param {Object} data
+	 * @returns {window.gtd.Analysis.Action}
+	 */
 	_createAction: function(entry, data) {
 		if (!data['#label']) {
 			return null;
@@ -75,7 +103,8 @@ window.gtd.Analysis.InstantParser = Backbone.Model.extend({
 	
 	/**
 	 * State machine
-	 * @param src
+	 * @access private
+	 * @param {String} src
 	 * @returns {}
 	 */
 	_parse: function(src) {

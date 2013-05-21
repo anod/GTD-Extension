@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Describes action that can be applied to an email
+ * @author alex
+ */
 window.gtd.Analysis.Action = Backbone.Model.extend({
 	UNKNOWN: 0,
 	NEXT_ACTION: 1,

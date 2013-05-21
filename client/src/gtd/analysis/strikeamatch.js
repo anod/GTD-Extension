@@ -2,9 +2,16 @@
 /**
  * Simplified version of strike a match algorithm
  * @see http://www.catalysoft.com/articles/StrikeAMatch.html
+ * @author alex
  */
 window.gtd.Analysis.StrikeAMatch = Backbone.Model.extend({
 	
+	/**
+	 * Compare two arrays and returns similarity rank
+	 * @param {Array} tags1
+	 * @param {Array} tags2
+	 * @returns {Number}
+	 */
 	compare: function(tags1, tags2) {
 		var intersection = 0;
 		var tags2cp = tags2.slice(0);
