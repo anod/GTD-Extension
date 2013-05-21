@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Predefined regular expressions
+ * @author alex
+ */
 window.gtd.Pattern.Regex = {
 	/**
 	 * dd/MM/YY

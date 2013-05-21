@@ -1,5 +1,6 @@
 "use strict";
 
+// Init namespaces
 window.gtd = {};
 window.gtd.Gmail = {};
 window.gtd.Settings = {};
@@ -9,6 +10,8 @@ window.gtd.Suggestion = {};
 window.gtd.External = {};
 window.gtd.Utils = {};
 window.gtd.Contentscript = {};
+
+// Init labels
 window.gtd.Label = {
 	NEXT_ACTION: 'GTD/NextAction',
 	PROJECT: 'GTD/Project',

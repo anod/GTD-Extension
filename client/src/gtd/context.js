@@ -1,6 +1,7 @@
 "use strict";
 /**
  * Dependency injection container
+ * @author alex
  */
 window.gtd.Context = Backbone.Model.extend({
 

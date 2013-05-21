@@ -1,14 +1,27 @@
 "use strict";
-
+/**
+ * Collection of suggestions
+ * @author alex
+ */
 window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 	STORE_NAME: 'suggestions',
 	model: window.gtd.Suggestion.Suggestion,
 	context: null,
 	
+	/**
+	 * @override
+	 * @param {Object} attributes
+	 * @param {Object} options
+	 */
 	initialize: function(attributes, options) {
 		this.context = options.context;
 	},
 
+	/**
+	 * Create suggestion from json object
+	 * @param json
+	 * @returns {window.gtd.Suggestion.Suggestion}
+	 */
 	fromJSON: function(json) {
 		var action = new window.gtd.Analysis.Action(json.action);
 		var suggestion = new window.gtd.Suggestion.Suggestion({
@@ -18,6 +31,12 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		return suggestion;
 	},
 	
+	/**
+	 * Create suggestion from entry & action
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @param {window.gtd.Analysis.Action} action
+	 * @returns {window.gtd.Suggestion.Suggestion}
+	 */
 	createSuggestion: function(entry, action) {
 		var suggestion = new window.gtd.Suggestion.Suggestion({
 			'id' : entry.get('msgid'),
@@ -26,6 +45,10 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		return suggestion;
 	},
 	
+	/**
+	 * Insert new suggestion into db
+	 * @param {window.gtd.Suggestion.Suggestion} suggestion
+	 */
 	insertDb: function(suggestion) {
 		if (_.isArray(suggestion)) {
 			return; //Not supported
@@ -41,6 +64,12 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		}, this));
 	},
 
+	/**
+	 * Load suggesion by id
+	 * @param {Number} id
+	 * @param {Object} options
+	 * @param {Function} callback
+	 */
 	load: function(id, options, callback) {
 		var self = this;
 		this.context.get('db')
@@ -59,6 +88,11 @@ window.gtd.Suggestion.SuggestionCollection = Backbone.Collection.extend({
 		);
 	},
 	
+	/**
+	 * Remove suggestion by id
+	 * @param {Number} id
+	 * @param {Object} options
+	 */
 	remove: function(id, options) {
 		var self = this;
 		this.context.get('db')

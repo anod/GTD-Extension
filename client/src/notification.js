@@ -1,5 +1,7 @@
 "use strict";
-
+/**
+ * Show notification window
+ */
 window.notification = {
 	
 	notify: function(title, msg) {

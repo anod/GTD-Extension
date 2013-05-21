@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Various funcations to work with dates
+ * @author alex
+ */
 window.gtd.Utils.DateUtils = Backbone.Model.extend({
 	
 	defaults: {

@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Simple logger wrapper above console
+ * @author alex
+ */
 window.simplelogger = {
 	info: function(message) {
 		console.info(message);

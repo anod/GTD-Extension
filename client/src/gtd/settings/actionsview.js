@@ -1,14 +1,23 @@
 "use strict";
-
+/**
+ * Class represents view of the list of actions
+ * @author alex
+ */
 window.gtd.Settings.ActionsView = Backbone.View.extend({
 	events: {
 		"click a.act-delete": "_onDeleteClick"
 	},
 	
+	/**
+	 * @override
+	 */
 	initialize: function() {
 		this.collection.on('sync', this.render, this);
 	},
 	
+	/**
+	 * @override
+	 */
 	render: function() {
 		this.$el.empty();
 		if (this.collection.isEmpty()) {
@@ -19,6 +28,9 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 		this.trigger('render:finish');
 	},
 	
+	/**
+	 * @access private
+	 */
 	_renderList: function() {
 		var html = [];
 		this.collection.each(function(pattern) {
@@ -27,11 +39,20 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 		this.$el.html(html.join(''));
 	},
 	
+	/**
+	 * @access private
+	 */
 	_renderEmpty: function() {
 		var el = '<li class="noitems">No actions stored</li>';
 		this.$el.append(el);
 	},
 	
+	/**
+	 * 
+	 * @access private
+	 * @param {window.gtd.Analysis.Action} action
+	 * @returns {String}
+	 */
 	_renderItem: function(action) {
 		var lines = [];
 		var id = action.get('id');
@@ -55,6 +76,10 @@ window.gtd.Settings.ActionsView = Backbone.View.extend({
 		return html;
 	},
 
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onDeleteClick:  function(e) {
 		var $el = $(e.target);
 		var action = this.collection.get($el.data('id'));

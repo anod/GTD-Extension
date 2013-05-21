@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Represnet edit pattern dialog view 
+ * @author alex
+ */
 window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	types: {
 		2: "Apply Action",
@@ -16,10 +19,17 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 	$modal: null,
 	addMode: false,
 	
+	/**
+	 * @override
+	 * @param options
+	 */
 	initialize: function(options) {
 		this.addMode = options.addMode;
 	},
 	
+	/**
+	 * @override
+	 */
 	render: function() {
 		this.$el.find('#pattern-edit').remove();
 		this.$modal = $(this._template(this.model));
@@ -29,6 +39,9 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		this.$modal.find('input').blur();
 	},
 	
+	/**
+	 * @access private
+	 */
 	_close: function() {
 		this.undelegateEvents();
 		this.$modal.animate({ opacity: 0 }, "fast", null, _.bind(function() {
@@ -37,6 +50,11 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		}, this));
 	},
 	
+	/**
+	 * @access private
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @returns {String}
+	 */
 	_template: function(pattern) {
 		var type = pattern.get('type');
 		var action = pattern.get('action');
@@ -73,6 +91,14 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		return html;
 	},
 	
+	/**
+	 * @access private
+	 * @param {Object} options
+	 * @param {String} selected
+	 * @param {String} name
+	 * @param {Object} firstOpt
+	 * @returns {String}
+	 */
 	_renderSelect: function(options, selected, name, firstOpt) {
 		var optHtml = (firstOpt) ? '<option value="'+firstOpt.value+'">'+firstOpt.name+'</option>' : '';
 		_.each(options, function(value, key) {
@@ -82,6 +108,10 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		return '<select name="'+name+'">' + optHtml + '</select>';
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onSaveClick: function(e) {
 		var $error = this.$el.find('#error');
 		$error.hide();
@@ -108,6 +138,10 @@ window.gtd.Settings.PatternEditView = Backbone.View.extend({
 		e.preventDefault();
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onCancelClick: function(e) {
 		this._close();
 		e.preventDefault();

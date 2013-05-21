@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Collection of patterns tht can be appiled to email in order to create suggestion for an action
+ * @author alex
+ */
 window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	STORE_NAME: 'patterns',
 	
@@ -18,6 +21,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		{ 'from' : null, 'content' : window.gtd.Pattern.Regex.CONTEXT, 'type' : 4, 'insensitive' : true, 'editable' : false }
 	],
 	
+	/**
+	 * @override
+	 * @param {Array} model
+	 * @param {Object} options
+	 */
 	initialize: function(model, options) {
 		this.context = options.context;
 		if (this.context.get('settings').get('firstTime')) {
@@ -25,6 +33,10 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}
 	},
 	
+	/**
+	 * First time initialization
+	 * @access private
+	 */
 	_initializeDb: function() {
 		var db = this.context.get('db');
 		_.each(this._initPatterns, function(plain) {
@@ -49,6 +61,12 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}));
 	},
 	
+	/**
+	 * Fill action with the data from matched patterns
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @param {window.gtd.Analysis.Action} action
+	 * @event patterns:fill
+	 */
 	fillAction: function(entry, action) {
 		var db = this.context.get('db');
 		db.values(this.STORE_NAME).done(_.bind(function(records) {
@@ -63,6 +81,14 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		
 	},
 	
+	/**
+	 * Create new pattern object
+	 * @param {String} from
+	 * @param {String} content
+	 * @param {Number} type
+	 * @param {window.gtd.Analysis.Action} action
+	 * @returns {window.gtd.Pattern.Pattern}
+	 */
 	createPattern: function(from,content,type,action) {
 		var pattern = new window.gtd.Pattern.Pattern({
 			'from' : from,
@@ -75,8 +101,8 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 	
 	/**
 	 * Insert directly to Db
-	 * @Override
-	 * @param pattern
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @param {Boolean} refresh content of the collection
 	 */
 	insertDb: function(pattern, refresh) {
 		var plain = pattern.toJSON();
@@ -92,6 +118,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}, this));
 	},
 	
+	/**
+	 * Remove existing pattern
+	 * @param {Number} id
+	 * @param {Boolean} refresh
+	 */
 	removeDb: function(id, refresh) {
 		var req = this.context.get('db').remove(this.STORE_NAME, id);
 		req.done(_.bind(function(key) {
@@ -105,6 +136,13 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}, this));
 	},
 	
+	/**
+	 * Convert pattern + entry into action
+	 * @access private
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @param {window.gtd.Analysis.Action} action
+	 */
 	_applyPattern: function(pattern, entry, action) {
 		// User defined pattern
 		if (pattern.get('editable')) {
@@ -132,6 +170,12 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}
 	},
 
+	/**
+	 * Convert user defined pattern into action
+	 * @access private
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @param {window.gtd.Analysis.Action} action
+	 */
 	_applyPatternUser: function(pattern, action) {
 		var type = pattern.get('type');
 		
@@ -150,6 +194,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		}
 	},
 	
+	/**
+	 * @access private
+	 * @param {Array} match
+	 * @returns {String}
+	 */
 	_matchToProject: function(match) {
 		var prjStr = match[0];
 		if (!prjStr) {
@@ -160,6 +209,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		
 	},
 	
+	/**
+	 * @access private
+	 * @param {Array} match
+	 * @returns {String}
+	 */
 	_matchToContext: function(match) {
 		var ctxStr = match[0];
 		if (!ctxStr) {
@@ -173,6 +227,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		return 'Video';
 	},
 	
+	/**
+	 * @access private
+	 * @param {Array} match
+	 * @returns {String}
+	 */
 	_matchToAction: function(match) {
 		var actStr = match[0];
 		if (!actStr) {
@@ -193,6 +252,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		return "";
 	},
 	
+	/**
+	 * @access private
+	 * @param {Array} match
+	 * @returns {String}
+	 */
 	_matchToDate: function(match) {
 		var dateStr = match[0];
 		if (!dateStr) {
@@ -219,6 +283,11 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		return date;
 	},
 	
+	/**
+	 * @access private
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @returns {String}
+	 */
 	_getModifiers: function(pattern) {
 		if (pattern.get('insensitive')) {
 			return 'i';
@@ -226,6 +295,12 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		return '';
 	},
 	
+	/**
+	 * @access private
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @param {window.gtd.Gmail.Entry} entry
+	 * @returns {Boolean}
+	 */
 	_testPattern: function(pattern, entry) {
 		var patt = null;
 		var result = null;

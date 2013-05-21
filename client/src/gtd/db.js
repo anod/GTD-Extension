@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * IndexedDb wrapper
+ * @author alex
+ */
 window.gtd.Db = {
 		
 	/**

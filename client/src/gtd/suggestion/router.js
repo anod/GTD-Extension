@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Routes notification from Contentscrpt to he appliaction
+ * @author alex
+ */
 window.gtd.Suggestion.Router = Backbone.Model.extend({
 	
 	defaults : {
@@ -8,9 +11,14 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 	},
 	
 	initialize: function(attributes, options) {
-
+		
 	},
 	
+	/**
+	 * Route received message to the destination
+	 * @param {Object} message
+	 * @param {Object} options
+	 */
 	route: function(message, options) {
 		if (message.action == 'open') {
 			this._emailOpen(message.msgId, options);
@@ -45,11 +53,24 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 		}
 	},
 	
+	/**
+	 * Send current settings to all subscribers
+	 * @access private
+	 * @param options
+	 * @event message:send
+	 */
 	_sendSettings: function(options) {
 		var settings = this.get('context').get('settings').toJSON();
 		this.get('context').trigger('message:send', options, 'newSettings', { 'settings': settings });
 	},
 	
+	/**
+	 * Handle email open message
+	 * @access private
+	 * @param msgId
+	 * @param options
+	 * @event message:send
+	 */
 	_emailOpen: function(msgId, options) {
 		this.get('suggestions').load(msgId, options, _.bind(function(suggestion, options) {
 			if (!suggestion) {
@@ -58,6 +79,11 @@ window.gtd.Suggestion.Router = Backbone.Model.extend({
 			this.get('context').trigger('message:send', options, 'show', {'suggestion': suggestion});
 		},this));
 	},
+	/**
+	 * Handles new tab message
+	 * @access private
+	 * @param {String} msgId
+	 */
 	_openTab: function(msgId) {
 		var url = window.gtd.External.Api.ACTION_LINK + msgId;
 		this.get('context').get('chrome').tabs.create({

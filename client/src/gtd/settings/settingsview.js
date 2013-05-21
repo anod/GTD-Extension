@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Settings window view
+ * @author alex
+ */
 window.gtd.Settings.SettingsView = Backbone.View.extend({
 	actionsView: null,
 	patternsView: null,
@@ -18,7 +21,11 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 	
 	checkboxes: [ 'enabled', 'autoActions', 'advancedMode' ],
 	inputs: ['hotkey', 'actionTreshold'],
-		
+	
+	/**
+	 * @override
+	 * @param {Object} options
+	 */
 	initialize: function(options) {
 		var context = options.context;
 		this.patterns = context.get('patterns');
@@ -41,6 +48,9 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		this.model.on('change:advancedMode', this._renderAdvanced, this);
 	},
 	
+	/**
+	 * @override
+	 */
 	render: function() {
 		this._renderAdvanced();
 		
@@ -56,6 +66,9 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		
 	},
 	
+	/**
+	 * @access private
+	 */
 	_renderAdvanced: function() {
 		if (this.model.get('advancedMode')) {
 			this.$el.find('.advanced-mode').show();
@@ -66,6 +79,10 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		this.$el.find('input').blur();
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onCheckBoxChange: function(e) {
 		var $chkbox = $(e.target);
 		var id = $chkbox.attr('id');
@@ -73,10 +90,18 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		this.model.set(id, checked);
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onCloseClick: function(e) {
 		window.close();
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onActionTresholdChange: function(e) {
 		var $treshold = $(e.target);
 		var val = $treshold.val();
@@ -85,17 +110,30 @@ window.gtd.Settings.SettingsView = Backbone.View.extend({
 		}
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onHotkeyChange: function(e) {
 		var $hotkey = $(e.target);
 		var val = $hotkey.val();
 		this.model.set('hotkey', val);
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onPatternAddClick: function(e) {
 		this._onPatternEdit( new window.gtd.Pattern.Pattern(), true );
 		e.preventDefault();
 	},
 
+	/**
+	 * @access private
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @param {Bollean} addMode
+	 */
 	_onPatternEdit: function(pattern, addMode) {
 
 		this.patternEditView = new window.gtd.Settings.PatternEditView({

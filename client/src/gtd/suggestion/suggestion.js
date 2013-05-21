@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Describes action suggestion to specific email
+ * @author alex
+ */
 window.gtd.Suggestion.Suggestion = Backbone.Model.extend({
 	
 	defaults: {
@@ -7,12 +10,17 @@ window.gtd.Suggestion.Suggestion = Backbone.Model.extend({
 		action: null
 	},
 	
+	/**
+	 * @override
+	 * @param {Object} attributes
+	 * @param {Object} options
+	 */
 	initialize: function(attributes, options) {
 
 	},
 	
 	/**
-	 * @Override
+	 * @override
 	 */
 	toJSON: function() {
 		var action = this.get('action');

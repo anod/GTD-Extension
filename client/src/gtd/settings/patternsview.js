@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Class represents view of the list of patterns
+ * @author alex
+ */
 window.gtd.Settings.PatternsView = Backbone.View.extend({
 	
 	events: {
@@ -7,10 +10,16 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		"click a.act-delete": "_onDeleteClick"
 	},
 	
+	/**
+	 * @override
+	 */
 	initialize: function() {
 		this.collection.on('sync', this.render, this);
 	},
 	
+	/**
+	 * @override
+	 */
 	render: function() {
 		this.$el.empty();
 		if (this.collection.isEmpty()) {
@@ -21,6 +30,9 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		this.trigger('render:finish');
 	},
 	
+	/**
+	 * @access private
+	 */
 	_renderList: function() {
 		var html = [];
 		this.collection.each(function(pattern, idx) {
@@ -29,11 +41,20 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		this.$el.html(html.join(''));
 	},
 	
+	/**
+	 * @access private
+	 */
 	_renderEmpty: function() {
 		var el = '<li class="noitems">No itmes</li>';
 		this.$el.append(el);
 	},
 	
+	/**
+	 * @access private
+	 * @param {window.gtd.Pattern.Pattern} pattern
+	 * @param {Number} idx
+	 * @returns {String}
+	 */
 	_renderItem: function(pattern, idx) {
 		var lines = [];
 		var firstLine = '';
@@ -68,6 +89,12 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		return html;
 	},
 	
+	/**
+	 * Simplify pattern representation
+	 * @access private
+	 * @param {String} regex
+	 * @returns
+	 */
 	_renderRegex: function(regex) {
 		var stripped = regex;//.substring(1,regex.length - 1);
 		stripped = stripped.replace(/\\b/g, '');
@@ -83,10 +110,22 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		return parts.join(', ');
 	},
 	
+	/**
+	 * Escape regex
+	 * @access private
+	 * @param {String} str
+	 * @returns
+	 */
 	_escapeRegExp: function(str) {
 		return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, "\\$&");
 	},
 	
+	/**
+	 * Convert type to string
+	 * @access private
+	 * @param type
+	 * @returns {String}
+	 */
 	_renderType: function(type) {
 		/*
 		 * TYPE_DATE: 0,
@@ -109,12 +148,20 @@ window.gtd.Settings.PatternsView = Backbone.View.extend({
 		throw "Unknown type: " + type;
 	},
 	
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onEditClick: function(e) {
 		var $el = $(e.target);
 		this.trigger('edit:click', this.collection.get($el.data('id')));
 		e.preventDefault();
 	},
 
+	/**
+	 * @access private
+	 * @param e
+	 */
 	_onDeleteClick: function(e) {
 		var $el = $(e.target);
 		var pattern = this.collection.get($el.data('id'));

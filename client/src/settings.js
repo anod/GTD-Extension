@@ -1,5 +1,7 @@
 "use strict";
-
+/*
+ * Settings window bootstrap 
+ */
 document.addEventListener('DOMContentLoaded', function () {
 
 	var db = window.gtd.Db.init();

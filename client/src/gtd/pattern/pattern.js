@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Describes pattern to detect actions for an email 
+ * @author alex
+ */
 window.gtd.Pattern.Pattern = Backbone.Model.extend({
 
 	defaults : {
@@ -20,6 +23,12 @@ window.gtd.Pattern.Pattern = Backbone.Model.extend({
 		ACTION: 'Action is required'
 	},
 	
+	/**
+	 * Validate consistency of the data
+	 * @param {Object} attrs
+	 * @param {Object} options
+	 * @returns {String} Error message
+	 */
 	validate: function(attrs, options) {
 		if (!attrs.type || attrs.type === null) {
 			return this.errors.TYPE;

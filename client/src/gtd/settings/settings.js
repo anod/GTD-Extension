@@ -1,5 +1,8 @@
 "use strict";
-
+/**
+ * Model represents state of settings with localStorage backend
+ * @author alex
+ */
 window.gtd.Settings.Settings = Backbone.Model.extend({
 
 	context: null,
@@ -13,6 +16,11 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 		hotkey: 'ctrl+shift+a'
 	},
 	
+	/**
+	 * @override
+	 * @param {Object} attributes
+	 * @param {Object} options
+	 */
 	initialize: function(attributes, options) {
 		this.context = options.context;
 		this.localStorage = options.localStorage;
@@ -32,6 +40,10 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 		this._readLocal();
 	},
 	
+	/**
+	 * @access private
+	 * @returns {Boolean}
+	 */
 	_readLocal: function() {
 		if (!this.localStorage['gtd_settings']) {
 			return false;
@@ -41,6 +53,9 @@ window.gtd.Settings.Settings = Backbone.Model.extend({
 		return true;
 	},
 
+	/**
+	 * @access private
+	 */
 	_saveLocal: function() {
 		var data = this.toJSON();
 		this.localStorage['gtd_settings'] = JSON.stringify(data);

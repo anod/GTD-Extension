@@ -1,8 +1,14 @@
 "use strict";
-
+/**
+ * Application bootstrap
+ * @author alex
+ */
 window.gtdBootstrap = {
 	app: null,
 	
+	/**
+	 * Get authentication token
+	 */
 	authorize: function() {
 		window.oauth.authorize(_.bind(function() {
 			console.log("Authorize - Token:" + window.oauth.getAccessToken());
@@ -10,6 +16,9 @@ window.gtdBootstrap = {
 		}, this));
 	},
 	
+	/**
+	 * Run application
+	 */
 	run: function() {
 
 		var db = window.gtd.Db.init();
@@ -83,12 +92,16 @@ window.gtdBootstrap = {
 		this.app.runBackground();
 	},
 
-	refresh: function() {
-		if (this.app) {
-			this.app.runBackground();
-		}
-	},
+//	refresh: function() {
+//		if (this.app) {
+//			this.app.runBackground();
+//		}
+//	},
 	
+	/**
+	 * Start app
+	 * if we don't have internte connection subbscribe to online event
+	 */
 	start: function() {
 		if (this._checkConnection()) {
 			this.authorize();
@@ -97,6 +110,10 @@ window.gtdBootstrap = {
 		}
 	},
 	
+	/**
+	 * Check if we have connection
+	 * @returns
+	 */
 	_checkConnection: function() {
 		return window.navigator.onLine;
 	}
@@ -105,4 +122,4 @@ window.gtdBootstrap = {
 
 _.bindAll(window.gtdBootstrap);
 document.addEventListener('DOMContentLoaded', window.gtdBootstrap.start);
-window.chrome.browserAction.onClicked.addListener(window.gtdBootstrap.refresh);
+//window.chrome.browserAction.onClicked.addListener(window.gtdBootstrap.refresh);
