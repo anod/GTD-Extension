@@ -148,6 +148,7 @@ window.gtd.Pattern.PatternCollection = Backbone.Collection.extend({
 		if (pattern.get('editable')) {
 			console.log("User pattern", pattern);
 			this._applyPatternUser(pattern,action);
+			return;
 		}
 		
 		var type = pattern.get('type');
